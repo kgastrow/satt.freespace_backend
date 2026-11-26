@@ -240,7 +240,7 @@ export function NotificationSettingsPage() {
                   <FormItem>
                     <FormLabel>Email Sender Name</FormLabel>
                     <FormControl>
-                      <Input placeholder="AYZER Webapp" {...field} />
+                      <Input placeholder="Freespace Webapp" {...field} />
                     </FormControl>
                     <FormDescription>
                       The name that appears in the &quot;From&quot; field
@@ -257,7 +257,7 @@ export function NotificationSettingsPage() {
                   <FormItem>
                     <FormLabel>SMS Sender ID</FormLabel>
                     <FormControl>
-                      <Input placeholder="AYZER" maxLength={11} {...field} />
+                      <Input placeholder="FREESPACE" maxLength={11} {...field} />
                     </FormControl>
                     <FormDescription>
                       Alphanumeric sender ID (max 11 characters)

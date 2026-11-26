@@ -1,6 +1,6 @@
 # Context Expert Skill
 
-Context Documentation Expert responsible for maintaining AI context documentation accuracy for AYZER Webapp.
+Context Documentation Expert responsible for maintaining AI context documentation accuracy for Freespace Webapp.
 
 ## Responsibilities
 

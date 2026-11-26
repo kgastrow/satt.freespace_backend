@@ -19,7 +19,7 @@ Automatic TypeScript type generation from FastAPI backend's OpenAPI schema for c
 
 - **Smart Backend URL Detection**: Sources `.ports.env` for dynamic port (ADW worktree), falls back to localhost:8000
 - **Health Check Validation**: Verifies backend is running before schema download
-- **Basic Auth Support**: Uses `API_DOCS_USERNAME`/`API_DOCS_PASSWORD` (defaults: `ayzer`/`ayzer`)
+- **Basic Auth Support**: Uses `API_DOCS_USERNAME`/`API_DOCS_PASSWORD` (defaults: `freespace`/`freespace`)
 - **Error Handling**: Clear messages for common issues (backend down, auth failure, generation errors)
 - **Colorized Output**: Green/yellow/red console feedback
 

@@ -1,5 +1,5 @@
 """
-Main Locust entry point for load testing the AYZER Webapp API.
+Main Locust entry point for load testing the Freespace API.
 
 Usage:
     # Headless mode:

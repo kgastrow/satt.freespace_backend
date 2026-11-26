@@ -3,10 +3,10 @@
 # Script to create a Debian package for the FastAPI backend
 
 # Set variables
-PACKAGE_NAME="ayzer-backend"
+PACKAGE_NAME="freespace-backend"
 VERSION="1.0.0"
 ARCH="all"
-INSTALL_DIR="/home/ayzer_backend"
+INSTALL_DIR="/home/freespace"
 
 # Create temporary directory structure
 TEMP_DIR=$(mktemp -d)
@@ -29,11 +29,11 @@ cp requirements.txt "${PACKAGE_DIR}${INSTALL_DIR}/"
 cp config.json.example "${PACKAGE_DIR}${INSTALL_DIR}/"
 
 # Copy systemd service files
-cp initscripts/ayzer_backend.service "${PACKAGE_DIR}/etc/systemd/system/"
-cp initscripts/ayzer_worker.service "${PACKAGE_DIR}/etc/systemd/system/"
+cp initscripts/freespace_backend.service "${PACKAGE_DIR}/etc/systemd/system/"
+cp initscripts/freespace_worker.service "${PACKAGE_DIR}/etc/systemd/system/"
 
 # Copy Apache configuration (installed conditionally via postinst)
-cp apache_site_config/ravenx_backend.conf "${PACKAGE_DIR}${INSTALL_DIR}/apache_site_config/"
+cp apache_site_config/freespace.conf "${PACKAGE_DIR}${INSTALL_DIR}/apache_site_config/"
 
 # Copy DEBIAN control files from initscripts
 sed "s/tmp_arch/${ARCH}/" initscripts/control > "${PACKAGE_DIR}/DEBIAN/control"

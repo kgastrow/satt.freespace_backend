@@ -104,9 +104,9 @@ def get_database_config() -> dict:
     default_config = {
         "host": "localhost",
         "port": 5432,
-        "user": "ayzer-webapp-user",
-        "password": "ayzer-webapp-pass",
-        "db": "ayzer-webapp",
+        "user": "freespace-user",
+        "password": "freespace-pass",
+        "db": "freespace",
     }
 
     if not os.path.exists(config_path):

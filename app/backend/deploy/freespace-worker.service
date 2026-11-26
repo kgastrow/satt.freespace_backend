@@ -1,5 +1,5 @@
 [Unit]
-Description=AYZER Webapp ARQ Background Worker
+Description=Freespace ARQ Background Worker
 After=network.target redis.service postgresql.service pgbouncer.service
 Wants=redis.service
 
@@ -7,11 +7,11 @@ Wants=redis.service
 Type=simple
 User=www-data
 Group=www-data
-WorkingDirectory=/opt/ayzer-webapp/backend
-Environment="PATH=/opt/ayzer-webapp/backend/venv/bin"
-EnvironmentFile=/opt/ayzer-webapp/backend/.env
+WorkingDirectory=/opt/freespace/backend
+Environment="PATH=/opt/freespace/backend/venv/bin"
+EnvironmentFile=/opt/freespace/backend/.env
 
-ExecStart=/opt/ayzer-webapp/backend/venv/bin/arq src.workers.worker.WorkerSettings
+ExecStart=/opt/freespace/backend/venv/bin/arq src.workers.worker.WorkerSettings
 
 ExecReload=/bin/kill -s HUP $MAINPID
 Restart=always
@@ -24,7 +24,7 @@ NoNewPrivileges=true
 PrivateTmp=true
 ProtectSystem=strict
 ProtectHome=true
-ReadWritePaths=/opt/ayzer-webapp/backend/logs
+ReadWritePaths=/opt/freespace/backend/logs
 
 [Install]
 WantedBy=multi-user.target

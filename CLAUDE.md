@@ -1,7 +1,7 @@
-# AYZER Webapp Template
+# Freespace Webapp
 
 ## Context
-ayzer-webapp-template multi-tenant backend with React frontend. Row-level multi-tenancy with PostgreSQL. All tenant-scoped data requires `organization_id` filtering.
+freespace multi-tenant backend with React frontend. Row-level multi-tenancy with PostgreSQL. All tenant-scoped data requires `organization_id` filtering.
 
 ## Tooling
 

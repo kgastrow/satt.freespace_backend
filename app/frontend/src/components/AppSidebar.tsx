@@ -41,7 +41,7 @@ function AppSidebarComponent() {
         {isCollapsed && !isMobile ? (
           <div className="flex flex-col items-center gap-1 p-2">
             <a href="https://ayzer.ai" target="_blank" rel="noopener noreferrer">
-              <img src="/A_symbol.svg" alt="AYZER" className="h-8 w-auto dark:invert" />
+              <img src="/A_symbol.svg" alt="FREESPACE" className="h-8 w-auto dark:invert" />
             </a>
             <button
               onClick={toggleSidebar}
@@ -58,7 +58,7 @@ function AppSidebarComponent() {
               <SidebarMenuItem>
                 <SidebarMenuButton size="lg" asChild>
                   <a href="https://ayzer.ai" target="_blank" rel="noopener noreferrer">
-                    <img src="/AYZER_wordmark.svg" alt="AYZER" className="h-6 dark:invert" />
+                    <img src="/AYZER_wordmark.svg" alt="FREESPACE" className="h-6 dark:invert" />
                   </a>
                 </SidebarMenuButton>
               </SidebarMenuItem>

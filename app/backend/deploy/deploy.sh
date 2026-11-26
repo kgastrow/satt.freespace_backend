@@ -1,14 +1,14 @@
 #!/bin/bash
-# Deployment script for AYZER Webapp API
+# Deployment script for Freespace API
 # Usage: ./deploy.sh [environment]
 
 set -e
 
 ENVIRONMENT=${1:-production}
-DEPLOY_DIR="/opt/ayzer-webapp/backend"
+DEPLOY_DIR="/opt/freespace/backend"
 REPO_DIR=$(dirname "$(dirname "$(readlink -f "$0")")")
 
-echo "Deploying AYZER Webapp API to $ENVIRONMENT environment..."
+echo "Deploying Freespace API to $ENVIRONMENT environment..."
 
 # Create deployment directory if it doesn't exist
 sudo mkdir -p $DEPLOY_DIR
@@ -68,20 +68,20 @@ sudo chmod 600 $DEPLOY_DIR/.env
 
 # Install systemd services
 echo "Installing systemd services..."
-sudo cp $DEPLOY_DIR/deploy/ayzer-webapp-api.service /etc/systemd/system/
-sudo cp $DEPLOY_DIR/deploy/ayzer-webapp-worker.service /etc/systemd/system/
+sudo cp $DEPLOY_DIR/deploy/freespace-api.service /etc/systemd/system/
+sudo cp $DEPLOY_DIR/deploy/freespace-worker.service /etc/systemd/system/
 sudo systemctl daemon-reload
 
 # Enable and start services
 echo "Starting services..."
-sudo systemctl enable ayzer-webapp-api ayzer-webapp-worker
-sudo systemctl restart ayzer-webapp-api ayzer-webapp-worker
+sudo systemctl enable freespace-api freespace-worker
+sudo systemctl restart freespace-api freespace-worker
 
 # Check service status
 echo "Checking service status..."
 sleep 3
-sudo systemctl status ayzer-webapp-api --no-pager || true
-sudo systemctl status ayzer-webapp-worker --no-pager || true
+sudo systemctl status freespace-api --no-pager || true
+sudo systemctl status freespace-worker --no-pager || true
 
 # Health check
 echo "Performing health check..."
@@ -93,5 +93,5 @@ echo "Deployment complete!"
 echo "API is running at http://localhost:8000"
 echo ""
 echo "To view logs:"
-echo "  journalctl -u ayzer-webapp-api -f"
-echo "  journalctl -u ayzer-webapp-worker -f"
+echo "  journalctl -u freespace-api -f"
+echo "  journalctl -u freespace-worker -f"

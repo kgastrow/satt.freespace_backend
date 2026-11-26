@@ -366,7 +366,7 @@ def create_test_definition(
 ) -> str:
     """Create a test definition JSON file for the direct Playwright runner.
 
-    These tests are designed for the ayzer-webapp-template UI structure:
+    These tests are designed for the freespace UI structure:
     - Login page with email/password form
     - Dashboard with admin cards (User Management, Role Management, etc.)
     - Sidebar navigation with user profile dropdown

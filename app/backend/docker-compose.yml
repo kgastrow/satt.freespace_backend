@@ -4,7 +4,7 @@ services:
   # PostgreSQL Database
   postgres:
     image: postgres:15-alpine
-    container_name: ayzer-webapp-postgres
+    container_name: freespace-postgres
     environment:
       POSTGRES_USER: appuser
       POSTGRES_PASSWORD: password
@@ -19,12 +19,12 @@ services:
       timeout: 5s
       retries: 5
     networks:
-      - ayzer-webapp-network
+      - freespace-network
 
   # PgBouncer Connection Pooler
   pgbouncer:
     image: edoburu/pgbouncer:1.21.0
-    container_name: ayzer-webapp-pgbouncer
+    container_name: freespace-pgbouncer
     environment:
       DATABASE_URL: postgres://appuser:password@postgres:5432/appdb
       POOL_MODE: transaction
@@ -41,12 +41,12 @@ services:
       postgres:
         condition: service_healthy
     networks:
-      - ayzer-webapp-network
+      - freespace-network
 
   # Redis Cache & Job Queue
   redis:
     image: redis:7-alpine
-    container_name: ayzer-webapp-redis
+    container_name: freespace-redis
     command: redis-server --appendonly yes
     volumes:
       - redis_data:/data
@@ -58,14 +58,14 @@ services:
       timeout: 5s
       retries: 5
     networks:
-      - ayzer-webapp-network
+      - freespace-network
 
   # FastAPI Application
   api:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: ayzer-webapp-api
+    container_name: freespace-api
     environment:
       - PYTHONUNBUFFERED=1
     volumes:
@@ -87,7 +87,7 @@ services:
       retries: 3
       start_period: 10s
     networks:
-      - ayzer-webapp-network
+      - freespace-network
     restart: unless-stopped
 
   # ARQ Background Worker
@@ -95,7 +95,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.worker
-    container_name: ayzer-webapp-worker
+    container_name: freespace-worker
     environment:
       - PYTHONUNBUFFERED=1
     volumes:
@@ -107,11 +107,11 @@ services:
       redis:
         condition: service_healthy
     networks:
-      - ayzer-webapp-network
+      - freespace-network
     restart: unless-stopped
 
 networks:
-  ayzer-webapp-network:
+  freespace-network:
     driver: bridge
 
 volumes:

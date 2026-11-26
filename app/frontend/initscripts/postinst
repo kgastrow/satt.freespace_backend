@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
-INSTALL_DIR="/var/www/ayzer"
+INSTALL_DIR="/var/www/freespace"
 
 # Set proper permissions
 chown -R www-data:www-data "${INSTALL_DIR}"
@@ -9,4 +9,4 @@ chown -R www-data:www-data "${INSTALL_DIR}"
 # Reload Apache
 systemctl reload apache2
 
-echo "AYZER Frontend installed successfully!"
+Freespace Frontend installed successfully!"

@@ -1,0 +1,12 @@
+[Unit]
+Description=Freespace Backend Service
+After=syslog.target network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/home/freespace/
+ExecStart=/bin/bash -c "PORT=$$(/home/freespace/.venv/bin/python3 -c 'import json; print(json.load(open(\"config.json\"))[\"server\"][\"port\"])' 2>/dev/null || echo 8000); exec /home/freespace/.venv/bin/gunicorn --workers=4 --worker-class=uvicorn.workers.UvicornWorker --bind=127.0.0.1:$$PORT --log-level=info main:app"
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

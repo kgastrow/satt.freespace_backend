@@ -1,4 +1,4 @@
-# AYZER Webapp Template
+# Freespace Webapp
 
 A production-ready, full-stack SaaS application template with **row-level multi-tenancy**, **FastAPI backend**, **React frontend**, and **AI-assisted development workflows**. Built for teams building scalable multi-tenant applications with complete data isolation.
 
@@ -139,7 +139,7 @@ After installation, start the servers with:
 ```bash
 # Clone the repository
 git clone <your-repo-url>
-cd ayzer-webapp-template
+cd freespace
 
 # Start all services (PostgreSQL, PgBouncer, Redis, API, Worker)
 cd app/backend
@@ -166,7 +166,7 @@ make seed  # Creates first organization and admin user
 ## Project Structure
 
 ```
-ayzer-webapp-template/
+freespace/
 ├── app/
 │   ├── backend/                 # FastAPI backend
 │   │   ├── src/
@@ -413,11 +413,11 @@ docker-compose -f docker-compose.prod.yml up -d
 sudo ./app/backend/deploy/deploy.sh
 
 # Manage services
-sudo systemctl status ayzer-webapp-api
-sudo systemctl status ayzer-webapp-worker
+sudo systemctl status freespace-api
+sudo systemctl status freespace-worker
 
 # View logs
-journalctl -u ayzer-webapp-api -f
+journalctl -u freespace-api -f
 ```
 
 ### Manual Start

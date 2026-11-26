@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Script to create a Debian package for the AYZER React frontend
+# Script to create a Debian package for the Freespace React frontend
 
 set -e
 
@@ -13,12 +13,12 @@ if [ -f .env ]; then
 fi
 
 # Set variables
-PACKAGE_NAME="ayzer-frontend"
+PACKAGE_NAME="freespace-frontend"
 VERSION="1.0.0"
 ARCH="all"
 MAINTAINER="Konrad Gastrow <kgastrow@gmail.com>"
-DESCRIPTION="AYZER Frontend"
-INSTALL_DIR="/var/www/ayzer"
+DESCRIPTION="Freespace Frontend"
+INSTALL_DIR="/var/www/freespace"
 
 # Build the frontend
 echo "Building frontend..."

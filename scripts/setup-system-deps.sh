@@ -13,7 +13,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(dirname "$SCRIPT_DIR")"
 
 echo "============================================"
-echo "AYZER Webapp Template - System Dependencies"
+echo "Freespace Webapp - System Dependencies"
 echo "============================================"
 echo ""
 
@@ -120,7 +120,7 @@ if [[ "$OS" == "macos" ]]; then
     fi
     if ! grep -q "postgresql@15/bin" "$SHELL_RC" 2>/dev/null; then
         echo "" >> "$SHELL_RC"
-        echo "# PostgreSQL 15 (added by ayzer setup)" >> "$SHELL_RC"
+        echo "# PostgreSQL 15 (added by freespace setup)" >> "$SHELL_RC"
         echo "$PG_PATH_LINE" >> "$SHELL_RC"
         echo "Added postgresql@15 to PATH in $SHELL_RC"
     fi

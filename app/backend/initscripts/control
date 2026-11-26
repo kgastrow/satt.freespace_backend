@@ -1,7 +1,7 @@
-Package: ayzer-backend
+Package: freespace-backend
 Version: 0.1
 Section: main
 Priority: optional
 Architecture: tmp_arch
 Maintainer: Konrad Gastrow <kgastrow@gmail.com>
-Description: Ayzer Backend
+Description: Freespace Backend

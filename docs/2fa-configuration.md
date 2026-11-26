@@ -1,6 +1,6 @@
 # Two-Factor Authentication (2FA) Configuration Guide
 
-This guide covers the complete setup and configuration of Two-Factor Authentication in the AYZER Webapp Template.
+This guide covers the complete setup and configuration of Two-Factor Authentication in the Freespace Webapp.
 
 ## Table of Contents
 
@@ -50,7 +50,7 @@ All 2FA settings are configured in `app/backend/config.json`.
 ```json
 {
   "app": {
-    "name": "AYZER"
+    "name": "FREESPACE"
   },
   "jwt": {
     "secret": "your-jwt-secret-key-here"
@@ -168,7 +168,7 @@ Authorization: Bearer {access_token}
 ```json
 {
   "secret": "JBSWY3DPEHPK3PXP",
-  "provisioning_uri": "otpauth://totp/AYZER:user@example.com?secret=JBSWY3DPEHPK3PXP&issuer=AYZER",
+  "provisioning_uri": "otpauth://totp/FREESPACE:user@example.com?secret=JBSWY3DPEHPK3PXP&issuer=FREESPACE",
   "qr_code_data": "otpauth://totp/..."
 }
 ```

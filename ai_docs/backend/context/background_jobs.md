@@ -216,9 +216,9 @@ arq src.workers.worker.WorkerSettings
 arq src.workers.worker.WorkerSettings --verbose
 
 # Production (systemd)
-# /etc/systemd/system/ayzer-webapp-worker.service
+# /etc/systemd/system/freespace-worker.service
 [Service]
-ExecStart=/opt/ayzer-webapp/backend/venv/bin/arq src.workers.worker.WorkerSettings
+ExecStart=/opt/freespace/backend/venv/bin/arq src.workers.worker.WorkerSettings
 ```
 
 ## Error Handling and Retries

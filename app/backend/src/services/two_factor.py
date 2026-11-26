@@ -26,7 +26,7 @@ class TwoFactorService:
 
     @staticmethod
     def generate_provisioning_uri(
-        secret: str, email: str, issuer: str = "AYZER"
+        secret: str, email: str, issuer: str = "FREESPACE"
     ) -> str:
         """
         Generate a provisioning URI for QR code display.
@@ -34,7 +34,7 @@ class TwoFactorService:
         Args:
             secret: Base32-encoded TOTP secret
             email: User's email address
-            issuer: Issuer name (default: AYZER)
+            issuer: Issuer name (default: FREESPACE)
 
         Returns:
             otpauth:// URI string

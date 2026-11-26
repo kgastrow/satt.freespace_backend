@@ -113,7 +113,7 @@ _Note: Smoke test failures are non-blocking and logged for review._
 ### Validate Chrome Detection
 
 ```bash
-cd /Users/kgastrow/ayzer.webapp.template/trees/756cce26
+cd /Users/kgastrow/freespace/trees/756cce26
 uv run python -c "import sys; sys.path.insert(0, 'adws'); from adw_modules.utils import is_chrome_available; print(is_chrome_available())"
 ```
 
@@ -122,7 +122,7 @@ Expected: `(True, None)` on Mac, `(False, 'reason...')` on Linux/WSL
 ### Run E2E Test
 
 ```bash
-cd /Users/kgastrow/ayzer.webapp.template/trees/756cce26
+cd /Users/kgastrow/freespace/trees/756cce26
 claude /e2e:test_smoke_test_workflow
 ```
 

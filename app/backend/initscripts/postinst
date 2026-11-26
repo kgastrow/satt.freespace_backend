@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
-INSTALL_DIR="/home/ayzer_backend"
+INSTALL_DIR="/home/freespace"
 
 # Install uv if not present
 if ! command -v uv &> /dev/null; then
@@ -36,8 +36,8 @@ rm -f ${INSTALL_DIR}/config.json.example
 chown -R www-data:www-data ${INSTALL_DIR}
 
 # Copy Apache config only if it doesn't exist
-if [ ! -f /etc/apache2/sites-available/ayzer_backend.conf ]; then
-    cp ${INSTALL_DIR}/apache_site_config/ayzer_backend.conf /etc/apache2/sites-available/
+if [ ! -f /etc/apache2/sites-available/freespace.conf ]; then
+    cp ${INSTALL_DIR}/apache_site_config/freespace.conf /etc/apache2/sites-available/
 fi
 rm -rf ${INSTALL_DIR}/apache_site_config
 
@@ -45,20 +45,20 @@ rm -rf ${INSTALL_DIR}/apache_site_config
 a2enmod proxy proxy_http proxy_wstunnel headers ssl rewrite
 
 # Enable the site
-a2ensite ayzer_backend
+a2ensite freespace
 
 # Reload systemd and Apache
 systemctl daemon-reload
 systemctl reload apache2
 
 # Enable and start services
-echo "Adding AYZER Backend services..."
-systemctl enable ayzer_backend.service
-systemctl enable ayzer_worker.service
+echo "Adding Freespace Backend services..."
+systemctl enable freespace_backend.service
+systemctl enable freespace_worker.service
 
-echo "Starting AYZER Backend applications..."
-systemctl start ayzer_backend.service
-systemctl start ayzer_worker.service
+echo "Starting Freespace Backend applications..."
+systemctl start freespace_backend.service
+systemctl start freespace_worker.service
 
-echo "AYZER Backend installed successfully!"
+Freespace Backend installed successfully!"
 echo "Please edit ${INSTALL_DIR}/config.json and run database migrations"

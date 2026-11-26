@@ -1,9 +1,9 @@
-# Makefile for AYZER Webapp Backend
+# Makefile for Freespace Backend
 .PHONY: help dev test lint build up down logs clean migrate perf perf-ui perf-report benchmark
 
 # Default target
 help:
-	@echo "AYZER Webapp Backend - Available Commands"
+	@echo "Freespace Backend - Available Commands"
 	@echo "======================================="
 	@echo ""
 	@echo "Development:"

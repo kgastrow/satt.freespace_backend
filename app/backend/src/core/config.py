@@ -77,7 +77,7 @@ class Settings(BaseSettings):
     )
 
     # Application
-    APP_NAME: str = "AYZER Webapp"
+    APP_NAME: str = "Freespace Webapp"
     TEAM_NAME: str = "Your Team"
 
     # Server
@@ -281,8 +281,8 @@ class Settings(BaseSettings):
     CORS_ALLOWED_HEADERS: str = "Authorization,Content-Type,X-API-Key,X-Request-ID,X-App-Commit"
 
     # API Documentation Authentication
-    API_DOCS_USERNAME: str = "ayzer"
-    API_DOCS_PASSWORD: str = "ayzer"
+    API_DOCS_USERNAME: str = "freespace"
+    API_DOCS_PASSWORD: str = "freespace"
 
     # AWS
     AWS_REGION: str = "us-east-1"
@@ -290,7 +290,7 @@ class Settings(BaseSettings):
     AWS_SECRET_ACCESS_KEY: str = ""
 
     # S3
-    S3_BUCKET: str = "ayzer-webapp-files"
+    S3_BUCKET: str = "freespace-files"
     S3_REGION: str = "us-east-1"
     S3_ENDPOINT_URL: str = ""
 
@@ -496,7 +496,7 @@ class Settings(BaseSettings):
                 # Map JSON config structure to Settings fields
                 if "app" in config_data:
                     app = config_data["app"]
-                    config_values["APP_NAME"] = app.get("name", "AYZER Webapp")
+                    config_values["APP_NAME"] = app.get("name", "Freespace Webapp")
                     config_values["TEAM_NAME"] = app.get("team_name", "Your Team")
 
                 if "server" in config_data:
@@ -732,7 +732,7 @@ class Settings(BaseSettings):
 
                 if "s3" in config_data:
                     s3 = config_data["s3"]
-                    config_values["S3_BUCKET"] = s3.get("bucket", "ayzer-webapp-files")
+                    config_values["S3_BUCKET"] = s3.get("bucket", "freespace-files")
                     config_values["S3_REGION"] = s3.get("region", "us-east-1")
                     config_values["S3_ENDPOINT_URL"] = s3.get("endpoint_url", "")
 
@@ -775,10 +775,10 @@ class Settings(BaseSettings):
                 if "api_docs" in config_data:
                     api_docs = config_data["api_docs"]
                     config_values["API_DOCS_USERNAME"] = api_docs.get(
-                        "username", "ayzer"
+                        "username", "freespace"
                     )
                     config_values["API_DOCS_PASSWORD"] = api_docs.get(
-                        "password", "ayzer"
+                        "password", "freespace"
                     )
 
                 if "cors" in config_data:

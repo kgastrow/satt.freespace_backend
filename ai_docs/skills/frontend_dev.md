@@ -1,6 +1,6 @@
 # Frontend Developer Skill
 
-Expert React frontend developer for AYZER Webapp platform.
+Expert React frontend developer for Freespace Webapp platform.
 
 ## Tech Stack
 

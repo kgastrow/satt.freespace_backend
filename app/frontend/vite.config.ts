@@ -129,8 +129,8 @@ export default defineConfig({
       disable: process.env.VITE_ENABLE_PWA !== 'true',
       registerType: 'prompt',
       manifest: {
-        name: process.env.VITE_PWA_APP_NAME || 'AYZER',
-        short_name: process.env.VITE_PWA_APP_NAME || 'AYZER',
+        name: process.env.VITE_PWA_APP_NAME || 'FREESPACE',
+        short_name: process.env.VITE_PWA_APP_NAME || 'FREESPACE',
         description: 'Multi-tenant application',
         display: 'standalone',
         background_color: '#ffffff',

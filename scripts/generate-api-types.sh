@@ -61,8 +61,8 @@ fi
 if [ -z "$API_DOCS_PASSWORD" ] && [ -f "$BACKEND_CONFIG" ]; then
     API_DOCS_PASSWORD=$(python3 -c "import json; print(json.load(open('$BACKEND_CONFIG'))['api_docs']['password'])" 2>/dev/null)
 fi
-API_DOCS_USERNAME="${API_DOCS_USERNAME:-ayzer}"
-API_DOCS_PASSWORD="${API_DOCS_PASSWORD:-ayzer}"
+API_DOCS_USERNAME="${API_DOCS_USERNAME:-freespace}"
+API_DOCS_PASSWORD="${API_DOCS_PASSWORD:-freespace}"
 
 echo -e "${GREEN}OpenAPI TypeScript Type Generator${NC}"
 echo "===================================="

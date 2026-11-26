@@ -565,7 +565,7 @@ async def test_two_factor_service_generate_provisioning_uri():
     assert uri.startswith("otpauth://totp/")
     # Email may be URL encoded in the URI
     assert email in unquote(uri)
-    assert "AYZER" in unquote(uri)
+    assert "FREESPACE" in unquote(uri)
     assert secret in uri
 
 

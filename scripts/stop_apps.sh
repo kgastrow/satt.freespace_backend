@@ -7,7 +7,7 @@ RED='\033[0;31m'
 YELLOW='\033[0;33m'
 NC='\033[0m' # No Color
 
-echo -e "${BLUE}Stopping AYZER Webapp and ADW Services...${NC}"
+echo -e "${BLUE}Stopping Freespace Webapp..."
 
 # Function to gracefully stop processes matching a pattern
 # Uses SIGTERM first, then SIGKILL as fallback

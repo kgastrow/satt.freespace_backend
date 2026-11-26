@@ -1,0 +1,13 @@
+[Unit]
+Description=Freespace ARQ Background Worker
+After=syslog.target network.target redis.service freespace_backend.service
+
+[Service]
+Type=simple
+WorkingDirectory=/home/freespace/
+ExecStart=/home/freespace/.venv/bin/arq src.workers.worker.WorkerSettings
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
