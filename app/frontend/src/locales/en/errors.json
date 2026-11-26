@@ -1,0 +1,55 @@
+{
+  "validation": {
+    "required": "This field is required",
+    "email": "Please enter a valid email address",
+    "minLength": "Must be at least {{min}} characters",
+    "maxLength": "Must be at most {{max}} characters",
+    "password": "Password must be at least 8 characters",
+    "passwordMatch": "Passwords do not match",
+    "invalidFormat": "Invalid format"
+  },
+  "api": {
+    "networkError": "Network error. Please check your connection.",
+    "unauthorized": "Unauthorized. Please log in again.",
+    "forbidden": "You don't have permission to perform this action.",
+    "notFound": "Resource not found.",
+    "serverError": "Server error. Please try again later.",
+    "uploadFailed": "Upload failed",
+    "deleteFailed": "Delete failed",
+    "updateFailed": "Update failed",
+    "createFailed": "Create failed"
+  },
+  "file": {
+    "tooLarge": "File is too large. Maximum size is {{max}}.",
+    "invalidType": "Invalid file type",
+    "uploadError": "Failed to upload file"
+  },
+  "maintenance": {
+    "title": "System Maintenance",
+    "defaultMessage": "We're currently performing scheduled maintenance. We'll be back soon!",
+    "estimatedEnd": "Estimated completion",
+    "autoRefresh": "This page will automatically refresh when maintenance is complete."
+  },
+  "notFound": {
+    "title": "Page Not Found",
+    "description": "The page you're looking for doesn't exist or has been moved.",
+    "goHome": "Go Home",
+    "goBack": "Go Back"
+  },
+  "routeError": {
+    "unexpectedError": "Something Went Wrong",
+    "description": "An unexpected error occurred. Please try again or return to the home page.",
+    "goHome": "Go Home",
+    "tryAgain": "Try Again",
+    "status": {
+      "404": "The page you're looking for doesn't exist or has been moved.",
+      "403": "You don't have permission to access this page.",
+      "500": "The server encountered an error. Please try again later."
+    }
+  },
+  "staleBuild": {
+    "title": "This tab is out of date",
+    "description": "The app was updated while this tab was open, so part of it could no longer be loaded. Reloading picks up the current version.",
+    "action": "Reload"
+  }
+}

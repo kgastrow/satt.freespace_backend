@@ -1,0 +1,364 @@
+{
+  "app": {
+    "name": "AYZER",
+    "description": "Multi-tenant application"
+  },
+  "yes": "Yes",
+  "no": "No",
+  "sso": {
+    "continueWithGoogle": "Continue with Google",
+    "connecting": "Connecting...",
+    "error": "Failed to initiate Google login"
+  },
+  "theme": {
+    "toggle": "Toggle theme",
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System"
+  },
+  "cancel": "Cancel",
+  "back": "Back",
+  "continue": "Continue",
+  "loading": "Loading...",
+  "buttons": {
+    "submit": "Submit",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "close": "Close",
+    "confirm": "Confirm",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "search": "Search",
+    "filter": "Filter",
+    "reset": "Reset",
+    "apply": "Apply",
+    "upload": "Upload",
+    "download": "Download",
+    "continue": "Continue"
+  },
+  "navigation": {
+    "dashboard": "Dashboard",
+    "files": "Files",
+    "users": "Users",
+    "settings": "Settings",
+    "profile": "Profile",
+    "admin": "Admin",
+    "logout": "Logout",
+    "notifications": "Notifications",
+    "organization": "Organization",
+    "apiKeys": "API Keys",
+    "ssoSettings": "SSO Settings",
+    "auditLogs": "Audit Logs",
+    "metrics": "Metrics",
+    "feedback": "Feedback",
+    "organizations": "Organizations",
+    "roles": "Roles",
+    "permissions": "Permissions",
+    "announcements": "Announcements",
+    "changelog": "Changelog",
+    "helpCenter": "Help Center",
+    "apiKeyRateLimits": "API Key Rate Limits",
+    "twoFactor": "Two-Factor Auth",
+    "crons": "Crons",
+    "requestLogs": "Request Logs",
+    "featureFlags": "Feature Flags",
+    "userTypes": "User Types",
+    "onboardingReview": "Onboarding Review",
+    "maintenance": "Maintenance",
+    "signOut": "Sign out",
+    "signingOut": "Signing out...",
+    "userMenu": "User menu",
+    "adminHub": "Administration",
+    "platformAdminHub": "Platform Administration"
+  },
+  "sidebar": {
+    "navigation": "Navigation",
+    "administration": "Administration",
+    "superAdmin": "Super Admin",
+    "expandSidebar": "Expand sidebar",
+    "collapseSidebar": "Collapse sidebar"
+  },
+  "settings": {
+    "security": "Security"
+  },
+  "error": "Error",
+  "common": {
+    "loading": "Loading...",
+    "saving": "Saving...",
+    "error": "An error occurred",
+    "success": "Success",
+    "noData": "No data available",
+    "actions": "Actions",
+    "status": "Status",
+    "name": "Name",
+    "email": "Email",
+    "createdAt": "Created At",
+    "updatedAt": "Updated At",
+    "description": "Description"
+  },
+  "languageSwitcher": {
+    "title": "Change Language",
+    "current": "Current Language"
+  },
+  "table": {
+    "noData": "No data found",
+    "search": "Search...",
+    "pagination": {
+      "showing": "Showing",
+      "of": "of",
+      "previous": "Previous",
+      "next": "Next",
+      "loadMore": "Load more",
+      "loading": "Loading..."
+    }
+  },
+  "dialog": {
+    "confirm": "Confirm",
+    "cancel": "Cancel",
+    "loading": "Loading..."
+  },
+  "fileUploader": {
+    "dragActive": "Drop the files here...",
+    "dragReject": "File type not accepted",
+    "placeholder": "Drag and drop files here, or click to browse",
+    "maxSize": "Max file size: {{size}}"
+  },
+  "storage": {
+    "used": "Storage Used",
+    "noQuota": "No quota limit",
+    "percentUsed": "{{percent}}% used"
+  },
+  "updatePrompt": {
+    "title": "Update available",
+    "message": "A new version is ready and installed on this device. Reload to switch to it.",
+    "apply": "Reload now",
+    "later": "Not now",
+    "dismiss": "Dismiss"
+  },
+  "installBanner": {
+    "message": "Install this app for a better experience.",
+    "install": "Install",
+    "dismiss": "Dismiss"
+  },
+  "deletionPendingBanner": {
+    "message": "Your account is scheduled for deletion on {{date}}",
+    "messagePending": "Your account is scheduled for deletion",
+    "cancelButton": "Cancel Deletion",
+    "cancelling": "Cancelling...",
+    "cancelSuccess": "Account deletion cancelled",
+    "cancelError": "Failed to cancel deletion"
+  },
+  "notifications": {
+    "title": "Notifications",
+    "empty": "No notifications",
+    "emptyDescription": "You're all caught up!",
+    "unread": "Unread",
+    "unreadCount": "{{count}} unread notifications",
+    "markAllRead": "Mark all read",
+    "loadMore": "Load more",
+    "dismiss": "Dismiss",
+    "openPanel": "Open notifications",
+    "viewAll": "View All Notifications",
+    "pageTitle": "Notifications",
+    "pageDescription": "View and manage all your notifications",
+    "filterAll": "All",
+    "filterUnread": "Unread",
+    "noMore": "No more notifications"
+  },
+  "changelog": {
+    "title": "What's New",
+    "description": "Latest updates and changes",
+    "empty": "No changelog entries yet",
+    "new": "New",
+    "markAllRead": "Mark all as read",
+    "unreadCount": "{{count}} unread updates",
+    "categories": {
+      "feature": "Feature",
+      "improvement": "Improvement",
+      "bugfix": "Bug Fix",
+      "breaking": "Breaking",
+      "other": "Other"
+    }
+  },
+  "announcements": {
+    "badge": "{{position}} of {{total}}",
+    "dismiss": "Dismiss announcement",
+    "dismissButton": "Dismiss",
+    "nonDismissible": "This announcement cannot be dismissed",
+    "next": "Next",
+    "previous": "Previous",
+    "viewDetails": "View announcement details",
+    "viewFullImage": "Click to view full image"
+  },
+  "adminHub": {
+    "title": "Administration",
+    "description": "Manage organization settings and users",
+    "emptyState": "You don't have access to any admin functions.",
+    "cards": {
+      "organization": {
+        "title": "Organization Settings",
+        "description": "Manage organization profile and configuration"
+      },
+      "users": {
+        "title": "Users",
+        "description": "Manage user accounts and permissions"
+      },
+      "onboardingReview": {
+        "title": "Onboarding Review",
+        "description": "Review and approve pending user onboarding"
+      },
+      "apiKeys": {
+        "title": "API Keys",
+        "description": "Manage API authentication keys"
+      },
+      "notifications": {
+        "title": "Notifications",
+        "description": "Configure and send notifications"
+      },
+      "announcements": {
+        "title": "Announcements",
+        "description": "Create and manage announcements"
+      },
+      "files": {
+        "title": "Files",
+        "description": "Manage organization files and storage"
+      },
+      "ssoSettings": {
+        "title": "SSO Settings",
+        "description": "Configure single sign-on providers"
+      },
+      "twoFactor": {
+        "title": "Two-Factor Auth",
+        "description": "Manage two-factor authentication settings"
+      },
+      "auditLogs": {
+        "title": "Audit Logs",
+        "description": "View audit trail and activity logs"
+      },
+      "metrics": {
+        "title": "Metrics",
+        "description": "View usage metrics and analytics"
+      },
+      "feedback": {
+        "title": "Feedback",
+        "description": "Review user feedback and suggestions"
+      }
+    }
+  },
+  "errorBoundary": {
+    "eyebrow": "Error",
+    "title": "Something went wrong",
+    "description": "An unexpected error occurred. Please try again.",
+    "tryAgain": "Try Again",
+    "reloadPage": "Reload Page",
+    "reportButton": "Report to support",
+    "reportDialogTitle": "Report this error",
+    "reportDialogDescription": "We've attached technical details about what happened. Add anything else that helps us understand the problem.",
+    "pageLabel": "Page",
+    "componentLabel": "Component",
+    "errorLabel": "Error",
+    "recentActionsLabel": "Recent actions",
+    "noRecentActions": "No recent actions recorded",
+    "unknownComponent": "Unknown",
+    "prefillSubject": "Error: {{message}}",
+    "prefillIntro": "I ran into an unexpected error.",
+    "diagnosticsAttachedNote": "Full technical diagnostics are attached as error-diagnostics.txt."
+  },
+  "home": {
+    "welcome": "Welcome to {{appName}}",
+    "description": "Multi-tenant backend template platform",
+    "loggedInAs": "Logged in as"
+  },
+  "platformAdminHub": {
+    "title": "Platform Administration",
+    "description": "Manage platform-wide settings and configurations",
+    "cards": {
+      "organizations": {
+        "title": "Organizations",
+        "description": "Manage all organizations on the platform"
+      },
+      "roles": {
+        "title": "Roles",
+        "description": "Define and manage user roles"
+      },
+      "permissions": {
+        "title": "Permissions",
+        "description": "Configure role permissions"
+      },
+      "apiKeyRateLimits": {
+        "title": "API Key Rate Limits",
+        "description": "Configure API rate limiting rules"
+      },
+      "featureFlags": {
+        "title": "Feature Flags",
+        "description": "Control feature availability"
+      },
+      "userTypes": {
+        "title": "User Types",
+        "description": "Manage user type definitions"
+      },
+      "helpCenter": {
+        "title": "Help Center",
+        "description": "Manage help documentation"
+      },
+      "crons": {
+        "title": "Cron Jobs",
+        "description": "Monitor scheduled tasks"
+      },
+      "requestLogs": {
+        "title": "Request Logs",
+        "description": "View API request logs"
+      },
+      "maintenance": {
+        "title": "Maintenance",
+        "description": "System maintenance tools"
+      }
+    }
+  },
+  "unsubscribe": {
+    "invalidLink": {
+      "title": "Invalid Link",
+      "description": "This unsubscribe link is missing required information.",
+      "instructions": "If you clicked a link from an email, please try clicking it again. If the problem persists, contact support."
+    },
+    "expired": {
+      "title": "Invalid or Expired Link",
+      "description": "This unsubscribe link is no longer valid.",
+      "instructions": "Unsubscribe links expire after a certain period. Please find a more recent email to unsubscribe, or manage your preferences in your account settings."
+    },
+    "alreadyUnsubscribed": {
+      "title": "Already Unsubscribed",
+      "description": "You have already unsubscribed from these notifications."
+    },
+    "success": {
+      "title": "Successfully Unsubscribed",
+      "description": "You have been unsubscribed from these notifications."
+    },
+    "confirm": {
+      "title": "Unsubscribe",
+      "description": "Confirm that you want to stop receiving these notifications"
+    },
+    "labels": {
+      "email": "Email",
+      "organization": "Organization",
+      "category": "Category",
+      "channel": "Channel"
+    },
+    "error": {
+      "failed": "Failed to unsubscribe. Please try again.",
+      "generic": "An error occurred. Please try again."
+    },
+    "goToHomepage": "Go to Homepage",
+    "loginToManage": "Login to Manage Preferences",
+    "isNotReceiving": "is not receiving",
+    "willNoLongerReceive": "will no longer receive",
+    "notificationsFrom": "notifications from",
+    "changedYourMind": "Changed your mind? You can re-enable notifications in your account settings.",
+    "processing": "Processing...",
+    "confirmButton": "Confirm Unsubscribe",
+    "reEnableNote": "You can always re-enable notifications by logging into your account and visiting your notification preferences."
+  }
+}

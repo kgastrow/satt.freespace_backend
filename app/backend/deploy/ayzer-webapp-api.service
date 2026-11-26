@@ -1,0 +1,60 @@
+[Unit]
+Description=AYZER Webapp API (FastAPI/Uvicorn)
+After=network.target postgresql.service redis.service pgbouncer.service
+Wants=redis.service pgbouncer.service
+
+[Service]
+Type=simple
+User=www-data
+Group=www-data
+WorkingDirectory=/opt/ayzer-webapp/backend
+Environment="PATH=/opt/ayzer-webapp/backend/venv/bin"
+EnvironmentFile=/opt/ayzer-webapp/backend/.env
+
+# --forwarded-allow-ips IS THE LOAD-BEARING HALF OF CLIENT-IP TRUST.
+#
+# It names the peer addresses whose X-Forwarded-For uvicorn will believe.
+# It used to be '*' here. Do not put it back. With '*', uvicorn 0.34's
+# _TrustedHosts.always_trust short-circuits get_trusted_client_host() to
+# x_forwarded_for_hosts[0] -- the LEFTMOST, client-supplied entry -- for EVERY
+# connection, whatever its source. request.client.host then becomes whatever
+# the caller typed into the header, and with it every audit row, every session
+# IP shown to a user, the per-IP rate-limit bucket, and the login/2FA
+# brute-force lockout: unlimited password attempts by rotating the header, and
+# a targeted lockout of any user by sending their address.
+#
+# 127.0.0.1 is correct when the reverse proxy (nginx/Apache/Caddy) runs on this
+# same host, which is what this unit assumes. uvicorn then takes the RIGHTMOST
+# entry the proxy did not itself forward -- the value the proxy appended, which
+# a client cannot forge.
+#
+# A fork whose proxy runs on ANOTHER host must set this to that host's address
+# or CIDR, comma-separated, e.g.:
+#   --forwarded-allow-ips='10.0.0.5,10.0.1.0/24'
+# If the client IP still resolves to a CDN edge rather than the visitor, do not
+# reach for '*': set "server": {"trusted_client_ip_header": "CF-Connecting-IP"}
+# in config.json and lock the origin so only the edge can reach it.
+ExecStart=/opt/ayzer-webapp/backend/venv/bin/uvicorn main:app \
+    --host 0.0.0.0 \
+    --port 8000 \
+    --workers 4 \
+    --loop uvloop \
+    --http httptools \
+    --proxy-headers \
+    --forwarded-allow-ips='127.0.0.1'
+
+ExecReload=/bin/kill -s HUP $MAINPID
+Restart=always
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+
+# Security hardening
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/opt/ayzer-webapp/backend/logs
+
+[Install]
+WantedBy=multi-user.target

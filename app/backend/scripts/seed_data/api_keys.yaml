@@ -1,0 +1,24 @@
+# Sample API keys to create
+# Keys are created for the specified organization slug
+# expires_in_days: number of days from creation (null for no expiry)
+
+- name: Development API Key
+  organization_slug: default-org
+  expires_in_days: 90
+  permissions:
+    - users:read
+    - roles:read
+    - notifications:read
+    - files:read
+    - organization:read
+    - metrics:read
+
+- name: Integration Test Key
+  organization_slug: default-org
+  expires_in_days: 30
+  permissions:
+    - users:read
+    - users:write
+    - files:read
+    - files:write
+    - notifications:read

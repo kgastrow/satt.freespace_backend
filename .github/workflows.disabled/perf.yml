@@ -1,0 +1,118 @@
+name: Performance Tests
+
+on:
+  pull_request:
+    branches:
+      - main
+  schedule:
+    - cron: "0 2 * * 1"  # Weekly Monday 2am
+
+jobs:
+  backend-benchmarks:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_DB: test
+          POSTGRES_USER: test
+          POSTGRES_PASSWORD: test
+        ports:
+          - "5432:5432"
+      redis:
+        image: redis:7
+        ports:
+          - "6379:6379"
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+
+      - name: Install dependencies
+        working-directory: app/backend
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run benchmarks
+        working-directory: app/backend
+        run: make benchmark
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: benchmark-results
+          path: app/backend/results/
+
+  backend-load-test:
+    runs-on: ubuntu-latest
+    needs: backend-benchmarks
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+
+      - name: Install dependencies
+        working-directory: app/backend
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Start app
+        working-directory: app/backend
+        run: |
+          make dev &
+          sleep 10
+
+      - name: Run Locust
+        working-directory: app/backend
+        run: PERF_USERS=50 PERF_SPAWN_RATE=5 PERF_RUN_TIME=2m make perf
+
+      - name: Check thresholds
+        run: |
+          python app/backend/perf/check_thresholds.py \
+            app/backend/perf/results/run_stats.csv
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: locust-results
+          path: app/backend/perf/results/
+
+  frontend-lighthouse:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: app/frontend/package-lock.json
+
+      - name: Install dependencies
+        working-directory: app/frontend
+        run: npm ci
+
+      - name: Run Lighthouse CI
+        working-directory: app/frontend
+        run: npm run perf
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: lighthouse-results
+          path: app/frontend/lighthouse-results/

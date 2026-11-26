@@ -1,0 +1,31 @@
+{
+  "welcome": "Welcome back, {{name}}!",
+  "subtitle": "Here's what you can do today.",
+  "cards": {
+    "userManagement": {
+      "title": "User Management",
+      "description": "Manage users in your organization",
+      "action": "Manage Users"
+    },
+    "roleManagement": {
+      "title": "Role Management",
+      "description": "Create and manage roles for your organization",
+      "action": "Manage Roles"
+    },
+    "auditLogs": {
+      "title": "Audit Logs",
+      "description": "View activity history and changes",
+      "action": "View Logs"
+    },
+    "systemMetrics": {
+      "title": "System Metrics",
+      "description": "Monitor system health and performance",
+      "action": "View Metrics"
+    },
+    "organizations": {
+      "title": "Organizations",
+      "description": "Manage all organizations in the system",
+      "action": "Manage Organizations"
+    }
+  }
+}

@@ -1,0 +1,118 @@
+{
+  "server": {
+    "host": "0.0.0.0",
+    "port": 8000,
+    "debug": true,
+    "enable_docs": true,
+    "max_request_body_bytes": 104857600,
+    "_trusted_client_ip_header": "Header your CDN/edge OVERWRITES with the real client IP (Cloudflare: CF-Connecting-IP, Akamai: True-Client-IP). Keys audit records AND the login/2FA lockout. Leave empty to use the connection peer address (correct for local dev and for a plain reverse proxy whose address is named in uvicorn --forwarded-allow-ips). Append-only headers (X-Forwarded-For, Forwarded, X-Forwarded) are refused at startup: proxies append to them, so a client can forge the leftmost value.",
+    "trusted_client_ip_header": ""
+  },
+  "database": {
+    "host": "localhost",
+    "port": 5432,
+    "pgbouncer_port": 6432,
+    "user": "appuser",
+    "password": "password",
+    "db": "appdb",
+    "echo": false,
+    "pooling": {
+      "pool_size": 2,
+      "max_overflow": 1,
+      "pool_timeout": 30,
+      "pool_recycle": 1800,
+      "pool_pre_ping": true
+    }
+  },
+  "_public_url_frontend": "Origin that serves the SPA bundle. EVERY URL MAILED TO A USER is built from it (password reset, invitation, unsubscribe page) plus the SSO redirect_uri fallback (/oauth/callback) - all of them are client-side routes, not API routes. Behind a single origin, set this and public_url_backend to the same value.",
+  "public_url_frontend": "http://localhost:5173",
+  "_public_url_backend": "Origin that serves this API under /api/v1. Used for anything a third-party system calls or SIGNS: Twilio webhook signature reconstruction and the status_callback handed to Twilio, the RFC 8058 one-click unsubscribe POST target, and local-file download URLs. A frontend origin here breaks webhook signature verification.",
+  "public_url_backend": "http://localhost:8000",
+  "jwt": {
+    "secret": "your-secret-key-change-in-production",
+    "algorithm": "HS256",
+    "access_token_expiry": 86400,
+    "refresh_token_expiry": 2592000
+  },
+  "encryption": {
+    "key": "generate-with: python -c 'from cryptography.fernet import Fernet; print(Fernet.generate_key().decode())'",
+    "key_previous": ""
+  },
+  "redis": {
+    "url": "redis://localhost:6379/0",
+    "arq_url": "redis://localhost:6379/1"
+  },
+  "cache": {
+    "enabled": true,
+    "jwt_ttl": 3600,
+    "user_ttl": 300,
+    "org_ttl": 300,
+    "roles_ttl": 60,
+    "_unavailable_cooldown": "Seconds to stop probing Redis after it fails, before re-testing. The cache fails open (a miss, never an exception), so this only paces the retries. Caching resumes on its own once Redis returns - no restart.",
+    "unavailable_cooldown": 10
+  },
+  "email": {
+    "server": "smtp.example.com",
+    "port": 587,
+    "username": "",
+    "password": "",
+    "use_tls": true,
+    "use_ssl": false,
+    "sender": "noreply@example.com"
+  },
+  "rate_limit": {
+    "enabled": true,
+    "default": "100/minute",
+    "login": "5/minute",
+    "otp_verify": "5/minute",
+    "otp_send": "3/minute"
+  },
+  "logging": {
+    "level": "INFO",
+    "filename": "app.log"
+  },
+  "metrics": {
+    "enabled": true,
+    "endpoint": "/metrics",
+    "excluded_paths": "/metrics,/health,/docs,/redoc,/openapi.json",
+    "slow_request_threshold": 1.0,
+    "slow_query_threshold": 0.1,
+    "user_activity_window": 300,
+    "instance_id": ""
+  },
+  "api_docs": {
+    "username": "ayzer",
+    "password": "ayzer"
+  },
+  "sso": {
+    "google": {
+      "client_id": "your-actual-client-id.apps.googleusercontent.com",
+      "client_secret": "your-actual-client-secret",
+      "redirect_uri": "http://localhost:5173/oauth/callback"
+    }
+  },
+  "twilio": {
+    "account_sid": "ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    "auth_token": "your-twilio-auth-token",
+    "sms_from": "+14155551234",
+    "whatsapp_from": "whatsapp:+14155238886"
+  },
+  "web_push": {
+    "public_key": "",
+    "private_key": "",
+    "subject": "mailto:admin@example.com"
+  },
+  "cookies": {
+    "domain": "",
+    "secure": true,
+    "samesite": "lax",
+    "path": "/api/v1/auth"
+  },
+  "cors": {
+    "allowed_origins": "http://localhost:5173,http://localhost:5174"
+  },
+  "notifications": {
+    "default_sms_provider": "twilio_sms",
+    "default_whatsapp_provider": "twilio"
+  }
+}

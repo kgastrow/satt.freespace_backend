@@ -1,0 +1,18 @@
+# Onboarding steps for each user type
+
+member:
+  - name: Personal Information
+    code: personal_info
+    description: Provide your basic personal details
+    step_order: 1
+    requires_verification: false
+    is_active: true
+    required_fields:
+      first_name:
+        type: string
+        label: First Name
+        required: true
+      last_name:
+        type: string
+        label: Last Name
+        required: true

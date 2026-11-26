@@ -1,0 +1,54 @@
+#!/bin/bash
+
+# Script to create a Debian package for the FastAPI backend
+
+# Set variables
+PACKAGE_NAME="ayzer-backend"
+VERSION="1.0.0"
+ARCH="all"
+INSTALL_DIR="/home/ayzer_backend"
+
+# Create temporary directory structure
+TEMP_DIR=$(mktemp -d)
+PACKAGE_DIR="${TEMP_DIR}/${PACKAGE_NAME}_${VERSION}_${ARCH}"
+
+# Create DEBIAN directory
+mkdir -p "${PACKAGE_DIR}/DEBIAN"
+
+# Create installation directories
+mkdir -p "${PACKAGE_DIR}${INSTALL_DIR}"
+mkdir -p "${PACKAGE_DIR}/etc/systemd/system"
+mkdir -p "${PACKAGE_DIR}${INSTALL_DIR}/apache_site_config"
+
+# Copy application files
+cp -r src "${PACKAGE_DIR}${INSTALL_DIR}/"
+cp -r alembic "${PACKAGE_DIR}${INSTALL_DIR}/"
+cp main.py "${PACKAGE_DIR}${INSTALL_DIR}/"
+cp alembic.ini "${PACKAGE_DIR}${INSTALL_DIR}/"
+cp requirements.txt "${PACKAGE_DIR}${INSTALL_DIR}/"
+cp config.json.example "${PACKAGE_DIR}${INSTALL_DIR}/"
+
+# Copy systemd service files
+cp initscripts/ayzer_backend.service "${PACKAGE_DIR}/etc/systemd/system/"
+cp initscripts/ayzer_worker.service "${PACKAGE_DIR}/etc/systemd/system/"
+
+# Copy Apache configuration (installed conditionally via postinst)
+cp apache_site_config/ravenx_backend.conf "${PACKAGE_DIR}${INSTALL_DIR}/apache_site_config/"
+
+# Copy DEBIAN control files from initscripts
+sed "s/tmp_arch/${ARCH}/" initscripts/control > "${PACKAGE_DIR}/DEBIAN/control"
+cp initscripts/postinst "${PACKAGE_DIR}/DEBIAN/postinst"
+cp initscripts/prerm "${PACKAGE_DIR}/DEBIAN/prerm"
+chmod 755 "${PACKAGE_DIR}/DEBIAN/postinst"
+chmod 755 "${PACKAGE_DIR}/DEBIAN/prerm"
+
+# Build the package
+dpkg-deb --build "${PACKAGE_DIR}"
+
+# Move package to current directory
+mv "${TEMP_DIR}/${PACKAGE_NAME}_${VERSION}_${ARCH}.deb" .
+
+# Clean up
+rm -rf "${TEMP_DIR}"
+
+echo "Package created: ${PACKAGE_NAME}_${VERSION}_${ARCH}.deb"

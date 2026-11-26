@@ -1,0 +1,35 @@
+# Sample maintenance history entries
+# These represent past maintenance events for demonstration purposes
+# Dates are relative: negative days = days ago, positive = days in future
+
+- message: "Database migration and performance optimization"
+  status: completed
+  scheduled_start_days_ago: 30
+  scheduled_end_days_ago: 30
+  actual_start_days_ago: 30
+  actual_end_days_ago: 30
+  duration_hours: 2
+
+- message: "Security patches and dependency updates"
+  status: completed
+  scheduled_start_days_ago: 14
+  scheduled_end_days_ago: 14
+  actual_start_days_ago: 14
+  actual_end_days_ago: 14
+  duration_hours: 1
+
+- message: "Infrastructure upgrade - improved server capacity"
+  status: completed
+  scheduled_start_days_ago: 7
+  scheduled_end_days_ago: 7
+  actual_start_days_ago: 7
+  actual_end_days_ago: 7
+  duration_hours: 3
+
+- message: "Scheduled maintenance - routine system checks"
+  status: completed
+  scheduled_start_days_ago: 3
+  scheduled_end_days_ago: 3
+  actual_start_days_ago: 3
+  actual_end_days_ago: 3
+  duration_hours: 1

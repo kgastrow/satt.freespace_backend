@@ -1,0 +1,30 @@
+[Unit]
+Description=AYZER Webapp ARQ Background Worker
+After=network.target redis.service postgresql.service pgbouncer.service
+Wants=redis.service
+
+[Service]
+Type=simple
+User=www-data
+Group=www-data
+WorkingDirectory=/opt/ayzer-webapp/backend
+Environment="PATH=/opt/ayzer-webapp/backend/venv/bin"
+EnvironmentFile=/opt/ayzer-webapp/backend/.env
+
+ExecStart=/opt/ayzer-webapp/backend/venv/bin/arq src.workers.worker.WorkerSettings
+
+ExecReload=/bin/kill -s HUP $MAINPID
+Restart=always
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+
+# Security hardening
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/opt/ayzer-webapp/backend/logs
+
+[Install]
+WantedBy=multi-user.target

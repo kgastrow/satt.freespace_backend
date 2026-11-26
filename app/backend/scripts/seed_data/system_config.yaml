@@ -1,0 +1,103 @@
+# System configuration defaults
+# These values are seeded if they don't already exist in the database
+
+# Cron job configuration
+- key: cleanup.notifications.retention_days
+  value: "90"
+  description: Number of days to retain notifications before automatic cleanup
+
+- key: cleanup.deleted_files.retention_days
+  value: "30"
+  description: Number of days to retain soft-deleted files before permanent deletion
+
+- key: request_logs.retention_days
+  value: "30"
+  description: Number of days to retain request logs before automatic cleanup
+
+# S3 storage monitoring configuration (no default for total_allocated_bytes - must be configured)
+- key: s3_storage.warning_threshold_percent
+  value: "20"
+  description: Send alert when remaining storage falls below this percentage
+
+# Disk usage monitoring configuration
+- key: disk_usage.warning_threshold_percent
+  value: "20"
+  description: Send alert when remaining disk space falls below this percentage
+
+- key: disk_usage.monitored_path
+  value: ""
+  description: Filesystem path to monitor for disk usage (empty = use LOCAL_STORAGE_PATH)
+
+# Email configuration - platform defaults
+# Note: Actual credentials should be set via API by super admin, not seeded
+- key: email.default_provider
+  value: "sendgrid"
+  description: Default email provider for the platform (smtp or sendgrid)
+
+- key: email.smtp.host
+  value: ""
+  description: Platform SMTP server host (leave empty to use config.json value)
+
+- key: email.smtp.port
+  value: "587"
+  description: Platform SMTP server port
+
+- key: email.sendgrid.enabled
+  value: "true"
+  description: Whether SendGrid is available as an email provider option
+
+- key: email.sendgrid.api_key
+  value: ""
+  description: SendGrid API key (encrypted, set via API)
+
+- key: email.default_sender_email
+  value: ""
+  description: Default sender email address (leave empty to use config.json value)
+
+- key: email.default_sender_name
+  value: ""
+  description: Default sender display name for emails
+
+# GeoIP MaxMind configuration
+# Note: Actual credentials should be set via API by super admin, not seeded
+- key: geoip.maxmind.account_id
+  value: ""
+  description: MaxMind account ID for downloading GeoIP databases
+
+- key: geoip.maxmind.license_key
+  value: ""
+  description: MaxMind license key (encrypted, set via API)
+
+- key: geoip.maxmind.edition_id
+  value: "GeoLite2-City"
+  description: MaxMind database edition (e.g., GeoLite2-City, GeoLite2-Country)
+
+# S3 migration configuration
+- key: s3_migration.batch_size
+  value: "50"
+  description: Number of files to migrate from local storage to S3 per cron run
+
+- key: s3_migration.enabled
+  value: "false"
+  description: Whether automatic local-to-S3 file migration is enabled
+
+# About page configuration
+- key: about.content
+  value: |
+    <h2>Welcome to Our Platform</h2>
+    <p>This is a multi-tenant web application template built with modern technologies.</p>
+    <h3>Features</h3>
+    <ul>
+      <li>User authentication and authorization</li>
+      <li>Multi-tenant organization support</li>
+      <li>Role-based access control</li>
+      <li>Real-time notifications</li>
+      <li>File management</li>
+    </ul>
+    <h3>Contact</h3>
+    <p>For support, please contact your organization administrator.</p>
+  description: HTML content displayed on the About page in user settings
+
+- key: about.content_type
+  value: "html"
+  description: Content type for the about page (plain or html)

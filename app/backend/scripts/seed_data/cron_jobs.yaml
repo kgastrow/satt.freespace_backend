@@ -1,0 +1,171 @@
+# Platform-wide cron jobs
+# All jobs are enabled by default for new organizations
+# Job configuration is managed via System Config (not parameters)
+
+- name: Cleanup Expired OTPs
+  description: Remove expired one-time passwords from the database
+  code: cleanup_expired_otps
+  schedule_expression: "*/30 * * * *"  # Every 30 minutes
+  is_active: true
+  is_enabled_by_default_for_new_orgs: true
+  parameters: {}
+
+- name: Cleanup Expired Refresh Tokens
+  description: Remove expired refresh tokens from the database
+  code: cleanup_expired_refresh_tokens
+  schedule_expression: "0 * * * *"  # Every hour at :00
+  is_active: true
+  is_enabled_by_default_for_new_orgs: true
+  parameters: {}
+
+- name: Cleanup Old Notifications
+  description: Remove notifications older than retention period (configured in System Config)
+  code: cleanup_old_notifications
+  schedule_expression: "0 2 * * *"  # Daily at 2:00 AM
+  is_active: true
+  is_enabled_by_default_for_new_orgs: true
+  parameters: {}
+
+- name: Cleanup Deleted Files
+  description: Permanently remove soft-deleted files from S3 and database (configured in System Config)
+  code: cleanup_deleted_files
+  schedule_expression: "0 3 * * *"  # Daily at 3:00 AM
+  is_active: true
+  is_enabled_by_default_for_new_orgs: true
+  parameters: {}
+
+- name: Check 2FA Grace Period
+  description: Check for expired 2FA grace periods and identify affected users
+  code: check_2fa_grace_period
+  schedule_expression: "0 1 * * *"  # Daily at 1:00 AM
+  is_active: true
+  is_enabled_by_default_for_new_orgs: true
+  parameters: {}
+
+- name: Cleanup Old Request Logs
+  description: Remove request logs older than retention period (configured in System Config)
+  code: cleanup_old_request_logs
+  schedule_expression: "0 4 * * *"  # Daily at 4:00 AM
+  is_active: true
+  is_enabled_by_default_for_new_orgs: true
+  parameters: {}
+
+- name: S3 Storage Monitoring
+  description: Monitor S3 bucket usage and alert super admins when approaching capacity (configured in System Config)
+  code: s3_storage_monitor
+  schedule_expression: "0 2 * * *"  # Daily at 2:00 AM
+  is_active: true
+  is_enabled_by_default_for_new_orgs: true
+  parameters: {}
+
+- name: Local Storage Monitoring
+  description: Monitor local file storage usage and alert super admins when approaching capacity (configured in System Config)
+  code: local_storage_monitor
+  schedule_expression: "0 2 * * *"  # Daily at 2:00 AM
+  is_active: true
+  is_enabled_by_default_for_new_orgs: true
+  parameters: {}
+
+- name: Cleanup Expired Exports
+  description: Delete expired data export files from S3 and mark requests as expired
+  code: cleanup_expired_exports
+  schedule_expression: "0 2 * * *"  # Daily at 2:00 AM
+  is_active: true
+  is_enabled_by_default_for_new_orgs: true
+  parameters: {}
+
+- name: Process Hard Deletions
+  description: Permanently delete users past the 30-day account deletion grace period
+  code: process_hard_deletions
+  schedule_expression: "0 3 * * *"  # Daily at 3:00 AM
+  is_active: true
+  is_enabled_by_default_for_new_orgs: true
+  parameters: {}
+
+- name: Check Brute Force Alerts
+  description: Monitor for brute force attacks and alert super admins
+  code: check_brute_force_alerts
+  schedule_expression: "*/15 * * * *"  # Every 15 minutes
+  is_active: true
+  is_enabled_by_default_for_new_orgs: true
+  parameters: {}
+
+- name: Check Queue Health
+  description: Monitor job queue depth, stuck jobs, and worker status
+  code: check_queue_health
+  schedule_expression: "*/10 * * * *"  # Every 10 minutes
+  is_active: true
+  is_enabled_by_default_for_new_orgs: true
+  parameters: {}
+
+- name: Check Notification Health
+  description: Monitor notification delivery rates and alert on failures
+  code: check_notification_health
+  schedule_expression: "0 * * * *"  # Every hour
+  is_active: true
+  is_enabled_by_default_for_new_orgs: true
+  parameters: {}
+
+- name: Check Database Pool Health
+  description: Monitor database connection pool utilization
+  code: check_db_pool_health
+  schedule_expression: "*/5 * * * *"  # Every 5 minutes
+  is_active: true
+  is_enabled_by_default_for_new_orgs: true
+  parameters: {}
+
+- name: Update GeoIP Database
+  description: Download and update the MaxMind GeoIP database (configured in System Config)
+  code: update_geoip_database
+  schedule_expression: "0 2 * * 0"  # Sunday at 2:00 AM
+  is_active: true
+  is_enabled_by_default_for_new_orgs: true
+  parameters: {}
+
+- name: Check User Type Expiry
+  description: Check for expired user type assignments and notify users
+  code: check_user_type_expiry
+  schedule_expression: "0 1 * * *"  # Daily at 1:00 AM
+  is_active: true
+  is_enabled_by_default_for_new_orgs: true
+  parameters: {}
+
+- name: Check API Key Expiry
+  description: Check for API keys expiring soon or already expired and notify owners
+  code: check_api_key_expiry
+  schedule_expression: "0 9 * * *"  # Daily at 9:00 AM
+  is_active: true
+  is_enabled_by_default_for_new_orgs: true
+  parameters: {}
+
+- name: Disk Usage Monitoring
+  description: Monitor filesystem disk usage and alert super admins when approaching capacity (configured in System Config)
+  code: disk_usage_monitor
+  schedule_expression: "30 2 * * *"  # Daily at 2:30 AM
+  is_active: true
+  is_enabled_by_default_for_new_orgs: true
+  parameters: {}
+
+- name: Process Scheduled Reports
+  description: Generate reports from active schedules and send to recipients
+  code: process_scheduled_reports
+  schedule_expression: "*/5 * * * *"  # Every 5 minutes
+  is_active: true
+  is_enabled_by_default_for_new_orgs: true
+  parameters: {}
+
+- name: Cleanup Old Background Job Executions
+  description: Remove background job execution records older than 7 days to prevent unbounded table growth
+  code: cleanup_old_bg_job_executions
+  schedule_expression: "30 4 * * *"  # Daily at 4:30 AM
+  is_active: true
+  is_enabled_by_default_for_new_orgs: true
+  parameters: {}
+
+- name: S3 Migration
+  description: Migrate files from local storage to S3 when S3 is enabled (batch size configured in System Config)
+  code: s3_migration
+  schedule_expression: "*/10 * * * *"  # Every 10 minutes
+  is_active: true
+  is_enabled_by_default_for_new_orgs: true
+  parameters: {}

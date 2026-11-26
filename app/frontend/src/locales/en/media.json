@@ -1,0 +1,46 @@
+{
+  "upload": {
+    "placeholder": "Drag and drop media here, or click to browse",
+    "dragActive": "Drop the media here...",
+    "dragReject": "File type not accepted",
+    "maxSize": "Max file size: {{size}}",
+    "acceptImage": "Accepted: Images (PNG, JPG, GIF, WebP, BMP)",
+    "svgNotAllowed": "SVG files are not supported due to security concerns",
+    "acceptVideo": "Accepted: Videos (MP4, MOV, AVI, WebM, MKV, FLV)",
+    "acceptBoth": "Accepted: Images and Videos",
+    "success": "Media uploaded successfully",
+    "error": "Failed to upload media",
+    "videoRequiresS3": "Video uploads require S3 storage to be configured. Please contact your administrator."
+  },
+  "list": {
+    "title": "Media Library",
+    "empty": "No media found",
+    "loadMore": "Load more",
+    "filterByType": "Filter by type",
+    "filterByUse": "Filter by use",
+    "uploadedByMe": "Uploaded by me"
+  },
+  "types": {
+    "image": "Image",
+    "video": "Video"
+  },
+  "uses": {
+    "avatar": "Avatar",
+    "announcement": "Announcement",
+    "help_article": "Help Article",
+    "other": "Other"
+  },
+  "actions": {
+    "delete": "Delete media",
+    "download": "Download",
+    "viewDetails": "View details"
+  },
+  "details": {
+    "filename": "Filename",
+    "type": "Type",
+    "use": "Use",
+    "size": "Size",
+    "uploadedBy": "Uploaded by",
+    "uploadedAt": "Uploaded at"
+  }
+}

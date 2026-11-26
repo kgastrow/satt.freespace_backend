@@ -1,0 +1,245 @@
+# Help Center Articles
+# Note: Content is stored as multiline strings using YAML literal block scalar (|)
+
+- category_slug: getting-started
+  title: Welcome to the Platform
+  slug: welcome-to-the-platform
+  featured_image_url: https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1200&h=630&fit=crop
+  content: |
+    # Welcome to the Platform
+
+    Welcome to your new workspace! This guide will help you get started with the key features of the platform.
+
+    ## First Steps
+
+    1. **Complete your profile** - Add your name, photo, and contact information
+    2. **Explore the dashboard** - Familiarize yourself with the main navigation
+    3. **Configure notifications** - Set your preferences for how you want to be notified
+    4. **Invite your team** - If you're an admin, start adding team members
+
+    ## Key Features
+
+    ### Dashboard
+    The dashboard provides an overview of your recent activity and quick access to commonly used features.
+
+    ### Sidebar Navigation
+    Use the sidebar to navigate between different sections of the application. On mobile devices, tap the menu icon to reveal the navigation.
+
+    ### User Menu
+    Click your avatar in the top right to access your profile, settings, and sign out option.
+
+    ## Need Help?
+
+    If you have questions, check out our FAQ section or contact support through the Help Center.
+
+    > **Pro Tip:** Use keyboard shortcuts to navigate faster! Press `?` anywhere to see available shortcuts.
+
+- category_slug: account-profile
+  title: Managing Your Profile
+  slug: managing-your-profile
+  featured_image_url: https://images.unsplash.com/photo-1633332755192-727a05c4013d?w=1200&h=630&fit=crop
+  content: |
+    # Managing Your Profile
+
+    Your profile contains your personal information and preferences. Here's how to keep it up to date.
+
+    ## Accessing Your Profile
+
+    1. Click your avatar in the top right corner
+    2. Select **Profile** from the dropdown menu
+
+    ## Profile Information
+
+    You can update the following information:
+
+    | Field | Description | Required |
+    |-------|-------------|----------|
+    | First Name | Your given name | Yes |
+    | Last Name | Your family name | Yes |
+    | Email Address | Primary contact (may require verification) | Yes |
+    | Profile Picture | Your avatar image | No |
+    | Timezone | For accurate timestamps | No |
+
+    ## Uploading a Profile Picture
+
+    For best results, use an image that:
+    - Is at least 200x200 pixels
+    - Is in JPG, PNG, or GIF format
+    - Shows your face clearly
+
+    ## Connected Accounts
+
+    Link external accounts to enable additional features:
+
+    1. Go to **Settings > Account > Connected Accounts**
+    2. Click **Connect** next to the service you want to link
+    3. Follow the authorization prompts
+
+    ## Privacy Settings
+
+    Control how your information is displayed to others in **Settings > Security > Privacy**.
+
+    > **Note:** Changes to your email address require verification before taking effect.
+
+- category_slug: team-roles
+  title: Understanding User Roles and Permissions
+  slug: understanding-user-roles-permissions
+  featured_image_url: https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=1200&h=630&fit=crop
+  content: |
+    # Understanding User Roles and Permissions
+
+    The platform uses a role-based access control system to manage what users can see and do.
+
+    ## Available Roles
+
+    | Role | Access Level | Best For |
+    |------|--------------|----------|
+    | **Owner** | Full access | Organization founders |
+    | **Admin** | Management access | Team leads, managers |
+    | **Member** | Standard access | Regular team members |
+    | **Viewer** | Read-only | Stakeholders, auditors |
+
+    ### Owner
+    - Full access to all features
+    - Can manage organization settings
+    - Can transfer ownership
+    - Can delete the organization
+
+    ### Admin
+    - Can manage users and invite new members
+    - Can assign roles to users
+    - Can manage most settings
+    - Cannot modify organization-level settings
+
+    ### Member
+    - Standard access for daily work
+    - Can view team members
+    - Can access shared resources
+    - Limited settings access
+
+    ### Viewer
+    - Read-only access
+    - Can view content but cannot make changes
+    - Ideal for stakeholders who need visibility
+
+    ## Managing Roles
+
+    If you're an Owner or Admin:
+
+    1. Navigate to **Users** in the sidebar
+    2. Click on a user's name
+    3. Select **Edit Role**
+    4. Choose the appropriate role
+    5. Save changes
+
+    ## Best Practices
+
+    - Follow the principle of least privilege
+    - Regularly audit role assignments
+    - Remove access for departing team members promptly
+
+- category_slug: security-privacy
+  title: Security Best Practices
+  slug: security-best-practices
+  featured_image_url: https://images.unsplash.com/photo-1563986768609-322da13575f3?w=1200&h=630&fit=crop
+  content: |
+    # Security Best Practices
+
+    Keep your account and organization secure by following these guidelines.
+
+    ## Account Security
+
+    ### Use Strong Passwords
+    - Minimum 12 characters
+    - Mix of letters, numbers, and symbols
+    - Avoid personal information
+    - Use a password manager
+
+    ### Enable Two-Factor Authentication (2FA)
+    Two-factor authentication adds an extra layer of security. Enable it in **Settings > Security > Two-Factor Authentication**.
+
+    ## Session Management
+
+    ### Monitor Active Sessions
+    Go to **Settings > Account > Sessions** to see all devices where you're logged in.
+
+    ### Sign Out Unused Sessions
+    If you see a session you don't recognize, terminate it immediately and change your password.
+
+    ## Data Protection
+
+    ### Be Careful with Sharing
+    - Only share files with people who need access
+    - Use expiring links when possible
+    - Regularly review shared resources
+
+    ### Report Security Issues
+    If you notice suspicious activity, contact your administrator immediately.
+
+    ## API Security
+
+    - Rotate API keys regularly
+    - Use different keys for different integrations
+    - Never commit API keys to source control
+    - Set appropriate expiration dates
+
+- category_slug: api-integrations
+  title: API Quick Start Guide
+  slug: api-quick-start-guide
+  featured_image_url: https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1200&h=630&fit=crop
+  content: |
+    # API Quick Start Guide
+
+    Learn how to integrate with our API to automate workflows and build custom applications.
+
+    ## Getting Started
+
+    ### 1. Create an API Key
+    1. Go to **Administration > API Keys**
+    2. Click **Create API Key**
+    3. Name your key (e.g., "Production Integration")
+    4. Copy the key immediately - it won't be shown again!
+
+    ### 2. Authentication
+    All API requests require authentication using Bearer tokens:
+
+    ```
+    Authorization: Bearer your-api-key-here
+    ```
+
+    ### 3. Base URL
+    All API endpoints are accessed via:
+    ```
+    https://api.example.com/v1/
+    ```
+
+    ## Making Your First Request
+
+    ```bash
+    curl -X GET "https://api.example.com/v1/users/me" \
+      -H "Authorization: Bearer your-api-key-here" \
+      -H "Content-Type: application/json"
+    ```
+
+    ## Rate Limits
+
+    | Plan | Requests/minute | Requests/day |
+    |------|-----------------|--------------|
+    | Free | 60 | 1,000 |
+    | Pro | 300 | 10,000 |
+    | Enterprise | Custom | Custom |
+
+    ## Error Handling
+
+    The API uses standard HTTP status codes:
+    - `200` - Success
+    - `400` - Bad request
+    - `401` - Unauthorized
+    - `403` - Forbidden
+    - `404` - Not found
+    - `429` - Rate limited
+    - `500` - Server error
+
+    ## Need Help?
+
+    Check the full API documentation or contact support for assistance.

@@ -1,0 +1,1149 @@
+{
+  "title": "Settings",
+  "description": "Manage your account settings and preferences",
+  "openMenu": "Open menu",
+  "nav": {
+    "account": {
+      "title": "Account",
+      "profile": "Profile Information",
+      "connected": "Connected Accounts",
+      "sessions": "Session Management",
+      "files": "My Files"
+    },
+    "preferences": {
+      "title": "Preferences",
+      "notifications": "Notifications",
+      "language": "Language & Region",
+      "appearance": "Appearance"
+    },
+    "security": {
+      "title": "Privacy & Security",
+      "password": "Password",
+      "email": "Change Email",
+      "twoFactor": "Two-Factor Authentication",
+      "privacy": "Privacy Settings",
+      "export": "Data Export"
+    },
+    "app": {
+      "title": "App Settings",
+      "shortcuts": "Keyboard Shortcuts",
+      "advanced": "Advanced"
+    },
+    "support": {
+      "title": "Support",
+      "help": "Help Center",
+      "feedback": "Feedback",
+      "about": "About",
+      "changelog": "Changelog"
+    },
+    "danger": {
+      "title": "Danger Zone",
+      "delete": "Delete Account"
+    }
+  },
+  "pages": {
+    "connected": {
+      "title": "Connected Accounts",
+      "description": "Manage your connected accounts and integrations"
+    },
+    "sessions": {
+      "title": "Session Management",
+      "description": "View and manage your active sessions"
+    },
+    "language": {
+      "title": "Language & Region",
+      "description": "Set your preferred language and regional settings"
+    },
+    "appearance": {
+      "title": "Appearance",
+      "description": "Customize the look and feel of the application"
+    },
+    "twoFactor": {
+      "title": "Two-Factor Authentication",
+      "description": "Add an extra layer of security to your account"
+    },
+    "privacy": {
+      "title": "Privacy Settings",
+      "description": "Control your privacy preferences"
+    },
+    "export": {
+      "title": "Data Export",
+      "description": "Download a copy of your data"
+    },
+    "shortcuts": {
+      "title": "Keyboard Shortcuts",
+      "description": "View and customize keyboard shortcuts"
+    },
+    "advanced": {
+      "title": "Advanced Settings",
+      "description": "Advanced configuration options"
+    },
+    "help": {
+      "title": "Help Center",
+      "description": "Get help and find answers to common questions"
+    },
+    "feedback": {
+      "title": "Feedback",
+      "description": "Send us your feedback and suggestions"
+    },
+    "about": {
+      "title": "About",
+      "description": "Learn more about the application",
+      "error": "Failed to load about page content",
+      "noContent": "No content available."
+    },
+    "delete": {
+      "title": "Delete Account",
+      "description": "Permanently delete your account and all associated data"
+    }
+  },
+  "placeholder": {
+    "comingSoon": "Coming Soon",
+    "description": "This feature is currently under development. Check back later for updates."
+  },
+  "appearance": {
+    "sections": {
+      "theme": {
+        "title": "Theme",
+        "description": "Select your preferred color theme for the application"
+      }
+    }
+  },
+  "language": {
+    "sections": {
+      "language": {
+        "title": "Display Language",
+        "description": "Choose the language for the application interface"
+      }
+    }
+  },
+  "security": {
+    "title": "Security Settings",
+    "description": "Manage your account security"
+  },
+  "profile": {
+    "title": "Profile",
+    "description": "Manage your account settings",
+    "sections": {
+      "profileInfo": {
+        "title": "Profile Information",
+        "description": "Update your personal details"
+      },
+      "accountInfo": {
+        "title": "Account Information",
+        "description": "Your organization and roles"
+      },
+      "changePassword": {
+        "title": "Change Password",
+        "description": "Update your password",
+        "securityNote": "For your security, you will need to verify your current password before setting a new one."
+      }
+    },
+    "fields": {
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "email": "Email",
+      "phone": "Phone (optional)",
+      "organization": "Organization",
+      "roles": "Roles",
+      "userTypes": "Profile Types",
+      "currentPassword": "Current Password",
+      "newPassword": "New Password",
+      "confirmPassword": "Confirm New Password"
+    },
+    "buttons": {
+      "saveChanges": "Save Changes",
+      "saving": "Saving...",
+      "changePassword": "Change Password",
+      "updatePassword": "Update Password",
+      "updating": "Updating..."
+    },
+    "messages": {
+      "profileUpdateSuccess": "Profile updated successfully",
+      "passwordUpdateSuccess": "Password updated successfully",
+      "noRoles": "No roles assigned"
+    },
+    "badges": {
+      "admin": "Admin",
+      "verified": "Verified",
+      "unverified": "Unverified"
+    },
+    "editDialog": {
+      "title": "Edit Profile",
+      "description": "Update your personal information",
+      "buttons": {
+        "save": "Save Changes",
+        "saving": "Saving...",
+        "cancel": "Cancel"
+      },
+      "emailChangeNote": "To change your email address, please use the Change Email page in security settings.",
+      "emailChangeHint": "Email cannot be changed here. Use the link below.",
+      "changeEmailLink": "Change email address",
+      "phoneChangeHint": "Changing your phone number will require verification."
+    },
+    "phoneVerification": {
+      "title": "Verify Phone Number",
+      "description": "Enter the 6-digit code sent to {{phone}}",
+      "codeSent": "Verification code sent",
+      "resendCountdown": "Resend code in {{seconds}}s",
+      "noCode": "Didn't receive the code?",
+      "nameSaved": "Name updated successfully",
+      "success": "Phone number verified successfully",
+      "buttons": {
+        "verify": "Verify",
+        "verifying": "Verifying...",
+        "resend": "Resend Code",
+        "resending": "Resending..."
+      },
+      "errors": {
+        "invalid": "Invalid verification code",
+        "expired": "Verification code expired",
+        "maxAttempts": "Maximum verification attempts exceeded"
+      }
+    },
+    "impersonationHistory": {
+      "title": "Impersonation History",
+      "description": "Sessions when an administrator accessed your account",
+      "empty": "No impersonation history",
+      "columns": {
+        "impersonator": "Impersonator",
+        "startTime": "Start Time",
+        "endTime": "End Time",
+        "duration": "Duration"
+      }
+    },
+    "avatar": {
+      "title": "Profile Picture",
+      "description": "Upload or update your profile picture",
+      "uploadHint": "Accepted formats: JPEG, PNG, GIF, WebP. Maximum size: 5MB",
+      "previewLabel": "Selected file",
+      "buttons": {
+        "choose": "Choose File",
+        "upload": "Upload",
+        "uploading": "Uploading...",
+        "cancel": "Cancel",
+        "remove": "Remove",
+        "deleting": "Deleting..."
+      },
+      "messages": {
+        "uploadSuccess": "Profile picture updated successfully",
+        "deleteSuccess": "Profile picture removed successfully"
+      },
+      "errors": {
+        "invalidType": "Please select a valid image file (JPEG, PNG, GIF, or WebP)",
+        "tooLarge": "Image size must be less than 5MB"
+      },
+      "confirmDelete": {
+        "title": "Remove Profile Picture",
+        "description": "Are you sure you want to remove your profile picture? You will see your initials instead.",
+        "cancel": "Cancel",
+        "confirm": "Remove"
+      }
+    }
+  },
+  "notifications": {
+    "title": "Notification Preferences",
+    "description": "Manage how and when you receive notifications",
+    "sections": {
+      "channels": {
+        "title": "Notification Channels",
+        "description": "Choose which channels you want to receive notifications on"
+      },
+      "quietHours": {
+        "title": "Quiet Hours",
+        "description": "Set a time period during which you won't receive non-urgent notifications"
+      },
+      "contact": {
+        "title": "Contact Information",
+        "description": "Specify preferred contact details for notifications"
+      },
+      "categories": {
+        "title": "Category Preferences",
+        "description": "Fine-tune notifications for specific categories"
+      }
+    },
+    "channels": {
+      "email": {
+        "label": "Email Notifications",
+        "description": "Receive notifications via email"
+      },
+      "sms": {
+        "label": "SMS Notifications",
+        "description": "Receive notifications via text message"
+      },
+      "whatsapp": {
+        "label": "WhatsApp Notifications",
+        "description": "Receive notifications via WhatsApp"
+      },
+      "inApp": {
+        "label": "In-App Notifications",
+        "description": "Receive notifications within the application"
+      },
+      "webPush": {
+        "label": "Web push",
+        "description": "Allow notifications to be pushed to your devices"
+      }
+    },
+    "quietHours": {
+      "enable": {
+        "label": "Enable Quiet Hours",
+        "description": "Pause non-urgent notifications during specified hours"
+      },
+      "startTime": "Start Time",
+      "endTime": "End Time",
+      "timezone": "Timezone",
+      "selectTime": "Select time",
+      "selectTimezone": "Select timezone"
+    },
+    "contact": {
+      "preferredEmail": {
+        "label": "Preferred Email",
+        "placeholder": "email@example.com",
+        "description": "Leave blank to use your account email"
+      },
+      "preferredPhone": {
+        "label": "Preferred Phone",
+        "placeholder": "+1234567890",
+        "description": "Used for SMS and WhatsApp notifications"
+      }
+    },
+    "buttons": {
+      "savePreferences": "Save Preferences",
+      "saving": "Saving..."
+    },
+    "messages": {
+      "updateSuccess": "Preferences updated successfully",
+      "updateError": "Failed to update preferences",
+      "categoryUpdateError": "Failed to update category preference",
+      "noCategories": "No configurable categories available"
+    },
+    "categoryChannels": {
+      "email": "Email",
+      "sms": "SMS",
+      "whatsapp": "WhatsApp",
+      "inApp": "In-App"
+    }
+  },
+  "organization": {
+    "title": "Organization Settings",
+    "description": "View and manage your organization settings",
+    "sections": {
+      "details": {
+        "title": "Organization Details",
+        "description": "Information about your organization"
+      },
+      "dangerZone": {
+        "title": "Danger Zone",
+        "description": "Irreversible actions for your organization"
+      },
+      "deletion": {
+        "title": "Organization Deletion",
+        "description": "Only organization owners can request deletion"
+      }
+    },
+    "fields": {
+      "name": "Name",
+      "slug": "Slug",
+      "status": "Status",
+      "created": "Created"
+    },
+    "status": {
+      "active": "Active",
+      "inactive": "Inactive"
+    },
+    "deletionRequest": {
+      "title": "Deletion Requested",
+      "submittedOn": "A deletion request was submitted on",
+      "retentionNotice": "Your organization data will be retained for a grace period before it can be permanently deleted by a system administrator.",
+      "cancelButton": "Cancel Deletion Request",
+      "requestAction": {
+        "title": "Request Organization Deletion",
+        "description": "Submit a request to delete your organization and all its data. A system administrator will review and process the request after the retention period.",
+        "button": "Request Deletion"
+      },
+      "ownerOnly": "If you need to delete this organization, please contact your organization owner."
+    },
+    "dialogs": {
+      "requestDeletion": {
+        "title": "Request Organization Deletion",
+        "description": "Are you sure you want to request deletion of \"{{name}}\"? This will mark your organization for deletion. All data including users, files, and notifications will be permanently deleted after the retention period expires. This action can be cancelled before the final deletion is processed.",
+        "confirmLabel": "Request Deletion"
+      },
+      "cancelDeletion": {
+        "title": "Cancel Deletion Request",
+        "description": "Are you sure you want to cancel the deletion request for \"{{name}}\"? Your organization will remain active.",
+        "confirmLabel": "Cancel Request"
+      }
+    },
+    "messages": {
+      "deletionRequestSuccess": "Deletion request submitted successfully",
+      "deletionRequestError": "Failed to request deletion",
+      "deletionCancelSuccess": "Deletion request cancelled",
+      "deletionCancelError": "Failed to cancel deletion request"
+    },
+    "alerts": {
+      "notAvailable": {
+        "title": "Not Available",
+        "description": "This page is only available to organization members. As a super admin, you can manage organizations from the",
+        "link": "Organizations admin page"
+      },
+      "accessRestricted": {
+        "title": "Access Restricted",
+        "description": "Organization settings are only available to organization owners and administrators. Contact your organization owner if you need to make changes."
+      },
+      "error": {
+        "title": "Error",
+        "permissionDenied": "You do not have permission to view this organization.",
+        "notFound": "Organization not found.",
+        "unknownStatus": "Unable to load organization. Status:",
+        "dataNotAvailable": "Organization data not available. Organization ID:"
+      }
+    }
+  },
+  "apiKeys": {
+    "title": "API Keys",
+    "description": "Manage API keys for external integrations",
+    "sections": {
+      "list": {
+        "title": "API Keys",
+        "description": "Create and manage API keys for programmatic access to your organization"
+      }
+    },
+    "fields": {
+      "name": "Name",
+      "namePlaceholder": "Production API Key",
+      "expiresAt": "Expiration Date (Optional)",
+      "expiresAtHelp": "Leave blank for no expiration",
+      "permissions": "Permissions",
+      "permissionsHelp": "Select permissions for this API key. You can only assign permissions you currently have.",
+      "permissionsReadOnlyHelp": "Permissions can only be set when creating an API key"
+    },
+    "table": {
+      "name": "Name",
+      "prefix": "Key Prefix",
+      "permissions": "Permissions",
+      "created": "Created",
+      "expires": "Expires",
+      "lastUsed": "Last Used",
+      "actions": "Actions",
+      "empty": "No API keys yet. Create one to get started.",
+      "noPermissions": "No permissions",
+      "never": "Never",
+      "neverUsed": "Never used"
+    },
+    "status": {
+      "expired": "Expired"
+    },
+    "buttons": {
+      "create": "Create API Key",
+      "creating": "Creating...",
+      "update": "Update",
+      "updating": "Updating...",
+      "save": "Save",
+      "saving": "Saving...",
+      "cancel": "Cancel",
+      "close": "Close",
+      "permissions": "Permissions"
+    },
+    "dialogs": {
+      "create": {
+        "title": "Create API Key",
+        "description": "Create a new API key for external integrations. The full key will only be shown once."
+      },
+      "showKey": {
+        "title": "API Key Created",
+        "description": "Copy this API key now. You won't be able to see it again.",
+        "warning": "Security Notice",
+        "warningDescription": "Store this API key securely. It will not be shown again after you close this dialog."
+      },
+      "edit": {
+        "title": "Edit API Key",
+        "description": "Update the API key name"
+      },
+      "delete": {
+        "title": "Revoke API Key",
+        "description": "Are you sure you want to revoke the API key \"{{name}}\"? This will immediately invalidate the key and cannot be undone.",
+        "confirmLabel": "Revoke Key"
+      },
+      "permissions": {
+        "title": "Manage Permissions",
+        "description": "Configure permissions for \"{{name}}\""
+      }
+    },
+    "messages": {
+      "createSuccess": "API key created successfully",
+      "createError": "Failed to create API key",
+      "updateSuccess": "API key updated successfully",
+      "updateError": "Failed to update API key",
+      "deleteSuccess": "API key revoked successfully",
+      "deleteError": "Failed to revoke API key",
+      "permissionsSuccess": "Permissions updated successfully",
+      "permissionsError": "Failed to update permissions",
+      "nameRequired": "Name is required",
+      "noPermissions": "No permissions available",
+      "copied": "Copied to clipboard"
+    },
+    "alerts": {
+      "error": {
+        "title": "Error",
+        "description": "Failed to load API keys"
+      }
+    }
+  },
+  "organizationDetails": {
+    "title": "Organization Details",
+    "description": "Manage your organization information",
+    "sections": {
+      "basic": {
+        "title": "Basic Information",
+        "description": "Your organization's display name and identification"
+      },
+      "address": {
+        "title": "Physical Address",
+        "description": "Your organization's location details"
+      },
+      "contact": {
+        "title": "Contact Information",
+        "description": "How to reach your organization"
+      }
+    },
+    "fields": {
+      "displayName": "Display Name",
+      "displayNameHelp": "Optional: A friendly name for your organization. Defaults to organization name if not set.",
+      "addressLine1": "Address Line 1",
+      "addressLine2": "Address Line 2",
+      "city": "City",
+      "stateProvince": "State/Province",
+      "postalCode": "Postal Code",
+      "country": "Country",
+      "contactEmail": "Contact Email",
+      "contactPhone": "Contact Phone"
+    },
+    "buttons": {
+      "save": "Save Changes",
+      "saving": "Saving..."
+    },
+    "messages": {
+      "updateSuccess": "Organization details updated successfully",
+      "updateError": "Failed to update organization details"
+    },
+    "error": {
+      "title": "Error",
+      "description": "Failed to load organization details",
+      "noData": "Organization data not available"
+    }
+  },
+  "rateLimits": {
+    "title": "API Key Rate Limits",
+    "description": "Configure rate limits for API keys by permission type",
+    "sections": {
+      "list": {
+        "title": "Rate Limit Configuration",
+        "description": "Set maximum request rates for different API key permissions"
+      }
+    },
+    "fields": {
+      "permissionCode": "Permission Code",
+      "permissionCodePlaceholder": "e.g., users:read",
+      "permissionCodeHelp": "The permission code to apply this rate limit to",
+      "requestsPerMinute": "Requests per Minute",
+      "requestsPerMinuteHelp": "Maximum number of requests allowed per minute",
+      "burstLimit": "Burst Limit",
+      "burstLimitHelp": "Maximum number of requests allowed in a burst"
+    },
+    "table": {
+      "permissionCode": "Permission",
+      "requestsPerMinute": "Requests/Min",
+      "burstLimit": "Burst Limit",
+      "updated": "Last Updated",
+      "actions": "Actions",
+      "empty": "No rate limits configured. Add one to get started."
+    },
+    "buttons": {
+      "create": "Add Rate Limit",
+      "creating": "Adding...",
+      "update": "Update",
+      "updating": "Updating...",
+      "cancel": "Cancel"
+    },
+    "dialogs": {
+      "create": {
+        "title": "Add Rate Limit",
+        "description": "Configure a rate limit for a specific permission type"
+      },
+      "edit": {
+        "title": "Edit Rate Limit",
+        "description": "Update rate limit for {{permissionCode}}"
+      },
+      "delete": {
+        "title": "Delete Rate Limit",
+        "description": "Are you sure you want to delete the rate limit for \"{{permissionCode}}\"? API keys with this permission will use default limits.",
+        "confirmLabel": "Delete Rate Limit"
+      }
+    },
+    "messages": {
+      "createSuccess": "Rate limit added successfully",
+      "createError": "Failed to add rate limit",
+      "updateSuccess": "Rate limit updated successfully",
+      "updateError": "Failed to update rate limit",
+      "deleteSuccess": "Rate limit deleted successfully",
+      "deleteError": "Failed to delete rate limit",
+      "permissionCodeRequired": "Permission code is required",
+      "invalidValues": "Requests per minute and burst limit must be greater than 0"
+    },
+    "alerts": {
+      "error": {
+        "title": "Error",
+        "description": "Failed to load rate limits"
+      }
+    }
+  },
+  "twoFactor": {
+    "setup": {
+      "title": "Enable Two-Factor Authentication",
+      "description": "Secure your account with an additional layer of protection",
+      "alert": {
+        "title": "What is Two-Factor Authentication?",
+        "description": "Two-factor authentication (2FA) adds an extra layer of security to your account by requiring both your password and a verification code from your authenticator app to sign in."
+      },
+      "buttons": {
+        "start": "Start Setup",
+        "starting": "Starting...",
+        "verify": "Verify and Enable",
+        "verifying": "Verifying..."
+      },
+      "scanning": {
+        "title": "Scan QR Code",
+        "description": "Use your authenticator app to scan this QR code or enter the code manually"
+      },
+      "manualEntry": {
+        "label": "Manual Entry Code",
+        "description": "If you can't scan the QR code, enter this code manually in your authenticator app",
+        "copyButton": "Copy code"
+      },
+      "verification": {
+        "label": "Verification Code",
+        "description": "Enter the 6-digit code from your authenticator app to verify the setup"
+      },
+      "validation": {
+        "codeLength": "Code must be exactly 6 digits",
+        "codeNumeric": "Code must contain only numbers"
+      },
+      "messages": {
+        "initiateFailed": "Failed to start 2FA setup",
+        "secretCopied": "Secret code copied to clipboard",
+        "verifySuccess": "Two-factor authentication enabled successfully",
+        "verifyFailed": "Invalid verification code. Please try again."
+      }
+    },
+    "backupCodes": {
+      "title": "Save Your Backup Codes",
+      "description": "Store these codes in a secure location. Each code can be used once if you lose access to your authenticator app.",
+      "warning": {
+        "title": "Important",
+        "description": "These codes will only be shown once. Make sure to save them in a secure location before continuing."
+      },
+      "buttons": {
+        "copy": "Copy All Codes",
+        "download": "Download Codes",
+        "complete": "I've Saved My Codes"
+      },
+      "messages": {
+        "copied": "Backup codes copied to clipboard",
+        "downloaded": "Backup codes downloaded"
+      }
+    },
+    "status": {
+      "enabled": {
+        "title": "Two-Factor Authentication Enabled",
+        "description": "Your account is protected with 2FA since {{date}}",
+        "descriptionNoDate": "Your account is protected with two-factor authentication",
+        "badge": "Enabled"
+      },
+      "disabled": {
+        "title": "Two-Factor Authentication",
+        "description": "Add an extra layer of security to your account",
+        "badge": "Disabled"
+      },
+      "backupCodes": {
+        "remaining": "{{remaining}} of {{total}} backup codes remaining",
+        "lowWarning": "You have few backup codes remaining. Consider regenerating them."
+      },
+      "buttons": {
+        "export": "Export Backup Codes",
+        "regenerate": "Regenerate Backup Codes",
+        "disable": "Disable 2FA"
+      },
+      "disableDialog": {
+        "title": "Disable Two-Factor Authentication",
+        "description": "Are you sure you want to disable 2FA? This will make your account less secure.",
+        "passwordLabel": "Current Password",
+        "passwordPlaceholder": "Enter your password",
+        "passwordRequired": "Password is required",
+        "cancel": "Cancel",
+        "confirm": "Disable 2FA",
+        "disabling": "Disabling..."
+      },
+      "regenerateDialog": {
+        "title": "Regenerate Backup Codes",
+        "description": "This will invalidate all your existing backup codes and generate 10 new ones. Make sure to save the new codes.",
+        "cancel": "Cancel",
+        "confirm": "Regenerate",
+        "regenerating": "Regenerating..."
+      },
+      "newCodesDialog": {
+        "title": "Your New Backup Codes",
+        "description": "Save these codes in a secure location. Each code can be used once if you lose access to your authenticator app.",
+        "copy": "Copy All",
+        "copied": "Copied!",
+        "download": "Download"
+      },
+      "messages": {
+        "disableSuccess": "Two-factor authentication disabled",
+        "disableFailed": "Failed to disable two-factor authentication",
+        "exportSuccess": "Backup codes downloaded",
+        "regenerateSuccess": "Backup codes regenerated successfully",
+        "codesCopied": "Backup codes copied to clipboard"
+      }
+    },
+    "error": {
+      "title": "Error",
+      "description": "Failed to load two-factor authentication status",
+      "noData": "Unable to retrieve two-factor authentication data"
+    }
+  },
+  "dataExport": {
+    "title": "Export Your Data",
+    "description": "Download a copy of your personal data in compliance with GDPR",
+    "info": {
+      "title": "What's Included",
+      "description": "Your data export will include:",
+      "includes": {
+        "profile": "Your profile information and account details",
+        "organizations": "Your organization memberships and roles",
+        "activity": "Your activity logs and audit history",
+        "files": "Metadata about files you've uploaded"
+      },
+      "retention": "Export files are available for 30 days after generation."
+    },
+    "buttons": {
+      "requestExport": "Request Data Export",
+      "requesting": "Requesting...",
+      "download": "Download",
+      "downloading": "Downloading..."
+    },
+    "status": {
+      "pending": "Pending",
+      "processing": "Processing",
+      "completed": "Completed",
+      "failed": "Failed",
+      "expired": "Expired"
+    },
+    "labels": {
+      "requested": "Requested",
+      "size": "Size",
+      "downloads": "Downloads",
+      "expires": "Expires",
+      "calculating": "Calculating..."
+    },
+    "history": {
+      "title": "Export History"
+    },
+    "messages": {
+      "requestSuccess": "Data export requested successfully. You'll be notified when it's ready.",
+      "downloadStarted": "Download started",
+      "exportFailed": "The export generation failed. Please try requesting a new export.",
+      "exportExpired": "This export has expired and is no longer available for download.",
+      "processing": "Your export is being processed. This may take a few minutes."
+    },
+    "notifications": {
+      "exportReady": "Your data export is ready for download",
+      "exportFailed": "Your data export failed. Please try again."
+    },
+    "error": {
+      "title": "Error",
+      "description": "Failed to load export history"
+    }
+  },
+  "deleteAccount": {
+    "title": "Delete Account",
+    "description": "Permanently delete your account and all associated data",
+    "warning": {
+      "title": "Warning: This Action is Irreversible",
+      "description": "Before you proceed, please understand the consequences:",
+      "immediate": "Your account will be scheduled for deletion",
+      "recoveryWindow": "You can continue using your account for 30 days",
+      "hardDelete": "After 30 days, your account and all data will be permanently deleted",
+      "permanent": "This includes your profile, files, activity history, and organization memberships",
+      "stayLoggedIn": "You will remain logged in and can cancel the deletion at any time during this period"
+    },
+    "status": {
+      "title": "Deletion Status",
+      "requestedOn": "Requested on",
+      "cancelledOn": "Cancelled on",
+      "hardDeleteScheduled": "Scheduled for permanent deletion",
+      "recoveryWindow": "You can still cancel this request during the 30-day recovery window",
+      "cancellationReason": "Reason"
+    },
+    "statusBadge": {
+      "pending": "Pending Deletion",
+      "cancelled": "Cancelled",
+      "completed": "Completed"
+    },
+    "recovery": {
+      "title": "Account Recovery Available",
+      "description": "Your account deletion request is still active. You can recover your account now or proceed with deletion.",
+      "scheduledDate": "Scheduled deletion date",
+      "recoverButton": "Recover My Account",
+      "dismissButton": "Dismiss"
+    },
+    "buttons": {
+      "deleteAccount": "Delete My Account",
+      "cancelDeletion": "Cancel Deletion",
+      "requesting": "Requesting...",
+      "cancelling": "Cancelling..."
+    },
+    "confirmDialog": {
+      "title": "Confirm Account Deletion",
+      "description": "This will schedule your account for deletion. You can continue using your account for 30 days. After that, all your data will be permanently deleted.",
+      "typePrompt": "Type DELETE to confirm",
+      "typeHint": "Type the word DELETE in capital letters to enable the confirmation button",
+      "cancel": "Cancel",
+      "confirm": "Delete My Account"
+    },
+    "cancelDialog": {
+      "title": "Cancel Account Deletion",
+      "description": "Are you sure you want to cancel your account deletion request? Your account will remain active.",
+      "cancel": "Keep Deletion Request",
+      "confirm": "Cancel Deletion"
+    },
+    "messages": {
+      "deletionRequested": "Account deletion has been scheduled. You can continue using your account during the 30-day window.",
+      "deletionCancelled": "Account deletion cancelled successfully",
+      "confirmationMismatch": "Please type DELETE to confirm"
+    },
+    "error": {
+      "title": "Error",
+      "description": "Failed to load account deletion status"
+    }
+  },
+  "emailChange": {
+    "title": "Change Email",
+    "description": "Update your email address with verification",
+    "currentEmail": "Current Email",
+    "pendingRequest": "You have a pending email change request to {{email}}. Status: {{status}}",
+    "fields": {
+      "newEmail": "New Email Address",
+      "newEmailDescription": "Enter the new email address you want to use"
+    },
+    "buttons": {
+      "continue": "Continue",
+      "continuing": "Continuing...",
+      "cancelRequest": "Cancel Request",
+      "cancelling": "Cancelling..."
+    },
+    "identityModal": {
+      "title": "Verify Your Identity",
+      "description": "Please verify your identity before changing your email address",
+      "tabs": {
+        "password": "Password",
+        "twoFactor": "2FA Code"
+      },
+      "fields": {
+        "password": "Current Password",
+        "twoFactorCode": "Two-Factor Code"
+      },
+      "showPassword": "Show password",
+      "hidePassword": "Hide password",
+      "buttons": {
+        "verify": "Verify",
+        "verifying": "Verifying..."
+      }
+    },
+    "otpModal": {
+      "title": "Verify New Email",
+      "description": "Enter the 6-digit code sent to {{email}}",
+      "fields": {
+        "otpCode": "Verification Code"
+      },
+      "resendCountdown": "Resend code in {{seconds}}s",
+      "noCode": "Didn't receive the code?",
+      "buttons": {
+        "verify": "Verify",
+        "verifying": "Verifying...",
+        "resend": "Resend Code",
+        "resending": "Resending..."
+      }
+    },
+    "messages": {
+      "initiateSuccess": "Verification email sent",
+      "identityVerified": "Identity verified successfully",
+      "otpSent": "Verification code sent to your new email",
+      "otpResent": "Verification code resent",
+      "changeComplete": "Email changed successfully. Please sign in again.",
+      "requestCancelled": "Email change request cancelled",
+      "requestExpired": "This request has expired. Please start a new email change request.",
+      "noActiveRequest": "No active email change request",
+      "invalidOtp": "Invalid verification code",
+      "otpExpired": "Verification code expired",
+      "tooManyAttempts": "Too many attempts. Please try again later.",
+      "rateLimitExceeded": "Too many requests. Please try again later.",
+      "emailInUse": "This email is already in use",
+      "emailSameAsCurrent": "New email must be different from your current email",
+      "maxResendsReached": "Maximum resend attempts reached"
+    },
+    "form": {
+      "newEmail": {
+        "label": "New Email Address",
+        "placeholder": "your.new.email@example.com",
+        "description": "Enter the new email address you want to use"
+      },
+      "buttons": {
+        "continue": "Continue",
+        "continuing": "Continuing...",
+        "cancel": "Cancel Request",
+        "cancelling": "Cancelling..."
+      }
+    },
+    "identityVerification": {
+      "title": "Verify Your Identity",
+      "description": "Please verify your identity before changing your email address",
+      "tabs": {
+        "password": "Password",
+        "twoFactor": "2FA Code"
+      },
+      "password": {
+        "label": "Current Password",
+        "placeholder": "Enter your password",
+        "showPassword": "Show password",
+        "hidePassword": "Hide password"
+      },
+      "twoFactor": {
+        "label": "Two-Factor Code",
+        "placeholder": "000000",
+        "description": "Enter the 6-digit code from your authenticator app"
+      },
+      "buttons": {
+        "verify": "Verify",
+        "verifying": "Verifying...",
+        "cancel": "Cancel"
+      },
+      "validation": {
+        "passwordRequired": "Password is required",
+        "codeRequired": "2FA code is required",
+        "codeLength": "Code must be exactly 6 digits",
+        "codeNumeric": "Code must contain only numbers"
+      }
+    },
+    "otpEntry": {
+      "title": "Verify New Email",
+      "description": "Enter the 6-digit code sent to {{email}}",
+      "descriptionNoEmail": "Enter the 6-digit code sent to your new email",
+      "label": "Verification Code",
+      "placeholder": "000000",
+      "buttons": {
+        "verify": "Verify",
+        "verifying": "Verifying...",
+        "resend": "Resend Code",
+        "resending": "Resending...",
+        "resendIn": "Resend in {{seconds}}s",
+        "cancel": "Cancel"
+      },
+      "validation": {
+        "codeRequired": "Verification code is required",
+        "codeLength": "Code must be exactly 6 digits",
+        "codeNumeric": "Code must contain only numbers"
+      }
+    },
+    "status": {
+      "pending": "Pending Verification",
+      "awaitingOtp": "Awaiting OTP",
+      "completed": "Completed",
+      "expired": "Expired",
+      "cancelled": "Cancelled"
+    },
+    "validation": {
+      "sameEmail": "New email must be different from your current email",
+      "emailRequired": "Email is required",
+      "emailInvalid": "Please enter a valid email address"
+    },
+    "info": {
+      "title": "Email Change Process",
+      "description": "To change your email address:",
+      "steps": {
+        "verify": "Verify your identity with your password or 2FA",
+        "otp": "Confirm the new email with a verification code",
+        "complete": "Sign in again with your new email"
+      }
+    },
+    "error": {
+      "title": "Error",
+      "description": "Failed to load email change request"
+    }
+  },
+  "sessions": {
+    "title": "Active Sessions",
+    "description": "These are the devices currently logged into your account",
+    "currentSession": "Current Session",
+    "lastActive": "Last active",
+    "signedIn": "Signed in",
+    "deviceTypes": {
+      "desktop": "Desktop",
+      "mobile": "Mobile",
+      "tablet": "Tablet",
+      "unknown": "Unknown Device"
+    },
+    "authProviders": {
+      "email": "Email",
+      "google": "Google",
+      "unknown": "Unknown"
+    },
+    "location": {
+      "unknown": "Unknown location"
+    },
+    "buttons": {
+      "revokeSession": "Revoke",
+      "revokeOthers": "Sign out all other sessions",
+      "revoking": "Revoking..."
+    },
+    "dialogs": {
+      "revoke": {
+        "title": "Revoke Session",
+        "description": "Are you sure you want to sign out this device? They will need to sign in again to access their account.",
+        "confirm": "Revoke Session"
+      },
+      "revokeOthers": {
+        "title": "Sign Out Other Sessions",
+        "description": "This will sign out all other devices. You will remain signed in on this device.",
+        "confirm": "Sign Out All Others"
+      }
+    },
+    "messages": {
+      "revokeSuccess": "Session revoked successfully",
+      "revokeOthersSuccess": "{{count}} session(s) revoked successfully",
+      "revokeError": "Failed to revoke session",
+      "noSessions": "No other active sessions"
+    },
+    "error": {
+      "title": "Error",
+      "description": "Failed to load sessions"
+    }
+  },
+  "emailSettings": {
+    "title": "Email Settings",
+    "description": "Configure email provider and sender settings for your organization",
+    "effectiveConfig": {
+      "title": "Current Configuration",
+      "using": "Using",
+      "from": "from"
+    },
+    "provider": {
+      "title": "Email Provider",
+      "description": "Select the email provider for sending notifications and system emails",
+      "label": "Provider",
+      "placeholder": "Select a provider",
+      "hint": "Leave as 'Platform Default' to use the system-wide configuration",
+      "options": {
+        "default": "Platform Default",
+        "smtp": "SMTP Server",
+        "sendgrid": "SendGrid"
+      }
+    },
+    "smtp": {
+      "title": "SMTP Configuration",
+      "description": "Configure your SMTP server settings. Leave blank to use platform defaults.",
+      "host": "SMTP Host",
+      "port": "SMTP Port",
+      "username": "Username",
+      "usernamePlaceholder": "Enter username or leave blank",
+      "currentUsername": "Current",
+      "password": "Password",
+      "passwordPlaceholder": "Enter new password or leave blank",
+      "passwordSet": "Password is configured",
+      "useTls": "Use TLS (STARTTLS)",
+      "useSsl": "Use SSL/TLS"
+    },
+    "sendgrid": {
+      "title": "SendGrid Configuration",
+      "description": "Configure your SendGrid API settings",
+      "apiKey": "API Key",
+      "apiKeyPlaceholder": "Enter SendGrid API key",
+      "apiKeySet": "API key is configured"
+    },
+    "branding": {
+      "title": "Sender Branding",
+      "description": "Customize how your emails appear to recipients",
+      "senderEmail": "Sender Email",
+      "senderName": "Sender Name",
+      "senderNamePlaceholder": "Your Organization",
+      "replyTo": "Reply-To Email",
+      "replyToHint": "Optional: Email address for recipients to reply to",
+      "lockedHint": "Sender branding can only be set when your organization uses its own SMTP or SendGrid provider. Select a provider above to customize these values."
+    },
+    "actions": {
+      "saveChanges": "Save Changes",
+      "testEmail": "Send Test Email",
+      "resetToDefaults": "Reset to Defaults"
+    },
+    "testDialog": {
+      "title": "Send Test Email",
+      "description": "Send a test email to verify your configuration is working correctly",
+      "emailPlaceholder": "Enter recipient email",
+      "send": "Send Test"
+    },
+    "resetDialog": {
+      "title": "Reset Email Settings",
+      "description": "This will remove your custom email configuration and use the platform defaults instead. Are you sure?",
+      "confirm": "Reset to Defaults"
+    },
+    "toast": {
+      "updateSuccess": "Email settings updated successfully",
+      "updateError": "Failed to update email settings",
+      "testSuccess": "Test email sent successfully",
+      "testFailed": "Failed to send test email",
+      "resetSuccess": "Email settings reset to defaults",
+      "resetError": "Failed to reset email settings",
+      "emailRequired": "Please enter a recipient email address",
+      "senderLockedOnDefaults": "Sender branding is locked while using platform defaults. Select a provider first."
+    }
+  },
+  "connectedAccounts": {
+    "title": "Connected Accounts",
+    "description": "Manage your linked sign-in methods",
+    "linkedOn": "Linked on {{date}}",
+    "primary": "Primary",
+    "unlink": "Unlink",
+    "cannotUnlink": "Cannot unlink - this is your only sign-in method",
+    "noIdentities": "No connected accounts found",
+    "unlinkTitle": "Unlink {{provider}} Account?",
+    "unlinkDescription": "You will no longer be able to sign in with {{provider}}. You can re-link anytime.",
+    "unlinkNote": "This only removes the connection from this app. To fully revoke access, visit your {{provider}} Account settings.",
+    "unlinkConfirm": "Unlink Account",
+    "unlinkSuccess": "{{provider}} account unlinked successfully",
+    "setupRequired": "Account Setup Required",
+    "setupRequiredDescription": "Your account was created with {{provider}} and has no password.",
+    "setupRequiredSteps": "Before unlinking, you must:",
+    "stepCreatePassword": "Create a password for your account",
+    "step2FARequired": "Set up two-factor authentication (required by your organization)",
+    "step2FARecommended": "Set up two-factor authentication (recommended)",
+    "beginSetup": "Set Up Account Security",
+    "stepPassword": "Create Password",
+    "stepPasswordDescription": "Create a password to access your account after unlinking {{provider}}.",
+    "step2FA": "Two-Factor Authentication",
+    "step2FAMandatory": "Your organization requires two-factor authentication for all accounts.",
+    "step2FAOptional": "We recommend enabling two-factor authentication for additional security.",
+    "skip2FA": "Skip for now",
+    "stepConfirm": "Confirm Unlink",
+    "stepConfirmDescription": "You're ready to unlink your {{provider}} account. After unlinking, you'll sign in with your email and password.",
+    "completeUnlink": "Complete & Unlink",
+    "providers": {
+      "email": "Email & Password",
+      "google": "Google"
+    },
+    "error": {
+      "title": "Error",
+      "description": "Failed to load connected accounts",
+      "noData": "Unable to retrieve connected accounts data"
+    }
+  }
+}

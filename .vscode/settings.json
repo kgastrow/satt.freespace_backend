@@ -1,0 +1,18 @@
+{
+    "python.defaultInterpreterPath": "app/backend/.venv/bin/python",
+    "python.testing.pytestArgs": [
+        "app/backend/tests",
+        "-n", "auto",
+        "--tb", "short",
+        "-q"
+    ],
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true,
+    "python.testing.autoTestDiscoverOnSaveEnabled": false,
+    "python.analysis.extraPaths": [
+        "app/backend"
+    ],
+    "playwright.reuseBrowser": true,
+    "playwright.showTrace": false,
+    "playwright.env": {}
+}

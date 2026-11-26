@@ -1,0 +1,109 @@
+# Help Center FAQs
+
+# Getting Started
+- category_slug: getting-started
+  question: How do I get started with the platform?
+  answer: Welcome! Start by completing your profile setup, then explore the dashboard to familiarize yourself with the available features. You can access key functions from the sidebar navigation.
+  display_order: 0
+
+- category_slug: getting-started
+  question: Where can I find the main navigation?
+  answer: The main navigation is located in the sidebar on the left side of the screen. On mobile devices, you can access it by tapping the menu icon in the header.
+  display_order: 1
+
+- category_slug: getting-started
+  question: How do I change my language preference?
+  answer: Go to Settings > Preferences > Language to select your preferred language. The platform supports English, German, Xhosa, Zulu, and Northern Sotho.
+  display_order: 2
+
+# Account & Profile
+- category_slug: account-profile
+  question: How do I update my profile information?
+  answer: Click on your avatar in the top right corner and select Profile from the dropdown menu. From there, you can update your name, contact information, and other personal details.
+  display_order: 0
+
+- category_slug: account-profile
+  question: Can I change my email address?
+  answer: Yes, you can change your email address in Settings > Account > Profile. You may need to verify your new email address before the change takes effect.
+  display_order: 1
+
+# Team & Roles
+- category_slug: team-roles
+  question: What are the different user roles?
+  answer: "The platform has four roles: **Owner** (full access including organization settings), **Admin** (can manage users and most settings), **Member** (standard access for daily work), and **Viewer** (read-only access)."
+  display_order: 0
+
+- category_slug: team-roles
+  question: How do I invite new team members?
+  answer: Organization admins and owners can invite new members from the Users section. Click 'Invite User', enter their email address, and select the appropriate role.
+  display_order: 1
+
+# Notifications
+- category_slug: notifications
+  question: How do I manage my notification preferences?
+  answer: Go to Settings > Preferences > Notifications to customize which notifications you receive and through which channels (in-app, email, etc.).
+  display_order: 0
+
+- category_slug: notifications
+  question: How do I mark notifications as read?
+  answer: Click the bell icon in the header to view your notifications. You can mark individual notifications as read by clicking on them, or use 'Mark all as read' to clear all unread notifications.
+  display_order: 1
+
+# Files & Storage
+- category_slug: files-storage
+  question: What file types can I upload?
+  answer: The platform supports most common file types including images (PNG, JPG, GIF), documents (PDF, DOC, DOCX), spreadsheets (XLS, XLSX, CSV), and more. Check with your administrator for any organization-specific restrictions.
+  display_order: 0
+
+- category_slug: files-storage
+  question: Is there a file size limit?
+  answer: Yes, the maximum file size depends on your organization's settings. Contact your administrator to learn about your specific limits.
+  display_order: 1
+
+# Security & Privacy
+- category_slug: security-privacy
+  question: How do I enable two-factor authentication?
+  answer: Go to Settings > Security > Two-Factor Authentication and follow the setup wizard. We support authenticator apps for secure 2FA.
+  display_order: 0
+
+- category_slug: security-privacy
+  question: How do I change my password?
+  answer: Navigate to Settings > Security > Password. You'll need to enter your current password and then your new password twice to confirm the change.
+  display_order: 1
+
+- category_slug: security-privacy
+  question: How can I view my active sessions?
+  answer: Go to Settings > Account > Sessions to see all devices where you're currently logged in. You can terminate any session from this page if you notice unfamiliar activity.
+  display_order: 2
+
+# Troubleshooting
+- category_slug: troubleshooting
+  question: I forgot my password. How do I reset it?
+  answer: Click 'Forgot Password' on the login page and enter your email address. You'll receive a password reset link within a few minutes. Check your spam folder if you don't see it.
+  display_order: 0
+
+- category_slug: troubleshooting
+  question: Why am I seeing 'Access Denied' errors?
+  answer: This usually means you don't have the required permissions for that action. Contact your organization administrator to request the necessary access level.
+  display_order: 1
+
+- category_slug: troubleshooting
+  question: My changes aren't saving. What should I do?
+  answer: First, check your internet connection. If connected, try refreshing the page and making the changes again. If the issue persists, clear your browser cache or try a different browser.
+  display_order: 2
+
+# API & Integrations
+- category_slug: api-integrations
+  question: How do I create an API key?
+  answer: "Go to Administration > API Keys and click 'Create API Key'. Give it a descriptive name and optionally set an expiration date. **Important:** Copy the key immediately after creation - it won't be shown again."
+  display_order: 0
+
+- category_slug: api-integrations
+  question: What authentication method does the API use?
+  answer: "The API uses Bearer token authentication. Include your API key in the Authorization header: `Authorization: Bearer your-api-key`. All API requests must be made over HTTPS."
+  display_order: 1
+
+- category_slug: api-integrations
+  question: Are there rate limits on the API?
+  answer: Yes, API requests are rate-limited to prevent abuse. The current limits are displayed in the API response headers. If you need higher limits, contact your administrator.
+  display_order: 2

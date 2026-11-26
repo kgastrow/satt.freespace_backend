@@ -1,0 +1,985 @@
+diff --git a/app/frontend/src/components/ErrorBoundary.tsx b/app/frontend/src/components/ErrorBoundary.tsx
+index 3405026..00bc2f6 100644
+--- a/app/frontend/src/components/ErrorBoundary.tsx
++++ b/app/frontend/src/components/ErrorBoundary.tsx
+@@ -10,6 +10,17 @@ interface ErrorBoundaryOwnProps {
+    * Optional fallback component to render on error
+    */
+   fallback?: ReactNode
++  /**
++   * Optional render-prop fallback. Receives the caught error, the React
++   * component stack, and a reset callback. Takes precedence over `fallback`.
++   * Use this when the fallback needs the error context (e.g. to build a
++   * support report). Only valid below the Redux/i18n providers.
++   */
++  renderFallback?: (args: {
++    error: Error
++    componentStack: string | null
++    reset: () => void
++  }) => ReactNode
+ }
+ 
+ type ErrorBoundaryProps = ErrorBoundaryOwnProps & WithTranslation
+@@ -17,6 +28,7 @@ type ErrorBoundaryProps = ErrorBoundaryOwnProps & WithTranslation
+ interface ErrorBoundaryState {
+   hasError: boolean
+   error: Error | null
++  componentStack: string | null
+ }
+ 
+ /**
+@@ -40,10 +52,12 @@ class ErrorBoundaryClass extends Component<
+ > {
+   constructor(props: ErrorBoundaryProps) {
+     super(props)
+-    this.state = { hasError: false, error: null }
++    this.state = { hasError: false, error: null, componentStack: null }
+   }
+ 
+-  static getDerivedStateFromError(error: Error): ErrorBoundaryState {
++  static getDerivedStateFromError(
++    error: Error,
++  ): Pick<ErrorBoundaryState, 'hasError' | 'error'> {
+     return { hasError: true, error }
+   }
+ 
+@@ -51,6 +65,10 @@ class ErrorBoundaryClass extends Component<
+     // Log error for debugging (kept intentionally for production error visibility)
+     console.error('ErrorBoundary caught an error:', error, errorInfo)
+ 
++    // Capture the component stack so a fallback can surface "what component"
++    // failed in a support report.
++    this.setState({ componentStack: errorInfo.componentStack ?? null })
++
+     // Optional: Integrate error reporting service (e.g., Sentry, Bugsnag)
+     // Example integration:
+     //   import * as Sentry from '@sentry/react'
+@@ -58,7 +76,7 @@ class ErrorBoundaryClass extends Component<
+   }
+ 
+   handleReset = () => {
+-    this.setState({ hasError: false, error: null })
++    this.setState({ hasError: false, error: null, componentStack: null })
+   }
+ 
+   handleReload = () => {
+@@ -66,7 +84,16 @@ class ErrorBoundaryClass extends Component<
+   }
+ 
+   render() {
+-    if (this.state.hasError) {
++    if (this.state.hasError && this.state.error) {
++      // Use render-prop fallback if provided (receives error context)
++      if (this.props.renderFallback) {
++        return this.props.renderFallback({
++          error: this.state.error,
++          componentStack: this.state.componentStack,
++          reset: this.handleReset,
++        })
++      }
++
+       // Use custom fallback if provided
+       if (this.props.fallback) {
+         return this.props.fallback
+diff --git a/app/frontend/src/components/ErrorFallback.test.tsx b/app/frontend/src/components/ErrorFallback.test.tsx
+new file mode 100644
+index 0000000..e496f6c
+--- /dev/null
++++ b/app/frontend/src/components/ErrorFallback.test.tsx
+@@ -0,0 +1,64 @@
++import { describe, expect, it, vi } from 'vitest'
++import { render, screen } from '@/test/utils'
++import type { RootState } from '@/store'
++import { ErrorFallback } from './ErrorFallback'
++
++const componentStack = '\n    at Boom (http://localhost/src/pages/dev/CrashTestPage.tsx:6:9)'
++
++function authState(isAuthenticated: boolean) {
++  return {
++    auth: { isAuthenticated } as unknown as RootState['auth'],
++  }
++}
++
++describe('ErrorFallback', () => {
++  it('renders the error title and description', () => {
++    render(<ErrorFallback error={new Error('boom')} componentStack={componentStack} reset={vi.fn()} />, {
++      preloadedState: authState(false),
++    })
++
++    expect(screen.getByText('common:errorBoundary.title')).toBeInTheDocument()
++    expect(screen.getByText('common:errorBoundary.description')).toBeInTheDocument()
++  })
++
++  it('surfaces the auto-captured page and failing component', () => {
++    render(<ErrorFallback error={new Error('boom')} componentStack={componentStack} reset={vi.fn()} />, {
++      preloadedState: authState(false),
++      route: '/dev/crash',
++    })
++
++    // pathname comes from window.location (jsdom default '/')
++    expect(screen.getByText(window.location.pathname)).toBeInTheDocument()
++    // component name is parsed from the stack
++    expect(screen.getByText('Boom')).toBeInTheDocument()
++  })
++
++  it('calls reset when "Try Again" is clicked', async () => {
++    const reset = vi.fn()
++    const { user } = render(
++      <ErrorFallback error={new Error('boom')} componentStack={componentStack} reset={reset} />,
++      { preloadedState: authState(false) }
++    )
++
++    await user.click(screen.getByRole('button', { name: 'common:errorBoundary.tryAgain' }))
++    expect(reset).toHaveBeenCalledTimes(1)
++  })
++
++  it('hides the "Report to support" action when not authenticated', () => {
++    render(<ErrorFallback error={new Error('boom')} componentStack={componentStack} reset={vi.fn()} />, {
++      preloadedState: authState(false),
++    })
++    expect(
++      screen.queryByRole('button', { name: 'common:errorBoundary.reportButton' })
++    ).not.toBeInTheDocument()
++  })
++
++  it('shows the "Report to support" action when authenticated', () => {
++    render(<ErrorFallback error={new Error('boom')} componentStack={componentStack} reset={vi.fn()} />, {
++      preloadedState: authState(true),
++    })
++    expect(
++      screen.getByRole('button', { name: 'common:errorBoundary.reportButton' })
++    ).toBeInTheDocument()
++  })
++})
+diff --git a/app/frontend/src/components/ErrorFallback.tsx b/app/frontend/src/components/ErrorFallback.tsx
+new file mode 100644
+index 0000000..67933ba
+--- /dev/null
++++ b/app/frontend/src/components/ErrorFallback.tsx
+@@ -0,0 +1,153 @@
++import { useMemo, useState } from 'react'
++import { useTranslation } from 'react-i18next'
++import { AlertTriangle } from 'lucide-react'
++import { Button } from '@/components/ui/button'
++import {
++  Card,
++  CardContent,
++  CardDescription,
++  CardHeader,
++  CardTitle,
++} from '@/components/ui/card'
++import { ScrollArea } from '@/components/ui/scroll-area'
++import {
++  Dialog,
++  DialogContent,
++  DialogDescription,
++  DialogHeader,
++  DialogTitle,
++} from '@/components/ui/dialog'
++import { useAppSelector } from '@/store/hooks'
++import { FeedbackForm } from '@/features/feedback/components'
++import { buildErrorDiagnostics } from '@/lib/errorDiagnostics'
++
++interface ErrorFallbackProps {
++  error: Error
++  componentStack: string | null
++  reset: () => void
++}
++
++/**
++ * Rich, in-app error page rendered by the error boundary that sits below the
++ * Redux/i18n providers. Surfaces the page + component that failed and lets the
++ * user file a support item with full diagnostics attached automatically.
++ */
++export function ErrorFallback({ error, componentStack, reset }: ErrorFallbackProps) {
++  const { t } = useTranslation(['common', 'feedback'])
++  const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated)
++  const [reportOpen, setReportOpen] = useState(false)
++
++  const diagnostics = useMemo(
++    () => buildErrorDiagnostics(error, componentStack),
++    [error, componentStack],
++  )
++
++  const componentName = diagnostics.component ?? t('common:errorBoundary.unknownComponent')
++
++  // Concise, human-readable summary that fits the 2000-char message field.
++  // The full structured payload is attached as JSON.
++  const reportSubject = t('common:errorBoundary.prefillSubject', {
++    message: error.message || error.name,
++  }).slice(0, 100)
++
++  const recentActions = diagnostics.breadcrumbs
++    .slice(-5)
++    .map((b) => `- ${b.label}`)
++    .join('\n')
++
++  const reportMessage = [
++    t('common:errorBoundary.prefillIntro'),
++    '',
++    `${t('common:errorBoundary.pageLabel')}: ${diagnostics.page.pathname}`,
++    `${t('common:errorBoundary.componentLabel')}: ${componentName}`,
++    `${t('common:errorBoundary.errorLabel')}: ${error.name}: ${error.message}`.slice(0, 300),
++    '',
++    `${t('common:errorBoundary.recentActionsLabel')}:`,
++    recentActions || `- ${t('common:errorBoundary.noRecentActions')}`,
++    '',
++    t('common:errorBoundary.diagnosticsAttachedNote'),
++  ].join('\n')
++
++  return (
++    <div className="flex min-h-dvh items-center justify-center bg-paper p-4">
++      <Card className="w-full max-w-lg">
++        <CardHeader className="text-center">
++          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-danger-nc-soft">
++            <AlertTriangle className="h-8 w-8 text-danger-nc" strokeWidth={1.5} />
++          </div>
++          <p className="text-[11px] font-semibold uppercase tracking-wider text-danger-nc">
++            {t('common:errorBoundary.eyebrow')}
++          </p>
++          <CardTitle className="font-display text-2xl font-normal tracking-[-0.01em] text-ink">
++            {t('common:errorBoundary.title')}
++          </CardTitle>
++          <CardDescription className="text-ink-2">
++            {t('common:errorBoundary.description')}
++          </CardDescription>
++        </CardHeader>
++        <CardContent className="flex flex-col gap-4">
++          {/* Auto-captured context, shown so the user sees what will be sent */}
++          <div className="flex flex-col gap-1.5 rounded-nc-md bg-surface-2 p-3 text-sm">
++            <div className="flex gap-2">
++              <span className="shrink-0 text-ink-3">{t('common:errorBoundary.pageLabel')}:</span>
++              <span className="truncate font-mono-nc text-ink-2">
++                {diagnostics.page.pathname}
++              </span>
++            </div>
++            <div className="flex gap-2">
++              <span className="shrink-0 text-ink-3">
++                {t('common:errorBoundary.componentLabel')}:
++              </span>
++              <span className="truncate font-mono-nc text-ink-2">{componentName}</span>
++            </div>
++          </div>
++
++          {import.meta.env.DEV && (
++            <div className="rounded-nc-md bg-danger-nc-soft p-3">
++              <p className="text-sm font-medium text-danger-nc">{error.message}</p>
++              <ScrollArea className="mt-2 max-h-40">
++                <pre className="font-mono-nc text-xs text-ink-3">{error.stack}</pre>
++              </ScrollArea>
++            </div>
++          )}
++
++          <div className="flex flex-col gap-2 sm:flex-row sm:justify-center">
++            <Button onClick={reset}>{t('common:errorBoundary.tryAgain')}</Button>
++            <Button variant="outline" onClick={() => window.location.reload()}>
++              {t('common:errorBoundary.reloadPage')}
++            </Button>
++            {isAuthenticated && (
++              <Button variant="outline" onClick={() => setReportOpen(true)}>
++                {t('common:errorBoundary.reportButton')}
++              </Button>
++            )}
++          </div>
++        </CardContent>
++      </Card>
++
++      {isAuthenticated && (
++        <Dialog open={reportOpen} onOpenChange={setReportOpen}>
++          <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-md">
++            <DialogHeader>
++              <DialogTitle>{t('common:errorBoundary.reportDialogTitle')}</DialogTitle>
++              <DialogDescription>
++                {t('common:errorBoundary.reportDialogDescription')}
++              </DialogDescription>
++            </DialogHeader>
++            <div className="mt-2">
++              <FeedbackForm
++                onSuccess={() => setReportOpen(false)}
++                defaultValues={{
++                  type: 'bug',
++                  subject: reportSubject,
++                  message: reportMessage,
++                }}
++                diagnostics={diagnostics}
++              />
++            </div>
++          </DialogContent>
++        </Dialog>
++      )}
++    </div>
++  )
++}
+diff --git a/app/frontend/src/features/feedback/components/FeedbackForm.tsx b/app/frontend/src/features/feedback/components/FeedbackForm.tsx
+index dbfc3a8..cd297ab 100644
+--- a/app/frontend/src/features/feedback/components/FeedbackForm.tsx
++++ b/app/frontend/src/features/feedback/components/FeedbackForm.tsx
+@@ -1,4 +1,4 @@
+-import { useState } from 'react'
++import { useEffect, useState } from 'react'
+ import { useForm } from 'react-hook-form'
+ import { z } from 'zod'
+ import { zodResolver } from '@hookform/resolvers/zod'
+@@ -49,9 +49,27 @@ type FeedbackFormData = z.infer<ReturnType<typeof createFeedbackSchema>>
+ 
+ interface FeedbackFormProps {
+   onSuccess?: () => void
++  /** Pre-populate fields (e.g. when reporting an error from the error page). */
++  defaultValues?: Partial<Pick<FeedbackFormData, 'type' | 'subject' | 'message' | 'rating'>>
++  /**
++   * Optional structured payload uploaded as a JSON attachment alongside the
++   * feedback (e.g. error diagnostics). Failures are non-blocking.
++   */
++  diagnostics?: unknown
++  /**
++   * Filename for the diagnostics attachment. Uses a `.txt` extension because
++   * the per-organization default allowed-extensions list does not include
++   * `json`; the content is still pretty-printed JSON, readable as text.
++   */
++  diagnosticsFilename?: string
+ }
+ 
+-export function FeedbackForm({ onSuccess }: FeedbackFormProps) {
++export function FeedbackForm({
++  onSuccess,
++  defaultValues,
++  diagnostics,
++  diagnosticsFilename = 'error-diagnostics.txt',
++}: FeedbackFormProps) {
+   const { t } = useTranslation(['feedback'])
+   const [submitFeedback, { isLoading: isSubmitting }] = useSubmitFeedbackMutation()
+   const [uploadAttachment] = useUploadAttachmentMutation()
+@@ -65,13 +83,22 @@ export function FeedbackForm({ onSuccess }: FeedbackFormProps) {
+   const form = useForm<FeedbackFormData>({
+     resolver: zodResolver(createFeedbackSchema(t)),
+     defaultValues: {
+-      type: undefined,
+-      rating: null,
+-      subject: '',
+-      message: '',
++      type: defaultValues?.type,
++      rating: defaultValues?.rating ?? null,
++      subject: defaultValues?.subject ?? '',
++      message: defaultValues?.message ?? '',
+     },
+   })
+ 
++  // When the form is opened pre-populated (e.g. an error report), validate up
++  // front so the submit button is enabled without the user editing a field.
++  useEffect(() => {
++    if (defaultValues) {
++      void form.trigger()
++    }
++    // eslint-disable-next-line react-hooks/exhaustive-deps
++  }, [])
++
+   const captureScreenshot = async () => {
+     try {
+       if (!navigator.mediaDevices || !navigator.mediaDevices.getDisplayMedia) {
+@@ -175,6 +202,16 @@ export function FeedbackForm({ onSuccess }: FeedbackFormProps) {
+         if (attachment) {
+           await uploadFileToStorage(attachment, response.feedback.id)
+         }
++
++        // Upload diagnostics payload (e.g. error report context) if provided
++        if (diagnostics !== undefined) {
++          const diagnosticsFile = new File(
++            [JSON.stringify(diagnostics, null, 2)],
++            diagnosticsFilename,
++            { type: 'text/plain' },
++          )
++          await uploadFileToStorage(diagnosticsFile, response.feedback.id)
++        }
+       } catch {
+         // Attachment upload failed - feedback was still submitted successfully
+       } finally {
+diff --git a/app/frontend/src/layouts/RootLayout.tsx b/app/frontend/src/layouts/RootLayout.tsx
+index 0f663f3..14e4e5e 100644
+--- a/app/frontend/src/layouts/RootLayout.tsx
++++ b/app/frontend/src/layouts/RootLayout.tsx
+@@ -1,13 +1,30 @@
+-import { Outlet } from 'react-router-dom'
++import { useEffect } from 'react'
++import { Outlet, useLocation } from 'react-router-dom'
+ import { Toaster } from '@/components/ui/sonner'
+ import { AuthProvider } from '@/components/AuthProvider'
+ import { MaintenanceProvider } from '@/components/MaintenanceProvider'
+ import { UpdateManager } from '@/components/UpdateManager'
++import { ErrorBoundary } from '@/components/ErrorBoundary'
++import { ErrorFallback } from '@/components/ErrorFallback'
+ import { useAppSelector } from '@/store/hooks'
+ import { FeedbackWidget } from '@/features/feedback/components'
++import {
++  installBreadcrumbCollectors,
++  recordBreadcrumb,
++} from '@/lib/errorBreadcrumbs'
+ 
+ function RootLayoutContent() {
+   const isImpersonating = useAppSelector((state) => state.impersonation.isImpersonating)
++  const location = useLocation()
++
++  // Collect lightweight activity breadcrumbs to enrich error reports.
++  useEffect(() => {
++    installBreadcrumbCollectors()
++  }, [])
++
++  useEffect(() => {
++    recordBreadcrumb('navigation', `Navigated to ${location.pathname}`)
++  }, [location.pathname])
+ 
+   return (
+     <div
+@@ -16,7 +33,13 @@ function RootLayoutContent() {
+       }`}
+     >
+       <div className="flex-1 overflow-hidden">
+-        <Outlet />
++        <ErrorBoundary
++          renderFallback={({ error, componentStack, reset }) => (
++            <ErrorFallback error={error} componentStack={componentStack} reset={reset} />
++          )}
++        >
++          <Outlet />
++        </ErrorBoundary>
+       </div>
+       <Toaster />
+       <FeedbackWidget />
+diff --git a/app/frontend/src/lib/errorBreadcrumbs.test.ts b/app/frontend/src/lib/errorBreadcrumbs.test.ts
+new file mode 100644
+index 0000000..775fa54
+--- /dev/null
++++ b/app/frontend/src/lib/errorBreadcrumbs.test.ts
+@@ -0,0 +1,128 @@
++import { beforeEach, describe, expect, it, vi } from 'vitest'
++
++// The breadcrumb buffer is module-level state, so reset modules before each
++// test to get a fresh, isolated buffer.
++let mod: typeof import('./errorBreadcrumbs')
++
++beforeEach(async () => {
++  vi.resetModules()
++  document.body.innerHTML = ''
++  mod = await import('./errorBreadcrumbs')
++})
++
++describe('recordBreadcrumb', () => {
++  it('records breadcrumbs in order (oldest first)', () => {
++    mod.recordBreadcrumb('navigation', 'Navigated to /a')
++    mod.recordBreadcrumb('click', 'Clicked "Save"')
++
++    const crumbs = mod.getBreadcrumbs()
++    expect(crumbs.map((c) => c.label)).toEqual(['Navigated to /a', 'Clicked "Save"'])
++    expect(crumbs.map((c) => c.type)).toEqual(['navigation', 'click'])
++    expect(crumbs[0].timestamp).toMatch(/^\d{4}-\d{2}-\d{2}T/)
++  })
++
++  it('ignores empty and whitespace-only labels', () => {
++    mod.recordBreadcrumb('click', '')
++    mod.recordBreadcrumb('click', '   ')
++    expect(mod.getBreadcrumbs()).toHaveLength(0)
++  })
++
++  it('trims and collapses internal whitespace', () => {
++    mod.recordBreadcrumb('click', '  Save\n  changes  ')
++    expect(mod.getBreadcrumbs()[0].label).toBe('Save changes')
++  })
++
++  it('caps label length at 100 characters', () => {
++    mod.recordBreadcrumb('click', 'x'.repeat(250))
++    expect(mod.getBreadcrumbs()[0].label).toHaveLength(100)
++  })
++
++  it('caps the buffer at 15 entries, evicting oldest', () => {
++    for (let i = 0; i < 20; i++) {
++      mod.recordBreadcrumb('navigation', `nav-${i}`)
++    }
++    const crumbs = mod.getBreadcrumbs()
++    expect(crumbs).toHaveLength(15)
++    expect(crumbs[0].label).toBe('nav-5')
++    expect(crumbs[14].label).toBe('nav-19')
++  })
++
++  it('returns a defensive copy from getBreadcrumbs', () => {
++    mod.recordBreadcrumb('navigation', 'nav')
++    const first = mod.getBreadcrumbs()
++    first.push({ type: 'click', label: 'mutated', timestamp: 'x' })
++    expect(mod.getBreadcrumbs()).toHaveLength(1)
++  })
++})
++
++describe('installBreadcrumbCollectors', () => {
++  it('records a click breadcrumb using the element text label', () => {
++    mod.installBreadcrumbCollectors()
++    const button = document.createElement('button')
++    button.textContent = 'Save changes'
++    document.body.appendChild(button)
++
++    button.dispatchEvent(new MouseEvent('click', { bubbles: true }))
++
++    const crumbs = mod.getBreadcrumbs()
++    expect(crumbs).toHaveLength(1)
++    expect(crumbs[0]).toMatchObject({ type: 'click', label: 'Clicked "Save changes"' })
++  })
++
++  it('prefers data-breadcrumb, then aria-label, over text content', () => {
++    mod.installBreadcrumbCollectors()
++
++    const dataEl = document.createElement('button')
++    dataEl.setAttribute('data-breadcrumb', 'Custom label')
++    dataEl.textContent = 'ignored text'
++    document.body.appendChild(dataEl)
++    dataEl.dispatchEvent(new MouseEvent('click', { bubbles: true }))
++
++    const ariaEl = document.createElement('button')
++    ariaEl.setAttribute('aria-label', 'Aria label')
++    ariaEl.textContent = 'ignored text'
++    document.body.appendChild(ariaEl)
++    ariaEl.dispatchEvent(new MouseEvent('click', { bubbles: true }))
++
++    expect(mod.getBreadcrumbs().map((c) => c.label)).toEqual([
++      'Clicked "Custom label"',
++      'Clicked "Aria label"',
++    ])
++  })
++
++  it('resolves clicks on descendants up to the nearest interactive element', () => {
++    mod.installBreadcrumbCollectors()
++    const button = document.createElement('button')
++    button.setAttribute('aria-label', 'Delete')
++    const icon = document.createElement('span')
++    button.appendChild(icon)
++    document.body.appendChild(button)
++
++    icon.dispatchEvent(new MouseEvent('click', { bubbles: true }))
++
++    expect(mod.getBreadcrumbs()[0].label).toBe('Clicked "Delete"')
++  })
++
++  it('ignores clicks that are not on an interactive element', () => {
++    mod.installBreadcrumbCollectors()
++    const div = document.createElement('div')
++    div.textContent = 'not interactive'
++    document.body.appendChild(div)
++
++    div.dispatchEvent(new MouseEvent('click', { bubbles: true }))
++
++    expect(mod.getBreadcrumbs()).toHaveLength(0)
++  })
++
++  it('is idempotent: calling twice attaches a single listener', () => {
++    mod.installBreadcrumbCollectors()
++    mod.installBreadcrumbCollectors()
++    const button = document.createElement('button')
++    button.textContent = 'Once'
++    document.body.appendChild(button)
++
++    button.dispatchEvent(new MouseEvent('click', { bubbles: true }))
++
++    expect(mod.getBreadcrumbs()).toHaveLength(1)
++  })
++})
+diff --git a/app/frontend/src/lib/errorBreadcrumbs.ts b/app/frontend/src/lib/errorBreadcrumbs.ts
+new file mode 100644
+index 0000000..dc1e0c0
+--- /dev/null
++++ b/app/frontend/src/lib/errorBreadcrumbs.ts
+@@ -0,0 +1,77 @@
++/**
++ * Lightweight breadcrumb trail used to enrich error reports with the user's
++ * recent activity ("what action triggered this"). Keeps an in-memory ring
++ * buffer of the last few navigation + click events. Only UI labels are
++ * captured (button text, aria-label, link text) — never input values — so no
++ * sensitive data is recorded.
++ */
++
++export type BreadcrumbType = 'navigation' | 'click'
++
++export interface Breadcrumb {
++  type: BreadcrumbType
++  label: string
++  timestamp: string
++}
++
++const MAX_BREADCRUMBS = 15
++const MAX_LABEL_LENGTH = 100
++
++const buffer: Breadcrumb[] = []
++
++/** Append a breadcrumb, evicting the oldest once the buffer is full. */
++export function recordBreadcrumb(type: BreadcrumbType, label: string): void {
++  const trimmed = label.trim().replace(/\s+/g, ' ')
++  if (!trimmed) return
++
++  buffer.push({
++    type,
++    label: trimmed.slice(0, MAX_LABEL_LENGTH),
++    timestamp: new Date().toISOString(),
++  })
++
++  if (buffer.length > MAX_BREADCRUMBS) {
++    buffer.shift()
++  }
++}
++
++/** Snapshot of the current breadcrumb trail (oldest first). */
++export function getBreadcrumbs(): Breadcrumb[] {
++  return [...buffer]
++}
++
++let installed = false
++
++/**
++ * Install global listeners that record click breadcrumbs. Idempotent and safe
++ * to call on every mount; navigation breadcrumbs are recorded separately by the
++ * router-aware caller.
++ */
++export function installBreadcrumbCollectors(): void {
++  if (installed || typeof window === 'undefined') return
++  installed = true
++  window.addEventListener('click', handleClick, { capture: true })
++}
++
++function handleClick(event: MouseEvent): void {
++  const target = event.target as HTMLElement | null
++  const el = target?.closest<HTMLElement>(
++    'button, a, [role="button"], [data-breadcrumb]',
++  )
++  if (!el) return
++
++  const label = getInteractiveLabel(el)
++  if (label) {
++    recordBreadcrumb('click', `Clicked "${label}"`)
++  }
++}
++
++function getInteractiveLabel(el: HTMLElement): string {
++  return (
++    el.getAttribute('data-breadcrumb') ||
++    el.getAttribute('aria-label') ||
++    el.textContent?.trim() ||
++    el.getAttribute('title') ||
++    ''
++  )
++}
+diff --git a/app/frontend/src/lib/errorDiagnostics.test.ts b/app/frontend/src/lib/errorDiagnostics.test.ts
+new file mode 100644
+index 0000000..d2bab45
+--- /dev/null
++++ b/app/frontend/src/lib/errorDiagnostics.test.ts
+@@ -0,0 +1,90 @@
++import { beforeEach, describe, expect, it, vi } from 'vitest'
++
++let diag: typeof import('./errorDiagnostics')
++let breadcrumbs: typeof import('./errorBreadcrumbs')
++
++beforeEach(async () => {
++  vi.resetModules()
++  breadcrumbs = await import('./errorBreadcrumbs')
++  diag = await import('./errorDiagnostics')
++})
++
++describe('extractComponentName', () => {
++  it('returns null for null or empty input', () => {
++    expect(diag.extractComponentName(null)).toBeNull()
++    expect(diag.extractComponentName('')).toBeNull()
++  })
++
++  it('extracts the component from a React 19 "at" frame', () => {
++    const stack = '\n    at Boom (http://localhost/src/pages/dev/CrashTestPage.tsx:6:9)'
++    expect(diag.extractComponentName(stack)).toBe('Boom')
++  })
++
++  it('extracts the component from a legacy "in" frame', () => {
++    const stack = '\n    in Boom (at CrashTestPage.tsx:6)\n    in CardContent'
++    expect(diag.extractComponentName(stack)).toBe('Boom')
++  })
++
++  it('returns the first (closest) frame when several are present', () => {
++    const stack = '\n    at Inner\n    at Outer\n    at App'
++    expect(diag.extractComponentName(stack)).toBe('Inner')
++  })
++
++  it('handles component names with digits and $', () => {
++    const stack = '\n    at Form2$Inner (file.tsx:1:1)'
++    expect(diag.extractComponentName(stack)).toBe('Form2$Inner')
++  })
++})
++
++describe('buildErrorDiagnostics', () => {
++  const componentStack = '\n    at Boom (http://localhost/src/pages/dev/CrashTestPage.tsx:6:9)'
++
++  it('captures error name, message, and stack', () => {
++    const error = new Error('boom')
++    const result = diag.buildErrorDiagnostics(error, componentStack)
++    expect(result.error.name).toBe('Error')
++    expect(result.error.message).toBe('boom')
++    expect(result.error.stack).toBe(error.stack)
++  })
++
++  it('uses null when the error has no stack', () => {
++    const error = new Error('boom')
++    error.stack = undefined
++    expect(diag.buildErrorDiagnostics(error, componentStack).error.stack).toBeNull()
++  })
++
++  it('captures the current page from window.location', () => {
++    const result = diag.buildErrorDiagnostics(new Error('x'), componentStack)
++    expect(result.page.url).toBe(window.location.href)
++    expect(result.page.pathname).toBe(window.location.pathname)
++  })
++
++  it('derives the component name and passes the raw stack through', () => {
++    const result = diag.buildErrorDiagnostics(new Error('x'), componentStack)
++    expect(result.component).toBe('Boom')
++    expect(result.componentStack).toBe(componentStack)
++  })
++
++  it('includes the current breadcrumb trail', () => {
++    breadcrumbs.recordBreadcrumb('navigation', 'Navigated to /dev/crash')
++    breadcrumbs.recordBreadcrumb('click', 'Clicked "Trigger render error"')
++
++    const result = diag.buildErrorDiagnostics(new Error('x'), componentStack)
++    expect(result.breadcrumbs.map((c) => c.label)).toEqual([
++      'Navigated to /dev/crash',
++      'Clicked "Trigger render error"',
++    ])
++  })
++
++  it('captures environment metadata', () => {
++    const { environment } = diag.buildErrorDiagnostics(new Error('x'), componentStack)
++    expect(environment.userAgent).toBe(navigator.userAgent)
++    expect(environment.language).toBe(navigator.language)
++    expect(environment.screenResolution).toBe(`${window.screen.width}x${window.screen.height}`)
++    expect(environment.viewport).toBe(`${window.innerWidth}x${window.innerHeight}`)
++    expect(environment.timestamp).toMatch(/^\d{4}-\d{2}-\d{2}T/)
++    // Build vars are unset under test → documented fallbacks
++    expect(environment.appVersion).toBe('0.0.0')
++    expect(environment.commit).toBe('development')
++  })
++})
+diff --git a/app/frontend/src/lib/errorDiagnostics.ts b/app/frontend/src/lib/errorDiagnostics.ts
+new file mode 100644
+index 0000000..79b22e7
+--- /dev/null
++++ b/app/frontend/src/lib/errorDiagnostics.ts
+@@ -0,0 +1,74 @@
++/**
++ * Builds a structured diagnostics payload from a caught React error. This is
++ * what gets attached (as JSON) to a support item so support can see the page,
++ * component, recent actions and environment without asking the user.
++ */
++
++import { getBreadcrumbs, type Breadcrumb } from './errorBreadcrumbs'
++
++export interface ErrorDiagnostics {
++  error: {
++    name: string
++    message: string
++    stack: string | null
++  }
++  page: {
++    url: string
++    pathname: string
++  }
++  /** Best-effort name of the component that threw (top of the component stack). */
++  component: string | null
++  componentStack: string | null
++  breadcrumbs: Breadcrumb[]
++  environment: {
++    userAgent: string
++    language: string
++    screenResolution: string
++    viewport: string
++    appVersion: string
++    commit: string
++    timestamp: string
++  }
++}
++
++const APP_VERSION = import.meta.env.VITE_BUILD_VERSION || '0.0.0'
++const APP_COMMIT = import.meta.env.VITE_BUILD_COMMIT || 'development'
++
++/**
++ * Pull the first component name out of a React component stack. Frames look
++ * like "\n    at ComponentName (...)" (React 19) or "\n    in ComponentName".
++ */
++export function extractComponentName(componentStack: string | null): string | null {
++  if (!componentStack) return null
++  const match = componentStack.match(/^\s*(?:at|in)\s+([A-Za-z0-9_$]+)/m)
++  return match ? match[1] : null
++}
++
++export function buildErrorDiagnostics(
++  error: Error,
++  componentStack: string | null,
++): ErrorDiagnostics {
++  return {
++    error: {
++      name: error.name,
++      message: error.message,
++      stack: error.stack ?? null,
++    },
++    page: {
++      url: window.location.href,
++      pathname: window.location.pathname,
++    },
++    component: extractComponentName(componentStack),
++    componentStack,
++    breadcrumbs: getBreadcrumbs(),
++    environment: {
++      userAgent: navigator.userAgent,
++      language: navigator.language,
++      screenResolution: `${window.screen.width}x${window.screen.height}`,
++      viewport: `${window.innerWidth}x${window.innerHeight}`,
++      appVersion: APP_VERSION,
++      commit: APP_COMMIT,
++      timestamp: new Date().toISOString(),
++    },
++  }
++}
+diff --git a/app/frontend/src/locales/af/common.json b/app/frontend/src/locales/af/common.json
+index 514ddbb..ded8636 100644
+--- a/app/frontend/src/locales/af/common.json
++++ b/app/frontend/src/locales/af/common.json
+@@ -261,10 +261,23 @@
+     }
+   },
+   "errorBoundary": {
++    "eyebrow": "Fout",
+     "title": "Iets het verkeerd geloop",
+     "description": "'n Onverwagte fout het voorgekom. Probeer asseblief weer.",
+     "tryAgain": "Probeer Weer",
+-    "reloadPage": "Herlaai Bladsy"
++    "reloadPage": "Herlaai Bladsy",
++    "reportButton": "Rapporteer aan ondersteuning",
++    "reportDialogTitle": "Rapporteer hierdie fout",
++    "reportDialogDescription": "Ons het tegniese besonderhede van wat gebeur het aangeheg. Voeg enigiets anders by wat ons kan help om die probleem te verstaan.",
++    "pageLabel": "Bladsy",
++    "componentLabel": "Komponent",
++    "errorLabel": "Fout",
++    "recentActionsLabel": "Onlangse aksies",
++    "noRecentActions": "Geen onlangse aksies aangeteken nie",
++    "unknownComponent": "Onbekend",
++    "prefillSubject": "Fout: {{message}}",
++    "prefillIntro": "Ek het 'n onverwagte fout teëgekom.",
++    "diagnosticsAttachedNote": "Volledige tegniese diagnostiek is aangeheg as error-diagnostics.txt."
+   },
+   "home": {
+     "welcome": "Welkom by {{appName}}",
+diff --git a/app/frontend/src/locales/en/common.json b/app/frontend/src/locales/en/common.json
+index 8c0923f..3c6b874 100644
+--- a/app/frontend/src/locales/en/common.json
++++ b/app/frontend/src/locales/en/common.json
+@@ -261,10 +261,23 @@
+     }
+   },
+   "errorBoundary": {
++    "eyebrow": "Error",
+     "title": "Something went wrong",
+     "description": "An unexpected error occurred. Please try again.",
+     "tryAgain": "Try Again",
+-    "reloadPage": "Reload Page"
++    "reloadPage": "Reload Page",
++    "reportButton": "Report to support",
++    "reportDialogTitle": "Report this error",
++    "reportDialogDescription": "We've attached technical details about what happened. Add anything else that helps us understand the problem.",
++    "pageLabel": "Page",
++    "componentLabel": "Component",
++    "errorLabel": "Error",
++    "recentActionsLabel": "Recent actions",
++    "noRecentActions": "No recent actions recorded",
++    "unknownComponent": "Unknown",
++    "prefillSubject": "Error: {{message}}",
++    "prefillIntro": "I ran into an unexpected error.",
++    "diagnosticsAttachedNote": "Full technical diagnostics are attached as error-diagnostics.txt."
+   },
+   "home": {
+     "welcome": "Welcome to {{appName}}",
+diff --git a/app/frontend/src/pages/dev/CrashTestPage.tsx b/app/frontend/src/pages/dev/CrashTestPage.tsx
+new file mode 100644
+index 0000000..2b3ea56
+--- /dev/null
++++ b/app/frontend/src/pages/dev/CrashTestPage.tsx
+@@ -0,0 +1,38 @@
++import { useState } from 'react'
++import { Button } from '@/components/ui/button'
++
++/**
++ * DEV-ONLY page for exercising the app ErrorBoundary / ErrorFallback. It is
++ * only registered as a route when `import.meta.env.DEV` is true (see router),
++ * so it never ships to production and is intentionally not internationalised.
++ *
++ * Clicking the button records a click breadcrumb and then throws during the
++ * next render, so the resulting error report shows a realistic breadcrumb trail.
++ */
++function Boom(): never {
++  throw new Error('Intentional render error from the dev crash-test page')
++}
++
++export function CrashTestPage() {
++  const [crash, setCrash] = useState(false)
++
++  if (crash) {
++    return <Boom />
++  }
++
++  return (
++    <div className="flex min-h-dvh items-center justify-center bg-paper p-4">
++      <div className="max-w-md space-y-4 text-center">
++        <h1 className="font-display text-2xl text-ink">Error boundary test</h1>
++        <p className="text-sm text-ink-2">
++          Dev-only tool. Click below to throw a render error and see the error
++          page. Navigate around and click a few things first to populate the
++          breadcrumb trail.
++        </p>
++        <Button variant="destructive" onClick={() => setCrash(true)}>
++          Trigger render error
++        </Button>
++      </div>
++    </div>
++  )
++}
+diff --git a/app/frontend/src/router.tsx b/app/frontend/src/router.tsx
+index 93eeb90..64fb288 100644
+--- a/app/frontend/src/router.tsx
++++ b/app/frontend/src/router.tsx
+@@ -66,6 +66,28 @@ const HelpArticlePage = lazyNamed(() => import('@/pages/HelpArticlePage'), 'Help
+ const TermsPage = lazyNamed(() => import('@/pages/TermsPage'), 'TermsPage')
+ const PrivacyPage = lazyNamed(() => import('@/pages/PrivacyPage'), 'PrivacyPage')
+ 
++// Dev-only: error boundary test page. The lazy import lives inside the
++// `import.meta.env.DEV` branch so production builds dead-code-eliminate it
++// entirely (no chunk emitted) rather than just hiding the route.
++const devRoutes = import.meta.env.DEV
++  ? (() => {
++      const CrashTestPage = lazyNamed(
++        () => import('@/pages/dev/CrashTestPage'),
++        'CrashTestPage'
++      )
++      return [
++        {
++          path: 'dev/crash',
++          element: (
++            <LazyPage>
++              <CrashTestPage />
++            </LazyPage>
++          ),
++        },
++      ]
++    })()
++  : []
++
+ // Authenticated pages
+ const DashboardPage = lazyNamed(() => import('@/pages/DashboardPage'), 'DashboardPage')
+ const OnboardingPage = lazyNamed(() => import('@/pages/OnboardingPage'), 'OnboardingPage')
+@@ -374,6 +396,10 @@ export const router = createBrowserRouter([
+         ),
+       },
+ 
++      // Dev-only: trigger a render error to test the ErrorBoundary/ErrorFallback.
++      // Visit /dev/crash and click the button. Omitted from production builds.
++      ...devRoutes,
++
+       // Public/guest pages
+       {
+         path: 'login',

@@ -1,0 +1,130 @@
+# Role to permission mappings
+# Each role gets a list of permission codes
+
+owner:
+  # Owners get ALL permissions
+  - users:read
+  - users:write
+  - users:delete
+  - roles:read
+  - roles:write
+  - roles:delete
+  - user_roles:read
+  - user_roles:assign
+  - user_roles:revoke
+  - audit_logs:read
+  - notifications:read
+  - notifications:write
+  - notifications:send
+  - notification_templates:read
+  - notification_templates:write
+  - notification_templates:delete
+  - notification_settings:read
+  - notification_settings:write
+  - notification_categories:read
+  - notification_categories:write
+  - notification_categories:delete
+  - notification_providers:read
+  - notification_providers:write
+  - files:read
+  - files:write
+  - files:delete
+  - files:admin
+  - file_settings:read
+  - file_settings:write
+  - metrics:read
+  - organization:read
+  - organization:write
+  - sso:read
+  - sso:write
+  - api_keys:read
+  - api_keys:write
+  - api_keys:delete
+  - feedback:submit
+  - feedback:view
+  - feedback:respond
+  - feedback:delete
+  - about:read
+  - about:write
+  - reports:read
+  - reports:write
+  - reports:delete
+  - reports:schedule
+
+admin:
+  # Admins get most permissions except some sensitive ones
+  - users:read
+  - users:write
+  - users:delete
+  - roles:read
+  - roles:write
+  # No roles:delete
+  - user_roles:read
+  - user_roles:assign
+  - user_roles:revoke
+  - audit_logs:read
+  - notifications:read
+  - notifications:write
+  - notifications:send
+  - notification_templates:read
+  - notification_templates:write
+  - notification_settings:read
+  - notification_settings:write
+  - notification_categories:read
+  - notification_categories:write
+  - notification_providers:read
+  # No notification_providers:write - the VAPID private key is platform
+  # infrastructure, not per-organization configuration.
+  - files:read
+  - files:write
+  - files:delete
+  - files:admin
+  - file_settings:read
+  # No file_settings:write
+  - metrics:read
+  - organization:read
+  # No organization:write
+  - sso:read
+  - sso:write
+  - api_keys:read
+  - api_keys:write
+  - api_keys:delete
+  - feedback:submit
+  - feedback:view
+  - feedback:respond
+  - about:read
+  - about:write
+  - reports:read
+  - reports:write
+  - reports:schedule
+  # No reports:delete
+
+member:
+  # Members get basic permissions including feedback submission
+  - feedback:submit
+  - about:read
+
+viewer:
+  # Viewers get read-only permissions
+  - users:read
+  - roles:read
+  - notifications:read
+  - files:read
+  - organization:read
+  - sso:read
+  - feedback:submit
+  - about:read
+  - reports:read
+
+tester:
+  # QA testers can bypass feature flags to test unreleased features
+  - feature_flags:bypass
+  - users:read
+  - roles:read
+  - notifications:read
+  - files:read
+  - files:write
+  - organization:read
+  - feedback:submit
+  - api_keys:read
+  - about:read

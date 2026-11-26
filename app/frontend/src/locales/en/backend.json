@@ -1,0 +1,333 @@
+{
+  "auth": {
+    "invalid_credentials": "Invalid credentials",
+    "organization_not_active": "Organization is not active",
+    "token_expired": "Token has expired",
+    "invalid_token": "Invalid token",
+    "token_revoked": "Token has been revoked",
+    "token_not_found": "Token not found",
+    "login_success": "Login successful",
+    "logout_success": "Logout successful",
+    "all_sessions_logged_out": "All sessions logged out",
+    "password_reset_email_sent": "Password reset email sent",
+    "password_reset_success": "Password reset successful",
+    "password_reset_token_invalid": "Password reset token is invalid",
+    "invalid_password": "Invalid password",
+    "password_too_short": "Password must be at least 8 characters long",
+    "password_reset_token_expired": "Invalid or expired password reset token",
+    "admin_required": "You can only log out yourself. Admin access required to log out other users.",
+    "invalid_2fa_code": "Invalid two-factor authentication code",
+    "account_locked": "Account temporarily locked due to too many failed attempts. Please try again later.",
+    "ip_blocked": "Too many failed attempts from this location. Please try again later.",
+    "2fa_locked": "Too many failed two-factor attempts. Please try again later.",
+    "email_not_verified": "Please verify your email address before signing in.",
+    "2fa_required": "This account uses two-factor authentication. Please sign in with your password to continue."
+  },
+  "user": {
+    "not_found": "User not found",
+    "organization_not_found": "Organization not found",
+    "email_undeliverable": "Email undeliverable",
+    "verification_email_sent": "Verification email sent",
+    "already_exists": "User already exists",
+    "created": "User created successfully",
+    "updated": "User updated successfully",
+    "deleted": "User deleted successfully",
+    "profile_updated": "Profile updated successfully",
+    "password_changed": "Password changed successfully",
+    "password_incorrect": "Incorrect password",
+    "permissions_retrieved": "Permissions retrieved successfully",
+    "registration_failed": "Unable to process registration. Please try again or contact support.",
+    "phone_already_exists": "Phone number is already in use",
+    "last_super_admin": "Cannot remove the last super admin. Promote another user first.",
+    "no_password_login": "This account does not use email and password sign-in. Sign in with the connected identity provider instead.",
+    "password_reset_sent": "Password reset email sent to the user"
+  },
+  "organization": {
+    "not_found": "Organization not found",
+    "created": "Organization created successfully",
+    "updated": "Organization updated successfully",
+    "deleted": "Organization deleted successfully",
+    "already_exists": "Organization already exists",
+    "invalid_id": "Invalid organization ID format"
+  },
+  "role": {
+    "not_found": "Role not found",
+    "created": "Role created successfully",
+    "updated": "Role updated successfully",
+    "deleted": "Role deleted successfully",
+    "already_exists": "Role already exists",
+    "cannot_delete_system_role": "Cannot delete system role"
+  },
+  "user_role": {
+    "assigned": "Role assigned successfully",
+    "removed": "Role removed successfully",
+    "already_assigned": "Role already assigned",
+    "not_found": "User role not found",
+    "self_assignment_forbidden": "Cannot assign roles to yourself",
+    "hierarchy_violation": "Cannot assign a role with higher privileges than your own"
+  },
+  "user_type": {
+    "not_found": "User type not found",
+    "assigned": "User type assigned successfully",
+    "revoked": "User type revoked successfully",
+    "already_assigned": "User already has this user type assigned",
+    "not_assigned": "User does not have this user type assigned",
+    "onboarding_reset": "Onboarding reset successfully"
+  },
+  "onboarding_step": {
+    "not_found": "Onboarding step not found"
+  },
+  "api_key": {
+    "created": "API key created successfully",
+    "updated": "API key updated successfully",
+    "deleted": "API key deleted successfully",
+    "not_found": "API key not found",
+    "invalid": "Invalid API key"
+  },
+  "file": {
+    "uploaded": "File uploaded successfully",
+    "deleted": "File deleted successfully",
+    "not_found": "File not found",
+    "too_large": "File is too large",
+    "invalid_type": "Invalid file type",
+    "service_unavailable": "File service unavailable",
+    "delete_forbidden": "You do not have permission to delete this file",
+    "content_mismatch": "File content does not match declared type",
+    "no_thumbnail": "No thumbnail is available for this file"
+  },
+  "media": {
+    "delete_forbidden": "You do not have permission to delete this media"
+  },
+  "notification": {
+    "sent": "Notification sent successfully",
+    "template_created": "Notification template created successfully",
+    "template_updated": "Notification template updated successfully",
+    "template_deleted": "Notification template deleted successfully",
+    "template_not_found": "Notification template not found",
+    "preference_updated": "Notification preference updated successfully",
+    "not_found": "Notification not found"
+  },
+  "push": {
+    "not_configured": "Push notifications are not configured",
+    "subscription_not_found": "Push subscription not found",
+    "invalid_endpoint": "That is not a recognised browser push endpoint",
+    "too_many_subscriptions": "Too many registered push devices. Remove one before adding another."
+  },
+  "user_notification": {
+    "marked_read": "Notification marked as read",
+    "marked_unread": "Notification marked as unread",
+    "deleted": "Notification deleted successfully",
+    "all_marked_read": "All notifications marked as read",
+    "not_found": "User notification not found"
+  },
+  "notification_preferences": {
+    "retrieved": "Notification preferences retrieved successfully",
+    "updated": "Notification preferences updated successfully"
+  },
+  "audit_log": {
+    "retrieved": "Audit log retrieved successfully"
+  },
+  "request_logs": {
+    "invalid_cursor": "Invalid pagination cursor",
+    "cleanup_enqueue_failed": "Could not start the log cleanup job. Please try again."
+  },
+  "cron_job": {
+    "invalid_config_key": "That configuration key is not valid for this job",
+    "config_value_invalid": "Value must be a whole number",
+    "config_value_too_low": "Value is below the allowed minimum",
+    "config_value_too_high": "Value is above the allowed maximum"
+  },
+  "otp": {
+    "sent": "OTP sent successfully",
+    "verified": "OTP verified successfully",
+    "invalid": "Invalid OTP",
+    "expired": "OTP has expired",
+    "not_found": "OTP not found",
+    "already_verified": "OTP already verified"
+  },
+  "two_factor": {
+    "enabled": "Two-factor authentication enabled successfully",
+    "not_enabled": "Two-factor authentication is not enabled for this user",
+    "invalid_code": "Invalid verification code. Please try again.",
+    "admin_disabled": "Two-factor authentication has been disabled for this user"
+  },
+  "sso": {
+    "settings_created": "SSO settings created successfully",
+    "settings_updated": "SSO settings updated successfully",
+    "settings_deleted": "SSO settings deleted successfully",
+    "settings_not_found": "SSO settings not found",
+    "provider_not_configured": "SSO provider not configured",
+    "provider_not_supported": "SSO provider not supported",
+    "authentication_failed": "SSO authentication failed",
+    "state_invalid": "Invalid SSO state parameter",
+    "state_replay": "SSO state has already been used or expired",
+    "state_verification_unavailable": "Sign-in verification is temporarily unavailable. Please try again in a moment.",
+    "link_verification_unavailable": "Account linking verification is temporarily unavailable. Please try again in a moment.",
+    "link_proof_required": "Confirm your password, or sign in first, to link this account.",
+    "link_attempts_exceeded": "Too many incorrect passwords for this link request. Please sign in again to start a new one."
+  },
+  "impersonation": {
+    "started": "Impersonation started successfully",
+    "ended": "Impersonation ended successfully",
+    "not_authorized": "Not authorized to impersonate",
+    "user_not_found": "User not found for impersonation",
+    "unauthorized": "Cannot end another admin's impersonation session",
+    "forbidden_while_impersonating": "Cannot view impersonation history while impersonating",
+    "no_active_session": "No active impersonation session found",
+    "resumed": "Impersonation resumed successfully"
+  },
+  "admin": {
+    "user_activated": "User activated successfully",
+    "user_deactivated": "User deactivated successfully",
+    "organization_activated": "Organization activated successfully",
+    "organization_deactivated": "Organization deactivated successfully"
+  },
+  "email_change": {
+    "request_initiated": "Email change request initiated",
+    "identity_verified": "Identity verified successfully",
+    "otp_sent": "Verification code sent to new email",
+    "completed": "Email changed successfully",
+    "cancelled": "Email change request cancelled",
+    "not_found": "Email change request not found",
+    "already_active": "An email change request is already active",
+    "email_already_registered": "This email is already registered",
+    "email_same_as_current": "New email is the same as current email",
+    "invalid_password": "Invalid password",
+    "invalid_2fa_code": "Invalid two-factor authentication code",
+    "invalid_otp": "Invalid verification code",
+    "otp_expired": "Verification code has expired",
+    "max_otp_attempts": "Maximum verification attempts exceeded",
+    "max_resend_attempts": "Maximum resend attempts exceeded",
+    "request_expired": "Email change request has expired",
+    "invalid_status": "Invalid request status",
+    "rate_limit_exceeded": "Too many requests, please try again later",
+    "identity_verification_failed": "Identity verification failed",
+    "identity_verification_locked": "Identity verification locked due to too many failed attempts"
+  },
+  "announcement": {
+    "created": "Announcement created successfully",
+    "updated": "Announcement updated successfully",
+    "deleted": "Announcement deleted successfully",
+    "not_found": "Announcement not found",
+    "dismissed": "Announcement dismissed successfully",
+    "not_dismissible": "This announcement is not dismissible",
+    "already_dismissed": "Announcement already dismissed",
+    "platform_wide_forbidden": "Only super admins can create platform-wide announcements",
+    "no_fields_provided": "No fields provided for update",
+    "conflict": "Announcement could not be created due to a conflict",
+    "database_error": "Database error occurred"
+  },
+  "session": {
+    "not_found": "Session not found",
+    "revoked": "Session revoked successfully",
+    "others_revoked": "Other sessions revoked successfully",
+    "invalidated": "Session invalidated successfully",
+    "no_current": "No current session could be identified"
+  },
+  "feedback": {
+    "created": "Feedback submitted successfully",
+    "updated": "Feedback updated successfully",
+    "deleted": "Feedback deleted successfully",
+    "not_found": "Feedback not found",
+    "forbidden": "You do not have permission to access this feedback",
+    "conflict": "Feedback could not be created due to a conflict",
+    "database_error": "Database error occurred while processing feedback",
+    "attachment_error": "Error processing attachment",
+    "attachment_conflict": "Attachment could not be created due to a conflict",
+    "cross_org_forbidden": "Only super admins can view feedback from other organizations",
+    "reply_created": "Reply created successfully",
+    "reply_error": "Error creating reply",
+    "reply_conflict": "Reply could not be created due to a conflict",
+    "marked_viewed": "Feedback marked as viewed",
+    "marked_viewed_admin": "Feedback marked as viewed by an administrator"
+  },
+  "common": {
+    "success": "Operation successful",
+    "error": "An error occurred",
+    "not_found": "Resource not found",
+    "bad_request": "Invalid request",
+    "forbidden": "Access forbidden",
+    "unauthorized": "Unauthorized",
+    "validation_error": "Validation error",
+    "internal_error": "Internal server error",
+    "service_unavailable": "Service temporarily unavailable"
+  },
+  "server": {
+    "error": "Internal server error"
+  },
+  "permission": {
+    "not_found": "Permission not found",
+    "already_exists": "Permission already exists",
+    "created": "Permission created successfully",
+    "updated": "Permission updated successfully",
+    "deleted": "Permission deleted successfully",
+    "assigned": "Permission assigned successfully",
+    "revoked": "Permission revoked successfully"
+  },
+  "data_export": {
+    "request_created": "Export request created successfully",
+    "request_failed": "Failed to create export request",
+    "not_found": "Export request not found",
+    "not_ready": "Export is not ready for download",
+    "file_missing": "Export file is missing",
+    "download_url_generated": "Download URL generated successfully",
+    "access_denied": "You do not have permission to access this export",
+    "invalid_path": "Invalid export file path",
+    "invalid_format": "Invalid export file format",
+    "file_not_found": "The export file is no longer available",
+    "invalid_storage": "This export is not available for direct download"
+  },
+  "data_deletion": {
+    "request_created": "Deletion request created successfully",
+    "request_failed": "Failed to create deletion request",
+    "already_exists": "A deletion request already exists",
+    "not_found": "Deletion request not found",
+    "cancelled": "Deletion request cancelled successfully",
+    "cancel_failed": "Failed to cancel deletion request"
+  },
+  "websocket": {
+    "access_revoked": "Your session has been revoked. Please log in again."
+  },
+  "phone": {
+    "otp_sent": "Verification code sent",
+    "otp_verified": "Phone number verified successfully",
+    "verification_failed": "Phone verification failed",
+    "rate_limit_exceeded": "Too many verification requests. Please try again later.",
+    "already_in_use": "This phone number is already registered to another account"
+  },
+  "payments": {
+    "provider_not_found": "Payment provider not found",
+    "settings_update_failed": "Payment settings could not be updated"
+  },
+  "help_center": {
+    "invalid_article_id": "Invalid article ID format. A UUID is expected.",
+    "invalid_faq_id": "Invalid FAQ ID format. A UUID is expected."
+  },
+  "help_article": {
+    "not_found": "Article not found",
+    "deleted": "Article deleted successfully",
+    "reordered": "Articles reordered successfully",
+    "invalid": "The article details are not valid",
+    "reorder_invalid": "The requested article order is not valid",
+    "conflict": "The article could not be saved because it conflicts with an existing one",
+    "database_error": "The article could not be saved. Please try again."
+  },
+  "help_category": {
+    "not_found": "Category not found",
+    "deleted": "Category deleted successfully",
+    "reordered": "Categories reordered successfully",
+    "invalid": "The category details are not valid",
+    "reorder_invalid": "The requested category order is not valid",
+    "conflict": "The category could not be saved because it conflicts with an existing one",
+    "database_error": "The category could not be saved. Please try again."
+  },
+  "help_faq": {
+    "not_found": "FAQ not found",
+    "deleted": "FAQ deleted successfully",
+    "reordered": "FAQs reordered successfully",
+    "invalid": "The FAQ details are not valid",
+    "reorder_invalid": "The requested FAQ order is not valid",
+    "conflict": "The FAQ could not be saved because it conflicts with an existing one",
+    "database_error": "The FAQ could not be saved. Please try again."
+  }
+}

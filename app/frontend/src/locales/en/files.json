@@ -1,0 +1,50 @@
+{
+  "title": "My Files",
+  "description": "Upload and manage your files",
+  "uploadButton": "Upload File",
+  "storage": {
+    "title": "Storage",
+    "categories": {
+      "images": "Images",
+      "videos": "Videos",
+      "documents": "Documents",
+      "other": "Other"
+    }
+  },
+  "filters": {
+    "all": "All",
+    "image": "Images",
+    "video": "Videos",
+    "document": "Documents",
+    "other": "Other",
+    "searchPlaceholder": "Search files..."
+  },
+  "emptyState": {
+    "title": "No files found",
+    "action": "Upload your first file"
+  },
+  "actions": {
+    "download": "Download",
+    "delete": "Delete"
+  },
+  "badges": {
+    "public": "Public"
+  },
+  "dialogs": {
+    "upload": {
+      "title": "Upload Files"
+    },
+    "delete": {
+      "title": "Delete File",
+      "description": "Are you sure you want to delete \"{{filename}}\"? This action cannot be undone.",
+      "confirmLabel": "Delete"
+    }
+  },
+  "messages": {
+    "uploadSuccess": "File uploaded successfully",
+    "uploadError": "Failed to upload file",
+    "downloadError": "Failed to get download URL",
+    "deleteSuccess": "File deleted successfully",
+    "deleteError": "Failed to delete file"
+  }
+}

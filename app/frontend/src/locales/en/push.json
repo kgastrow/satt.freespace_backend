@@ -1,0 +1,18 @@
+{
+  "title": "Push notifications (this device)",
+  "description": "Get notifications pushed straight to this device, even when the app is closed.",
+  "enable": "Enable push notifications",
+  "enabled": "Push notifications are enabled on this device.",
+  "blocked": "Notifications are blocked. Allow them in your browser settings to enable push.",
+  "unsupported": "This browser does not support push notifications.",
+  "iosInstall": "On iPhone and iPad, push notifications need this app added to your Home Screen. Tap Share, then “Add to Home Screen”, and open it from there.",
+  "channelOff": "This device is subscribed, but push is switched off for your account above — turn “{{channelLabel}}” on to receive them.",
+  "error": {
+    "denied": "Notifications are blocked for this site. Allow them in your browser settings, then try again.",
+    "dismissed": "The permission prompt was closed. Try again and choose Allow.",
+    "notConfigured": "Push notifications aren't available right now. Please try again later.",
+    "rejected": "This device couldn't be registered for push notifications.",
+    "network": "Couldn't reach the server. Check your connection and try again.",
+    "unsupported": "This browser can't receive push notifications."
+  }
+}

@@ -1,0 +1,184 @@
+version: '3.8'
+
+# Production Docker Compose configuration
+# Usage: docker-compose -f docker-compose.prod.yml up -d
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: ayzer-webapp-postgres
+    environment:
+      POSTGRES_USER: ${DB_USER:-appuser}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:?Database password required}
+      POSTGRES_DB: ${DB_NAME:-appdb}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-appuser} -d ${DB_NAME:-appdb}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - ayzer-webapp-network
+    restart: always
+    # Production: Don't expose port externally
+    # ports:
+    #   - "5432:5432"
+
+  # PgBouncer Connection Pooler
+  pgbouncer:
+    image: edoburu/pgbouncer:1.21.0
+    container_name: ayzer-webapp-pgbouncer
+    environment:
+      DATABASE_URL: postgres://${DB_USER:-appuser}:${DB_PASSWORD}@postgres:5432/${DB_NAME:-appdb}
+      POOL_MODE: transaction
+      MAX_CLIENT_CONN: 200
+      DEFAULT_POOL_SIZE: 40
+      MIN_POOL_SIZE: 10
+      RESERVE_POOL_SIZE: 10
+      RESERVE_POOL_TIMEOUT: 5
+      SERVER_RESET_QUERY: DISCARD ALL
+      AUTH_TYPE: scram-sha-256
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - ayzer-webapp-network
+    restart: always
+
+  # Redis Cache & Job Queue
+  redis:
+    image: redis:7-alpine
+    container_name: ayzer-webapp-redis
+    command: redis-server --appendonly yes --maxmemory 256mb --maxmemory-policy allkeys-lru
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - ayzer-webapp-network
+    restart: always
+
+  # FastAPI Application
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ayzer-webapp-api
+    environment:
+      - PYTHONUNBUFFERED=1
+    volumes:
+      - ./config.json:/app/config.json:ro
+      - ./logs:/app/logs
+    # --forwarded-allow-ips is load-bearing, not tuning. Without it uvicorn
+    # trusts only 127.0.0.1, and nginx is a SEPARATE container whose peer
+    # address is on the bridge network above - so every forwarded header is
+    # discarded and request.client.host resolves to the nginx container for
+    # every visitor. That collapses the per-IP brute-force lockout and the
+    # rate limiter into one shared bucket: five failed logins from anyone
+    # would lock /auth/login for the whole deployment.
+    #
+    # Set to the compose network's subnet, not '*'. With '*' uvicorn trusts
+    # any peer and returns the LEFTMOST X-Forwarded-For entry, which the
+    # client controls - which is the spoofable configuration this replaced.
+    #
+    # config.docker.json.example additionally sets trusted_client_ip_header to
+    # X-Real-IP, which nginx overwrites (deploy/nginx.conf); that is the
+    # primary path and this is defence in depth for anything reading
+    # request.client.host directly.
+    command: >
+      uvicorn main:app
+      --host 0.0.0.0
+      --port 8000
+      --workers 4
+      --loop uvloop
+      --http httptools
+      --proxy-headers
+      --forwarded-allow-ips=172.28.0.0/16
+    depends_on:
+      postgres:
+        condition: service_healthy
+      pgbouncer:
+        condition: service_started
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    networks:
+      - ayzer-webapp-network
+    restart: always
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 1G
+        reservations:
+          cpus: '0.5'
+          memory: 256M
+
+  # ARQ Background Worker
+  worker:
+    build:
+      context: .
+      dockerfile: Dockerfile.worker
+    container_name: ayzer-webapp-worker
+    environment:
+      - PYTHONUNBUFFERED=1
+    volumes:
+      - ./config.json:/app/config.json:ro
+      - ./logs:/app/logs
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - ayzer-webapp-network
+    restart: always
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 512M
+        reservations:
+          cpus: '0.25'
+          memory: 128M
+
+  # Nginx Reverse Proxy (optional - can use external load balancer)
+  nginx:
+    image: nginx:alpine
+    container_name: ayzer-webapp-nginx
+    volumes:
+      - ./deploy/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./logs/nginx:/var/log/nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - api
+    networks:
+      - ayzer-webapp-network
+    restart: always
+
+networks:
+  ayzer-webapp-network:
+    driver: bridge
+    # Pinned so the API's --forwarded-allow-ips can name the proxy's range
+    # deterministically. Docker otherwise allocates from its default pool and
+    # the nginx container's address changes between environments, which would
+    # make the API silently distrust it (see the api service's command).
+    ipam:
+      config:
+        - subnet: 172.28.0.0/16
+
+volumes:
+  postgres_data:
+  redis_data:

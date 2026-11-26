@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+set -e
+
+echo "Removing AYZER Frontend..."
+# Static files will be removed by dpkg automatically

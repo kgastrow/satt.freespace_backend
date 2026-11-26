@@ -1,0 +1,172 @@
+{
+  "page": {
+    "title": "Complete Your Onboarding",
+    "description": "Please complete the following steps to finish setting up your account",
+    "descriptionWithUserType": "Please complete the following steps to finish your {{userType}} onboarding"
+  },
+  "wizard": {
+    "title": "Onboarding Progress",
+    "userTypeContext": "Onboarding for {{userType}}",
+    "stepProgress": "Step {{current}} of {{total}}",
+    "progressDescription": "{{completed}} of {{total}} steps completed",
+    "loading": "Loading onboarding information...",
+    "noSteps": "No onboarding steps available",
+    "notStarted": {
+      "title": "Onboarding Not Started",
+      "description": "Your onboarding has not been started yet. Please contact your administrator.",
+      "goToDashboard": "Go to Dashboard"
+    },
+    "pendingReview": {
+      "title": "Onboarding Under Review",
+      "description": "Thank you for completing all onboarding steps!",
+      "badge": "Pending Review",
+      "info": "Your submission is being reviewed by an administrator. You will be notified once your onboarding is approved.",
+      "goToDashboard": "Go to Dashboard"
+    },
+    "rejected": {
+      "title": "Onboarding Rejected",
+      "description": "Unfortunately, your onboarding submission was not approved.",
+      "badge": "Rejected",
+      "info": "Please contact your administrator for more information about the rejection reason."
+    },
+    "changeRequested": {
+      "title": "Changes Requested",
+      "description": "The reviewer has requested changes to your onboarding submission.",
+      "badge": "Changes Requested",
+      "info": "Please review the feedback below and update your submission accordingly.",
+      "latestComment": "Reviewer Feedback",
+      "commentsTitle": "Review Comments",
+      "respondTitle": "Add a Response",
+      "respondPlaceholder": "Type your response or question here...",
+      "respond": "Send Response",
+      "respondSuccess": "Your response has been sent",
+      "respondError": "Failed to send response",
+      "editSteps": "Edit Submission",
+      "resubmit": "Resubmit for Review",
+      "resubmitSuccess": "Your submission has been resubmitted for review",
+      "resubmitError": "Failed to resubmit"
+    },
+    "approved": "Your onboarding has been approved! Redirecting to dashboard...",
+    "allSteps": {
+      "title": "All Steps",
+      "current": "Current",
+      "completed": "Completed"
+    },
+    "userTypeSelection": {
+      "title": "Select Your Profile Type",
+      "description": "Choose how you'll use the platform to get started",
+      "select": "Select",
+      "selecting": "Starting...",
+      "noUserTypes": "No profile types are currently available. Please contact your administrator."
+    },
+    "withdraw": {
+      "trigger": "Choose a different profile type",
+      "title": "Withdraw from this onboarding?",
+      "descriptionInProgress": "This will discard your progress on the {{userType}} onboarding. You can start again with this or a different profile type at any time.",
+      "descriptionPendingReview": "Your {{userType}} onboarding is awaiting administrator review. Withdrawing will stop the review and discard your answers.",
+      "descriptionChangeRequested": "Your {{userType}} onboarding has changes requested. Withdrawing will discard your answers and end the review thread.",
+      "confirm": "Withdraw and start over",
+      "cancel": "Keep going",
+      "submitting": "Withdrawing...",
+      "success": "Onboarding withdrawn",
+      "error": "Failed to withdraw onboarding"
+    }
+  },
+  "phoneVerification": {
+    "title": "Verify Your Phone Number",
+    "description": "We need to verify your phone number to complete your account setup",
+    "phoneLabel": "Phone Number",
+    "phoneDescription": "Enter your phone number with country code (e.g., +1234567890)",
+    "sendOtp": "Send Verification Code",
+    "sending": "Sending...",
+    "otpSent": "Verification code sent successfully",
+    "verifyTitle": "Enter Verification Code",
+    "verifyDescription": "We've sent a 6-digit code to {{phone}}",
+    "otpLabel": "Verification Code",
+    "expiresIn": "Code expires in {{time}}",
+    "expired": "Code has expired",
+    "verify": "Verify Code",
+    "verifying": "Verifying...",
+    "verified": "Phone number verified successfully",
+    "changePhone": "Change Phone Number",
+    "resend": "Resend Code",
+    "resendDisabled": "Resend available in {{time}}",
+    "validation": {
+      "phoneRequired": "Phone number is required",
+      "otpLength": "Verification code must be 6 digits",
+      "otpNumeric": "Verification code must contain only numbers"
+    },
+    "errors": {
+      "sendFailed": "Failed to send verification code",
+      "verifyFailed": "Failed to verify code",
+      "invalidOtp": "Invalid or expired verification code"
+    }
+  },
+  "stepCompleted": "Step completed successfully",
+  "validation": {
+    "required": "This field is required",
+    "invalidEmail": "Invalid email address",
+    "invalidUrl": "Invalid URL",
+    "invalidFormat": "Invalid format",
+    "minLength": "Minimum length is {{min}} characters",
+    "maxLength": "Maximum length is {{max}} characters",
+    "minValue": "Minimum value is {{min}}",
+    "maxValue": "Maximum value is {{max}}",
+    "minDate": "Date must be on or after {{date}}",
+    "maxDate": "Date must be on or before {{date}}",
+    "maxSelections": "Maximum {{max}} selections allowed",
+    "fileTooLarge": "File is too large. Maximum size is {{maxSize}}",
+    "uploadFailed": "Failed to upload file. Please try again.",
+    "dataTooLarge": "Submitted data exceeds maximum allowed size ({{maxSize}}). Please reduce the amount of data."
+  },
+  "fileUpload": {
+    "placeholder": "Drag and drop a file here, or click to select",
+    "dragActive": "Drop the file here...",
+    "dragReject": "This file type is not accepted",
+    "maxSize": "Maximum file size: {{size}}",
+    "loading": "Loading file...",
+    "previouslyUploaded": "Previously uploaded file"
+  },
+  "errors": {
+    "submitFailed": "Failed to submit step",
+    "startFailed": "Failed to start onboarding"
+  },
+  "progressCard": {
+    "title": "Complete Your Onboarding",
+    "description": "Continue with your {{userType}} onboarding",
+    "pendingReviewDescription": "Your {{userType}} onboarding submission is being reviewed",
+    "pendingReviewBadge": "Awaiting Review",
+    "progressLabel": "{{completed}} of {{total}} steps completed",
+    "currentStep": "Current Step",
+    "continueButton": "Continue Onboarding",
+    "getStartedTitle": "Complete Your Profile",
+    "getStartedDescription": "Set up your profile to get the most out of the platform",
+    "getStartedButton": "Get Started",
+    "approvedTitle": "Onboarding Approved",
+    "approvedDescription": "Congratulations! Your onboarding has been approved. You now have full access to the platform.",
+    "rejectedTitle": "Onboarding Rejected",
+    "rejectedDescription": "Unfortunately, your onboarding submission was not approved. Please review and resubmit.",
+    "reviewSubmission": "Review Submission",
+    "changeRequestedTitle": "Changes Requested",
+    "changeRequestedDescription": "The reviewer has requested changes to your onboarding submission. Please review and update.",
+    "editSubmission": "Review & Edit",
+    "dismiss": "Dismiss",
+    "addAnotherTitle": "Add Another Profile Type",
+    "addAnotherDescription": "You can onboard as additional profile types",
+    "addAnotherButton": "Add Profile Type"
+  },
+  "myUserTypes": {
+    "title": "My Profile Types",
+    "description": "Profile types you have onboarded as",
+    "empty": "You haven't onboarded as any profile type yet",
+    "addAnother": "Add Another",
+    "status": {
+      "pending": "Pending",
+      "in_progress": "In Progress",
+      "pending_review": "Pending Review",
+      "change_requested": "Changes Requested",
+      "approved": "Approved",
+      "rejected": "Rejected"
+    }
+  }
+}

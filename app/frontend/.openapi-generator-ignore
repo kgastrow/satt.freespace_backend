@@ -1,0 +1,16 @@
+# OpenAPI Generator Ignore File
+#
+# This file specifies patterns to ignore during OpenAPI type generation.
+# Since we're using openapi-typescript which only generates types,
+# this file is primarily for documentation and future use.
+#
+# For openapi-typescript, the tool generates a single file and doesn't
+# support .openapi-generator-ignore, but this file serves as documentation
+# for the generation process.
+
+# Don't overwrite custom type extensions
+*-custom.ts
+*-extended.ts
+
+# Don't overwrite manual API configuration
+src/store/api.ts

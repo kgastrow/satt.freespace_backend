@@ -1,0 +1,51 @@
+# Sample feedback data for testing
+
+- type: bug
+  rating: 2
+  subject: Dashboard widgets not loading
+  message: The dashboard page takes forever to load and sometimes the widgets don't appear at all. This happens most often in the morning.
+  page_url: /dashboard
+  screen_resolution: 1920x1080
+
+- type: suggestion
+  rating: 4
+  subject: Add dark mode support
+  message: It would be great to have a dark mode option for users who prefer working at night. Many modern apps have this feature.
+  page_url: /settings
+  screen_resolution: 2560x1440
+
+- type: praise
+  rating: 5
+  subject: Love the new file upload feature!
+  message: The drag-and-drop file upload is amazing. So much easier than the old version. Great work team!
+  page_url: /files
+  screen_resolution: 1920x1080
+
+- type: complaint
+  rating: 1
+  subject: Export function is broken
+  message: When I try to export my data to CSV, I get an error message. This is critical for my monthly reports.
+  page_url: /reports
+  screen_resolution: 1366x768
+
+- type: suggestion
+  rating: 3
+  subject: Improve search functionality
+  message: The search could be better. It would be nice to have filters and advanced search options to find things faster.
+  page_url: /search
+  screen_resolution: 1920x1080
+
+# Bug with attachment and conversation thread
+- type: bug
+  rating: 1
+  subject: 404 error on profile page
+  message: I'm getting a 404 error when I try to access my profile page. I've attached a screenshot of the error. This started happening after the last update.
+  page_url: /profile
+  screen_resolution: 1920x1080
+  has_attachment: true
+  attachment_file: 404_page.png
+  conversation:
+    - is_admin: true
+      message: Thank you for reporting this issue. We've identified the problem and our development team is working on a fix. This appears to be related to a recent routing change. We expect to have this resolved within 24 hours.
+    - is_admin: false
+      message: Thanks for the quick response! Is there a workaround I can use in the meantime to access my profile settings?

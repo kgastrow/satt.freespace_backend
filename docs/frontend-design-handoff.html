@@ -1,0 +1,708 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root { color-scheme: light dark; }
+  body { margin: 0; }
+  img { max-width: 100%; }
+  [hidden] { display: none !important; }
+</style>
+<title>AYZER Frontend Handoff</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Public+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+</head>
+<body>
+
+<style>
+  :root {
+    /* Surfaces — taken verbatim from the app's own token file (src/index.css) */
+    --bg: oklch(1 0 0);
+    --fg: oklch(0.145 0 0);
+    --card: oklch(1 0 0);
+    --muted: oklch(0.97 0 0);
+    --muted-fg: oklch(0.556 0 0);
+    --border: oklch(0.922 0 0);
+    --rule: oklch(0.922 0 0);
+
+    /* Zone coding — the app's chart-1..5 tokens, reused as categorical hues */
+    --zone-public: oklch(0.62 0.14 70);
+    --zone-user: oklch(0.52 0.10 185);
+    --zone-settings: oklch(0.58 0.15 84);
+    --zone-admin: oklch(0.60 0.19 41);
+    --zone-platform: oklch(0.45 0.09 227);
+
+    --accent: oklch(0.50 0.10 185);
+    --accent-soft: oklch(0.95 0.02 185);
+
+    --radius: 0.625rem;
+    --radius-sm: 0.375rem;
+
+    --shadow: 0 1px 2px oklch(0 0 0 / 0.05);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: oklch(0.145 0 0);
+      --fg: oklch(0.985 0 0);
+      --card: oklch(0.205 0 0);
+      --muted: oklch(0.235 0 0);
+      --muted-fg: oklch(0.708 0 0);
+      --border: oklch(1 0 0 / 12%);
+      --rule: oklch(1 0 0 / 10%);
+
+      --zone-public: oklch(0.78 0.15 70);
+      --zone-user: oklch(0.75 0.11 185);
+      --zone-settings: oklch(0.82 0.16 84);
+      --zone-admin: oklch(0.74 0.17 41);
+      --zone-platform: oklch(0.70 0.11 227);
+
+      --accent: oklch(0.78 0.10 185);
+      --accent-soft: oklch(0.28 0.03 185);
+
+      --shadow: 0 1px 2px oklch(0 0 0 / 0.4);
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --bg: oklch(0.145 0 0);
+    --fg: oklch(0.985 0 0);
+    --card: oklch(0.205 0 0);
+    --muted: oklch(0.235 0 0);
+    --muted-fg: oklch(0.708 0 0);
+    --border: oklch(1 0 0 / 12%);
+    --rule: oklch(1 0 0 / 10%);
+
+    --zone-public: oklch(0.78 0.15 70);
+    --zone-user: oklch(0.75 0.11 185);
+    --zone-settings: oklch(0.82 0.16 84);
+    --zone-admin: oklch(0.74 0.17 41);
+    --zone-platform: oklch(0.70 0.11 227);
+
+    --accent: oklch(0.78 0.10 185);
+    --accent-soft: oklch(0.28 0.03 185);
+
+    --shadow: 0 1px 2px oklch(0 0 0 / 0.4);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: "Public Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page {
+    max-width: 1160px;
+    margin: 0 auto;
+    padding: 56px 28px 96px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  @media (min-width: 1080px) {
+    .page {
+      grid-template-columns: 200px minmax(0, 1fr);
+      column-gap: 56px;
+      padding-top: 72px;
+    }
+  }
+
+  /* ---- masthead ---- */
+  .masthead { grid-column: 1 / -1; border-bottom: 1px solid var(--rule); padding-bottom: 34px; margin-bottom: 44px; }
+  .eyebrow {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--muted-fg); margin: 0 0 14px;
+  }
+  h1 {
+    font-family: Archivo, ui-sans-serif, system-ui, sans-serif;
+    font-weight: 700; font-size: clamp(2rem, 5vw, 2.9rem); line-height: 1.05;
+    letter-spacing: -0.025em; margin: 0 0 16px; text-wrap: balance;
+  }
+  .standfirst { font-size: 1.0625rem; color: var(--muted-fg); max-width: 62ch; margin: 0; }
+  .standfirst strong { color: var(--fg); font-weight: 600; }
+
+  .facts { display: flex; flex-wrap: wrap; gap: 8px 28px; margin-top: 26px; }
+  .fact { display: flex; flex-direction: column; gap: 2px; }
+  .fact dt {
+    font-family: "IBM Plex Mono", monospace; font-size: 10.5px; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--muted-fg);
+  }
+  .fact dd { margin: 0; font-weight: 600; font-size: 0.9375rem; font-variant-numeric: tabular-nums; }
+
+  /* ---- table of contents ---- */
+  nav.toc { grid-column: 1; display: none; }
+  @media (min-width: 1080px) {
+    nav.toc { display: block; position: sticky; top: 40px; align-self: start; }
+  }
+  nav.toc p {
+    font-family: "IBM Plex Mono", monospace; font-size: 10.5px; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--muted-fg); margin: 0 0 12px;
+  }
+  nav.toc ol { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 7px; }
+  nav.toc a { color: var(--muted-fg); text-decoration: none; font-size: 0.875rem; display: block; }
+  nav.toc a:hover { color: var(--fg); }
+
+  main { grid-column: 1 / -1; min-width: 0; }
+  @media (min-width: 1080px) { main { grid-column: 2; } }
+
+  section { margin-bottom: 60px; scroll-margin-top: 28px; }
+
+  h2 {
+    font-family: Archivo, sans-serif; font-weight: 600; font-size: 1.375rem;
+    letter-spacing: -0.015em; margin: 0 0 6px; text-wrap: balance;
+  }
+  h2 .num {
+    font-family: "IBM Plex Mono", monospace; font-size: 0.8125rem; font-weight: 400;
+    color: var(--muted-fg); margin-right: 10px;
+  }
+  h3 {
+    font-family: Archivo, sans-serif; font-weight: 600; font-size: 1rem;
+    margin: 30px 0 10px; letter-spacing: -0.01em;
+  }
+  .lede { color: var(--muted-fg); max-width: 68ch; margin: 0 0 22px; }
+  p { max-width: 68ch; }
+
+  code, .mono { font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 0.8125em; }
+  code { background: var(--muted); padding: 1px 5px; border-radius: 4px; }
+
+  a { color: var(--accent); }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 3px; }
+
+  /* ---- stack table ---- */
+  .tablewrap { overflow-x: auto; border: 1px solid var(--border); border-radius: var(--radius); }
+  table { border-collapse: collapse; width: 100%; min-width: 560px; font-size: 0.875rem; }
+  th, td { text-align: left; padding: 10px 16px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+  thead th {
+    font-family: "IBM Plex Mono", monospace; font-size: 10.5px; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--muted-fg); font-weight: 500; background: var(--muted);
+  }
+  tbody tr:last-child td { border-bottom: none; }
+  td.k { font-weight: 600; white-space: nowrap; }
+  td.v { color: var(--muted-fg); }
+  td .lib { font-family: "IBM Plex Mono", monospace; font-size: 0.8125rem; color: var(--fg); }
+
+  /* ---- zones ---- */
+  .zone { border-left: 3px solid var(--z); padding-left: 20px; margin-bottom: 38px; }
+  .zone-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px 14px; margin-bottom: 4px; }
+  .zone-head h3 { margin: 0; font-size: 1.0625rem; }
+  .zone-path {
+    font-family: "IBM Plex Mono", monospace; font-size: 0.75rem; color: var(--z);
+    background: color-mix(in oklch, var(--z) 10%, transparent);
+    padding: 2px 7px; border-radius: 4px;
+  }
+  .zone-who { color: var(--muted-fg); font-size: 0.875rem; margin: 0 0 16px; max-width: 66ch; }
+
+  .group { margin-bottom: 16px; }
+  .group-label {
+    font-family: "IBM Plex Mono", monospace; font-size: 10.5px; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--muted-fg); margin: 0 0 7px;
+  }
+  ul.screens { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
+  ul.screens li {
+    font-size: 0.8125rem; border: 1px solid var(--border); border-radius: var(--radius-sm);
+    padding: 3px 9px; background: var(--card);
+  }
+  ul.screens li .p {
+    font-family: "IBM Plex Mono", monospace; font-size: 0.6875rem; color: var(--muted-fg);
+    margin-left: 6px;
+  }
+
+  /* ---- component inventory ---- */
+  .cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 22px 34px; }
+  .col h4 {
+    font-family: "IBM Plex Mono", monospace; font-size: 10.5px; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--muted-fg); font-weight: 500;
+    margin: 0 0 9px; padding-bottom: 7px; border-bottom: 1px solid var(--rule);
+  }
+  .col ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px; font-size: 0.875rem; }
+  .col ul li span { color: var(--muted-fg); font-size: 0.8125rem; }
+
+  /* ---- swatches ---- */
+  .swatches { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-bottom: 20px; }
+  .sw { border: 1px solid var(--border); border-radius: var(--radius-sm); overflow: hidden; }
+  .sw .chip { height: 46px; }
+  .sw .meta { padding: 7px 10px; }
+  .sw .name { font-family: "IBM Plex Mono", monospace; font-size: 0.75rem; }
+  .sw .val { font-size: 0.6875rem; color: var(--muted-fg); font-variant-numeric: tabular-nums; }
+
+  /* ---- notes ---- */
+  ol.notes, ul.notes { padding-left: 20px; max-width: 68ch; display: flex; flex-direction: column; gap: 10px; margin: 0; }
+  ol.notes li::marker, ul.notes li::marker { color: var(--muted-fg); }
+  ol.notes strong, ul.notes strong { font-weight: 600; }
+
+  .callout {
+    border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 20px;
+    background: var(--muted); max-width: 72ch;
+  }
+  .callout h3 { margin-top: 0; }
+
+  footer {
+    grid-column: 1 / -1; border-top: 1px solid var(--rule); padding-top: 20px; margin-top: 12px;
+    color: var(--muted-fg); font-size: 0.8125rem;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+  }
+</style>
+
+<div class="page">
+
+  <header class="masthead">
+    <p class="eyebrow">Design handoff · AYZER webapp template · frontend</p>
+    <h1>AYZER Frontend Handoff</h1>
+    <p class="standfirst">
+      What already exists in the template's React frontend, and the constraints any new UI has to live inside.
+      New projects start from this codebase, so the design work is <strong>re-skinning and extending</strong> a
+      shipped multi-tenant application — not drawing one from scratch.
+    </p>
+    <dl class="facts">
+      <div class="fact"><dt>Page components</dt><dd>93</dd></div>
+      <div class="fact"><dt>Nav areas</dt><dd>5</dd></div>
+      <div class="fact"><dt>UI primitives</dt><dd>41</dd></div>
+      <div class="fact"><dt>Themes</dt><dd>Light + dark</dd></div>
+      <div class="fact"><dt>Locales shipped</dt><dd>English only</dd></div>
+    </dl>
+  </header>
+
+  <nav class="toc">
+    <p>Contents</p>
+    <ol>
+      <li><a href="#stack">1 — Stack</a></li>
+      <li><a href="#zones">2 — Navigation zones</a></li>
+      <li><a href="#screens">3 — Screen inventory</a></li>
+      <li><a href="#components">4 — Component inventory</a></li>
+      <li><a href="#tokens">5 — Design tokens</a></li>
+      <li><a href="#behaviours">6 — Cross-cutting UI</a></li>
+      <li><a href="#constraints">7 — Constraints</a></li>
+      <li><a href="#gaps">8 — Gaps to design</a></li>
+    </ol>
+  </nav>
+
+  <main>
+
+    <!-- 1 -->
+    <section id="stack">
+      <h2><span class="num">01</span>Stack</h2>
+      <p class="lede">
+        Everything is client-rendered from a Vite bundle against a FastAPI backend. There is no SSR, no CSS-in-JS,
+        and no separate design-system package — components live in the app repo and are edited directly.
+      </p>
+      <div class="tablewrap">
+        <table>
+          <thead>
+            <tr><th>Layer</th><th>Choice</th><th>Notes for design</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="k">Framework</td><td><span class="lib">React 19 + TypeScript 5.9</span></td><td class="v">Client-side only, built with Vite 7.</td></tr>
+            <tr><td class="k">Routing</td><td><span class="lib">React Router 7</span></td><td class="v">Nested layouts; routes are generated from config files, so adding a page is a config entry.</td></tr>
+            <tr><td class="k">Styling</td><td><span class="lib">Tailwind CSS v4</span></td><td class="v">Utility classes only. Theme lives in CSS custom properties in <code>src/index.css</code>.</td></tr>
+            <tr><td class="k">Components</td><td><span class="lib">shadcn/ui on Radix UI</span></td><td class="v">Copied into the repo, not installed. Fully editable, accessibility comes from Radix.</td></tr>
+            <tr><td class="k">Icons</td><td><span class="lib">lucide-react</span></td><td class="v">Single icon set across the whole app, including navigation config.</td></tr>
+            <tr><td class="k">State &amp; data</td><td><span class="lib">Redux Toolkit + RTK Query</span></td><td class="v">Cache-driven. Loading and empty states are a first-class concern on every list.</td></tr>
+            <tr><td class="k">Forms</td><td><span class="lib">React Hook Form + Zod</span></td><td class="v">Inline field-level validation messages, not a summary block at the top.</td></tr>
+            <tr><td class="k">Toasts</td><td><span class="lib">Sonner</span></td><td class="v">All success/error feedback; no custom alert bars for transient messages.</td></tr>
+            <tr><td class="k">i18n</td><td><span class="lib">i18next + react-i18next</span></td><td class="v">Every string is a key. Copy must be translatable and length-tolerant.</td></tr>
+            <tr><td class="k">Theming</td><td><span class="lib">next-themes</span></td><td class="v">Light / dark / system, user-switchable in Settings → Appearance.</td></tr>
+            <tr><td class="k">Rich content</td><td><span class="lib">marked + DOMPurify</span></td><td class="v">Help-centre articles are Markdown, styled by <code>@tailwindcss/typography</code>.</td></tr>
+            <tr><td class="k">Tables</td><td><span class="lib">@tanstack/react-virtual</span></td><td class="v">Row virtualisation for long lists — designs must assume fixed-height rows.</td></tr>
+            <tr><td class="k">Uploads</td><td><span class="lib">react-dropzone</span></td><td class="v">Drag-and-drop zones with progress for files, avatars and media.</td></tr>
+            <tr><td class="k">Drag &amp; drop</td><td><span class="lib">dnd-kit</span></td><td class="v">Sortable lists — onboarding field builder, ordered content.</td></tr>
+            <tr><td class="k">Real time</td><td><span class="lib">Native WebSocket</span></td><td class="v">Live notifications, announcements, maintenance state and export progress.</td></tr>
+            <tr><td class="k">Offline / install</td><td><span class="lib">vite-plugin-pwa</span></td><td class="v">Optional PWA mode with install prompt and update banner.</td></tr>
+            <tr><td class="k">Testing</td><td><span class="lib">Vitest + Testing Library, Playwright</span></td><td class="v">E2E tests select by accessible role and label — don't remove visible labels.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 2 -->
+    <section id="zones">
+      <h2><span class="num">02</span>Navigation zones</h2>
+      <p class="lede">
+        The app is split into five addressable areas with different audiences and different chrome. Three of them (app, admin hub, platform admin) are formal permission-gated navigation zones in the codebase; the split is enforced there, so it is the structure any new design has to work with. Colour coding below is
+        used throughout this document only.
+      </p>
+
+      <div class="tablewrap">
+        <table>
+          <thead>
+            <tr><th>Zone</th><th>Audience</th><th>Chrome</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="k" style="color:var(--zone-public)">Public</td><td class="v">Anonymous visitors</td><td class="v">Centred card on a plain ground, no sidebar</td></tr>
+            <tr><td class="k" style="color:var(--zone-user)">App</td><td class="v">Every signed-in user</td><td class="v">Collapsible left sidebar + header, mobile drawer</td></tr>
+            <tr><td class="k" style="color:var(--zone-settings)">Settings</td><td class="v">Every signed-in user</td><td class="v">Secondary settings nav nested inside the app shell</td></tr>
+            <tr><td class="k" style="color:var(--zone-admin)">Admin hub</td><td class="v">Organisation administrators</td><td class="v">Own sidebar with collapsible categories, at <code>/admin</code></td></tr>
+            <tr><td class="k" style="color:var(--zone-platform)">Platform admin</td><td class="v">Cross-tenant super admins</td><td class="v">Own sidebar, at <code>/platform-admin</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>The rule that governs placement</h3>
+      <p>
+        Requiring a permission does not make a page an admin page. Day-to-day work for the product's primary users
+        belongs in the app sidebar; infrequent configuration and reference-data management belongs in the admin hub.
+        Features often span both — an end-user view in the sidebar and its configuration screen in the admin hub.
+      </p>
+    </section>
+
+    <!-- 3 -->
+    <section id="screens">
+      <h2><span class="num">03</span>Screen inventory</h2>
+      <p class="lede">
+        Every screen already built. Grouped exactly as the navigation groups them, so this doubles as the
+        information architecture.
+      </p>
+
+      <div class="zone" style="--z: var(--zone-public)">
+        <div class="zone-head"><h3>Public</h3><span class="zone-path">unauthenticated</span></div>
+        <p class="zone-who">Entry, recovery and system-state screens. Shown without any app chrome.</p>
+        <div class="group">
+          <p class="group-label">Entry</p>
+          <ul class="screens">
+            <li>Landing<span class="p">/</span></li>
+            <li>Login<span class="p">/login</span></li>
+            <li>Register<span class="p">/register</span></li>
+            <li>SSO redirect<span class="p">/oauth/callback</span></li>
+            <li>SSO account link<span class="p">/sso/confirm-link</span></li>
+          </ul>
+        </div>
+        <div class="group">
+          <p class="group-label">Recovery &amp; verification</p>
+          <ul class="screens">
+            <li>Forgot password</li>
+            <li>Reset password</li>
+            <li>Verify email</li>
+            <li>Two-factor setup<span class="p">/setup-2fa</span></li>
+            <li>Unsubscribe</li>
+          </ul>
+        </div>
+        <div class="group">
+          <p class="group-label">System states</p>
+          <ul class="screens">
+            <li>Maintenance</li>
+            <li>404 not found</li>
+            <li>Route error boundary</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="zone" style="--z: var(--zone-user)">
+        <div class="zone-head"><h3>App</h3><span class="zone-path">sidebar</span></div>
+        <p class="zone-who">
+          The template ships an almost empty main sidebar — one Dashboard link. This is where the new product's
+          own workflows go, and it is the part of the IA the design team defines.
+        </p>
+        <div class="group">
+          <p class="group-label">Shipped</p>
+          <ul class="screens">
+            <li>Dashboard<span class="p">/dashboard</span></li>
+            <li>Files<span class="p">/files</span></li>
+            <li>Notifications<span class="p">/notifications</span></li>
+            <li>Profile<span class="p">/profile</span></li>
+            <li>Onboarding wizard<span class="p">/onboarding</span></li>
+            <li>Help centre<span class="p">/help-center</span></li>
+            <li>Help article<span class="p">/help-center/:slug</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="zone" style="--z: var(--zone-settings)">
+        <div class="zone-head"><h3>Settings</h3><span class="zone-path">/settings</span></div>
+        <p class="zone-who">Six groups behind a secondary nav. The most complete part of the template.</p>
+        <div class="group">
+          <p class="group-label">Account</p>
+          <ul class="screens"><li>Profile</li><li>Connected accounts</li><li>Sessions</li><li>My files</li><li>Organisation details</li><li>API keys</li></ul>
+        </div>
+        <div class="group">
+          <p class="group-label">Preferences</p>
+          <ul class="screens"><li>Notifications</li><li>Language</li><li>Appearance</li></ul>
+        </div>
+        <div class="group">
+          <p class="group-label">Security</p>
+          <ul class="screens"><li>Password</li><li>Email change</li><li>Two-factor</li><li>Privacy</li><li>Data export</li></ul>
+        </div>
+        <div class="group">
+          <p class="group-label">App</p>
+          <ul class="screens"><li>Keyboard shortcuts</li><li>Advanced</li></ul>
+        </div>
+        <div class="group">
+          <p class="group-label">Support</p>
+          <ul class="screens"><li>Feedback</li><li>About</li><li>Changelog</li><li>Help</li></ul>
+        </div>
+        <div class="group">
+          <p class="group-label">Danger</p>
+          <ul class="screens"><li>Delete account</li></ul>
+        </div>
+      </div>
+
+      <div class="zone" style="--z: var(--zone-admin)">
+        <div class="zone-head"><h3>Admin hub</h3><span class="zone-path">/admin</span></div>
+        <p class="zone-who">Organisation-level administration, in five collapsible sidebar categories.</p>
+        <div class="group">
+          <p class="group-label">Organisation</p>
+          <ul class="screens"><li>Org settings</li><li>SSO settings</li><li>Two-factor policy</li></ul>
+        </div>
+        <div class="group">
+          <p class="group-label">Users</p>
+          <ul class="screens"><li>User list</li><li>User detail</li><li>Onboarding review</li></ul>
+        </div>
+        <div class="group">
+          <p class="group-label">Communication</p>
+          <ul class="screens"><li>Notifications</li><li>Send notification</li><li>Bulk notifications</li><li>Templates</li><li>Categories</li><li>Notification settings</li><li>Announcements</li><li>Changelog</li><li>Email settings</li></ul>
+        </div>
+        <div class="group">
+          <p class="group-label">Content</p>
+          <ul class="screens"><li>Files</li><li>File settings</li><li>API keys</li><li>About page editor</li></ul>
+        </div>
+        <div class="group">
+          <p class="group-label">Monitoring</p>
+          <ul class="screens"><li>Audit logs</li><li>Feedback list</li><li>Feedback detail</li><li>Reports</li></ul>
+        </div>
+      </div>
+
+      <div class="zone" style="--z: var(--zone-platform)">
+        <div class="zone-head"><h3>Platform admin</h3><span class="zone-path">/platform-admin</span></div>
+        <p class="zone-who">Cross-tenant operations for super admins. Rarely part of a client-facing design brief, but it exists and inherits the same visual language.</p>
+        <div class="group">
+          <p class="group-label">Organisations &amp; access</p>
+          <ul class="screens"><li>Organisations</li><li>Organisation members</li><li>Roles</li><li>Permissions</li><li>User types</li><li>Onboarding steps builder</li></ul>
+        </div>
+        <div class="group">
+          <p class="group-label">Platform</p>
+          <ul class="screens"><li>Feature flags</li><li>API rate limits</li><li>Maintenance mode</li><li>System config</li></ul>
+        </div>
+        <div class="group">
+          <p class="group-label">Content &amp; monitoring</p>
+          <ul class="screens"><li>Help articles</li><li>Help categories</li><li>FAQs</li><li>Metrics</li><li>Background jobs</li><li>Cron jobs</li><li>Request logs</li></ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4 -->
+    <section id="components">
+      <h2><span class="num">04</span>Component inventory</h2>
+      <p class="lede">
+        Two tiers. Primitives are stock shadcn/ui and can be restyled wholesale through tokens and variants.
+        Composites are app-specific and are where most of the visible personality sits.
+      </p>
+
+      <h3>Primitives (41, in <code>components/ui/</code>)</h3>
+      <div class="cols">
+        <div class="col">
+          <h4>Input</h4>
+          <ul>
+            <li>Button <span>— 7 variants × 4 sizes</span></li>
+            <li>Input, Textarea, Label, Field</li>
+            <li>Select, Multi-select, Combobox</li>
+            <li>Checkbox, Radio group, Switch</li>
+            <li>Slider, Colour picker, Tag input</li>
+            <li>OTP input <span>— 2FA codes</span></li>
+            <li>Date picker, Calendar</li>
+            <li>Form <span>— RHF bindings</span></li>
+          </ul>
+        </div>
+        <div class="col">
+          <h4>Surface &amp; overlay</h4>
+          <ul>
+            <li>Card, Alert, Badge, Separator</li>
+            <li>Dialog, Alert dialog, Sheet</li>
+            <li>Popover, Tooltip, Dropdown menu</li>
+            <li>Command palette <span>— cmdk</span></li>
+            <li>Accordion, Collapsible, Tabs</li>
+            <li>Scroll area</li>
+          </ul>
+        </div>
+        <div class="col">
+          <h4>Display &amp; feedback</h4>
+          <ul>
+            <li>Table, Pagination, Breadcrumb</li>
+            <li>Avatar, User avatar</li>
+            <li>Progress, Spinner, Skeleton</li>
+            <li>Toaster <span>— Sonner</span></li>
+            <li>Theme toggle</li>
+            <li>Sidebar <span>— 11-part modular set</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <h3>App composites</h3>
+      <div class="cols">
+        <div class="col">
+          <h4>Shell</h4>
+          <ul>
+            <li>App sidebar <span>— permission-filtered</span></li>
+            <li>Admin / platform-admin sidebars</li>
+            <li>Header user menu</li>
+            <li>Page header <span>— title, description, actions</span></li>
+            <li>Language switcher</li>
+          </ul>
+        </div>
+        <div class="col">
+          <h4>Data</h4>
+          <ul>
+            <li>Advanced data table <span>— search, sort, column visibility, virtualised rows</span></li>
+            <li>Data table <span>— simple variant</span></li>
+            <li>Sortable list <span>— drag to reorder</span></li>
+            <li>File uploader, Media uploader</li>
+            <li>Storage usage bar</li>
+            <li>File icon, Image preview</li>
+          </ul>
+        </div>
+        <div class="col">
+          <h4>Banners &amp; signals</h4>
+          <ul>
+            <li>Announcement banner</li>
+            <li>Impersonation banner + indicator</li>
+            <li>Deletion-pending banner</li>
+            <li>Install banner <span>— PWA</span></li>
+            <li>Update banner <span>— new version</span></li>
+            <li>Notification bell + panel</li>
+            <li>Changelog badge + modal</li>
+          </ul>
+        </div>
+        <div class="col">
+          <h4>Guards &amp; states</h4>
+          <ul>
+            <li>Permission gate <span>— hides or replaces UI</span></li>
+            <li>Auth guard, Super-admin guard</li>
+            <li>Two-factor enforcement</li>
+            <li>Error boundary + fallback</li>
+            <li>Skeletons <span>— card, form, table</span></li>
+            <li>Page loader, Confirm dialog</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5 -->
+    <section id="tokens">
+      <h2><span class="num">05</span>Design tokens</h2>
+      <p class="lede">
+        Colour is defined once as CSS custom properties in OKLCH and consumed only through semantic names.
+        Re-skinning the product means replacing these values — not editing components. The shipped palette is
+        deliberately achromatic so it reads as unbranded.
+      </p>
+
+      <h3>Semantic surface tokens</h3>
+      <div class="swatches">
+        <div class="sw"><div class="chip" style="background: oklch(1 0 0); border-bottom:1px solid var(--border)"></div><div class="meta"><div class="name">background</div><div class="val">oklch(1 0 0)</div></div></div>
+        <div class="sw"><div class="chip" style="background: oklch(0.97 0 0)"></div><div class="meta"><div class="name">muted</div><div class="val">oklch(0.97 0 0)</div></div></div>
+        <div class="sw"><div class="chip" style="background: oklch(0.556 0 0)"></div><div class="meta"><div class="name">muted-foreground</div><div class="val">oklch(0.556 0 0)</div></div></div>
+        <div class="sw"><div class="chip" style="background: oklch(0.205 0 0)"></div><div class="meta"><div class="name">primary</div><div class="val">oklch(0.205 0 0)</div></div></div>
+        <div class="sw"><div class="chip" style="background: oklch(0.145 0 0)"></div><div class="meta"><div class="name">foreground</div><div class="val">oklch(0.145 0 0)</div></div></div>
+      </div>
+
+      <h3>Status tokens</h3>
+      <div class="swatches">
+        <div class="sw"><div class="chip" style="background: oklch(0.6 0.15 145)"></div><div class="meta"><div class="name">success</div><div class="val">oklch(0.6 0.15 145)</div></div></div>
+        <div class="sw"><div class="chip" style="background: oklch(0.7 0.15 75)"></div><div class="meta"><div class="name">warning</div><div class="val">oklch(0.7 0.15 75)</div></div></div>
+        <div class="sw"><div class="chip" style="background: oklch(0.6 0.15 240)"></div><div class="meta"><div class="name">info</div><div class="val">oklch(0.6 0.15 240)</div></div></div>
+        <div class="sw"><div class="chip" style="background: oklch(0.577 0.245 27.325)"></div><div class="meta"><div class="name">destructive</div><div class="val">oklch(0.577 0.245 27.3)</div></div></div>
+      </div>
+
+      <h3>Chart tokens</h3>
+      <div class="swatches">
+        <div class="sw"><div class="chip" style="background: oklch(0.646 0.222 41.116)"></div><div class="meta"><div class="name">chart-1</div><div class="val">oklch(0.646 0.222 41.1)</div></div></div>
+        <div class="sw"><div class="chip" style="background: oklch(0.6 0.118 184.704)"></div><div class="meta"><div class="name">chart-2</div><div class="val">oklch(0.6 0.118 184.7)</div></div></div>
+        <div class="sw"><div class="chip" style="background: oklch(0.398 0.07 227.392)"></div><div class="meta"><div class="name">chart-3</div><div class="val">oklch(0.398 0.07 227.4)</div></div></div>
+        <div class="sw"><div class="chip" style="background: oklch(0.828 0.189 84.429)"></div><div class="meta"><div class="name">chart-4</div><div class="val">oklch(0.828 0.189 84.4)</div></div></div>
+        <div class="sw"><div class="chip" style="background: oklch(0.769 0.188 70.08)"></div><div class="meta"><div class="name">chart-5</div><div class="val">oklch(0.769 0.188 70.1)</div></div></div>
+      </div>
+
+      <div class="tablewrap" style="margin-top:22px">
+        <table>
+          <thead><tr><th>Token family</th><th>What it covers</th></tr></thead>
+          <tbody>
+            <tr><td class="k">Core</td><td class="v">background, foreground, card, popover, primary, secondary, muted, accent, border, input, ring — each with a paired <code>-foreground</code></td></tr>
+            <tr><td class="k">Sidebar</td><td class="v">A separate eight-token set, so the sidebar can differ from the page ground without hard-coded values</td></tr>
+            <tr><td class="k">Status</td><td class="v">success, warning, info, destructive — semantic, kept distinct from any brand accent</td></tr>
+            <tr><td class="k">Chart</td><td class="v">chart-1…5 categorical hues (no charting library is wired up yet)</td></tr>
+            <tr><td class="k">Radius</td><td class="v">One base of <code>0.625rem</code>, with sm/md/lg/xl/2xl/3xl/4xl derived from it — change the base to change the whole product's roundness</td></tr>
+            <tr><td class="k">Dark mode</td><td class="v">A <code>.dark</code> class on the root re-declares every token; components never branch on theme</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Typography</h3>
+      <p>
+        No custom typeface is loaded today — the app runs on the system UI stack. Choosing and specifying a face
+        (and its fallback stack, weights and scale) is open work. Long-form article content is styled by the
+        Tailwind typography plugin, so a prose scale is needed as well as a UI scale.
+      </p>
+    </section>
+
+    <!-- 6 -->
+    <section id="behaviours">
+      <h2><span class="num">06</span>Cross-cutting UI</h2>
+      <p class="lede">
+        Behaviours that appear on many screens at once. Each one needs a designed state, and several of them
+        stack vertically above the page content.
+      </p>
+      <ul class="notes">
+        <li><strong>Banner stack.</strong> Up to five banners can appear above the app content simultaneously: announcement, impersonation, pending account deletion, PWA install prompt and new-version-available. They need a defined stacking order, a compact height, and dismiss behaviour.</li>
+        <li><strong>Permission gating.</strong> Any nav item, page or individual control can be hidden or replaced based on the signed-in user's permissions. Designs should say, per control, whether an unpermitted user sees nothing or sees a disabled state.</li>
+        <li><strong>Loading.</strong> Skeletons for cards, forms and tables; a full-page loader for route transitions. Data comes from a cache, so screens can also render stale content while refreshing.</li>
+        <li><strong>Empty and error states.</strong> Every list and table needs one of each. There is a route-level error boundary and an in-page fallback component.</li>
+        <li><strong>Real time.</strong> Notifications, announcements, maintenance mode and data-export progress arrive over WebSocket and change the UI without a reload — including a full-screen takeover when maintenance mode is switched on.</li>
+        <li><strong>Impersonation.</strong> Admins can act as another user. While impersonating, a persistent banner and indicator are shown and must be unmistakable.</li>
+        <li><strong>Onboarding.</strong> A configurable multi-step wizard with progress, admin-defined fields and an admin review queue. Field types and step count are data, not code — the design has to survive an arbitrary number of steps.</li>
+        <li><strong>Two-factor.</strong> QR-code enrolment, OTP entry, recovery codes, and an organisation-wide enforcement mode that blocks the app until 2FA is set up.</li>
+        <li><strong>Responsive.</strong> Mobile-first Tailwind breakpoints. On small screens the sidebar becomes a drawer; tables are the main pressure point and currently rely on horizontal scroll.</li>
+        <li><strong>Accessibility.</strong> Radix supplies roles, focus management and keyboard interaction. Playwright tests select elements by accessible name, so visible labels are load-bearing — icon-only controls need accessible names.</li>
+      </ul>
+    </section>
+
+    <!-- 7 -->
+    <section id="constraints">
+      <h2><span class="num">07</span>Constraints</h2>
+      <p class="lede">Things that will cause rework if the design ignores them.</p>
+      <ol class="notes">
+        <li><strong>Design to tokens, not to hex values.</strong> Anything specified as a one-off colour breaks dark mode, because dark mode works entirely by re-declaring the token set.</li>
+        <li><strong>Both themes are shipped.</strong> Every screen, banner, chart and illustration needs a light and a dark treatment. Dark is not an afterthought toggle.</li>
+        <li><strong>Every string is translated.</strong> Labels must tolerate roughly 30–40% expansion. Avoid layouts that depend on a specific word length, and avoid text baked into images.</li>
+        <li><strong>Stay inside the primitive set where possible.</strong> A new variant of an existing shadcn component is cheap; a bespoke interactive control is expensive and loses the Radix accessibility behaviour.</li>
+        <li><strong>Navigation zones are structural.</strong> Placing a page in the wrong zone is a code change, not a visual one. Decide zone before layout.</li>
+        <li><strong>Long lists are virtualised.</strong> Rows need a consistent height; variable-height cards in a long scroller are a problem.</li>
+        <li><strong>The template's main sidebar is nearly empty by design.</strong> The product's own IA is the thing being added — don't design around Dashboard alone.</li>
+      </ol>
+    </section>
+
+    <!-- 8 -->
+    <section id="gaps">
+      <h2><span class="num">08</span>Gaps to design</h2>
+      <p class="lede">Open work, in rough priority order.</p>
+      <div class="callout">
+        <ul class="notes">
+          <li><strong>Brand identity.</strong> The palette is intentionally neutral greyscale and there is no logo, no typeface and no illustration style. All of it is unspecified.</li>
+          <li><strong>Typography system.</strong> No web font is loaded; UI and prose scales both need defining.</li>
+          <li><strong>Data visualisation.</strong> Five chart tokens exist but no charting library is wired up. The Metrics and Reports screens are currently cards and badges. Chart style and library choice are open.</li>
+          <li><strong>The product's own screens.</strong> Everything in the app sidebar beyond Dashboard, Files, Notifications and Profile is new work.</li>
+          <li><strong>Dashboard.</strong> Shipped as a placeholder. Its composition is the most visible single design decision.</li>
+          <li><strong>Empty states.</strong> Present but generic; no illustration or voice.</li>
+          <li><strong>Mobile tables.</strong> Currently horizontal scroll. A card-per-row pattern is likely wanted.</li>
+          <li><strong>Marketing surfaces.</strong> The landing page is a stub; login and register are plain centred cards.</li>
+        </ul>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    Generated from the <code>ayzer.webapp.template</code> repository — <code>app/frontend</code> and <code>ai_docs/frontend</code>.
+    Counts reflect the current <code>main</code> branch.
+  </footer>
+
+</div>
+</body>
+</html>

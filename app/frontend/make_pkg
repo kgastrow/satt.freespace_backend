@@ -1,0 +1,64 @@
+#!/bin/bash
+
+# Script to create a Debian package for the AYZER React frontend
+
+set -e
+
+# Source .env file if it exists
+if [ -f .env ]; then
+    echo "Loading environment from .env..."
+    set -a
+    source .env
+    set +a
+fi
+
+# Set variables
+PACKAGE_NAME="ayzer-frontend"
+VERSION="1.0.0"
+ARCH="all"
+MAINTAINER="Konrad Gastrow <kgastrow@gmail.com>"
+DESCRIPTION="AYZER Frontend"
+INSTALL_DIR="/var/www/ayzer"
+
+# Build the frontend
+echo "Building frontend..."
+# Use `build` (not `build:only`) so OpenAPI types regenerate against the                                                                                                                                                                            
+# running backend when reachable — catches schema drift at package time.                                                                                                                                                                            
+# generate-api-types.sh falls back to the existing api-generated.ts if the                                                                                                                                                                          
+# backend is down, so packaging still works in that case.                                                                                                                                                                                           
+npm run build  
+
+# Create temporary directory structure
+TEMP_DIR=$(mktemp -d)
+PACKAGE_DIR="${TEMP_DIR}/${PACKAGE_NAME}_${VERSION}_${ARCH}"
+
+# Create DEBIAN directory
+mkdir -p "${PACKAGE_DIR}/DEBIAN"
+
+# Create installation directory
+mkdir -p "${PACKAGE_DIR}${INSTALL_DIR}"
+
+# Copy built files
+cp -r dist/* "${PACKAGE_DIR}${INSTALL_DIR}/"
+
+# Copy control file
+cp initscripts/control "${PACKAGE_DIR}/DEBIAN/control"
+
+# Copy postinst script
+cp initscripts/postinst "${PACKAGE_DIR}/DEBIAN/postinst"
+chmod 755 "${PACKAGE_DIR}/DEBIAN/postinst"
+
+# Copy prerm script
+cp initscripts/prerm "${PACKAGE_DIR}/DEBIAN/prerm"
+chmod 755 "${PACKAGE_DIR}/DEBIAN/prerm"
+
+# Build the package
+dpkg-deb --build "${PACKAGE_DIR}"
+
+# Move package to current directory
+mv "${TEMP_DIR}/${PACKAGE_NAME}_${VERSION}_${ARCH}.deb" .
+
+# Clean up
+rm -rf "${TEMP_DIR}"
+
+echo "Package created: ${PACKAGE_NAME}_${VERSION}_${ARCH}.deb"

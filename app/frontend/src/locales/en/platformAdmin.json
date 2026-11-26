@@ -1,0 +1,36 @@
+{
+  "title": "Platform Administration",
+  "description": "Manage platform-wide settings and configurations",
+  "openMenu": "Open menu",
+  "selectFromSidebar": "Select an option from the sidebar to get started.",
+  "nav": {
+    "organizations": {
+      "title": "Organizations",
+      "manage": "Manage Organizations"
+    },
+    "access": {
+      "title": "Access Control",
+      "roles": "Roles",
+      "permissions": "Permissions",
+      "userTypes": "User Types"
+    },
+    "platform": {
+      "title": "Platform",
+      "featureFlags": "Feature Flags",
+      "apiRateLimits": "API Rate Limits",
+      "maintenance": "Maintenance",
+      "systemConfig": "System Config"
+    },
+    "content": {
+      "title": "Content",
+      "helpCenter": "Help Center"
+    },
+    "monitoring": {
+      "title": "Monitoring",
+      "metrics": "Metrics",
+      "backgroundJobs": "Background Jobs",
+      "cronJobs": "Cron Jobs",
+      "requestLogs": "Request Logs"
+    }
+  }
+}

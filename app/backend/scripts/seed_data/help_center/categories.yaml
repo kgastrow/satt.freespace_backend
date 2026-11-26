@@ -1,0 +1,41 @@
+# Help Center categories
+
+- name: Getting Started
+  slug: getting-started
+  description: Learn the basics of using the platform
+  display_order: 0
+
+- name: Account & Profile
+  slug: account-profile
+  description: Manage your account settings and profile information
+  display_order: 1
+
+- name: Team & Roles
+  slug: team-roles
+  description: Learn about team management and role permissions
+  display_order: 2
+
+- name: Notifications
+  slug: notifications
+  description: Configure your notification preferences
+  display_order: 3
+
+- name: Files & Storage
+  slug: files-storage
+  description: Upload, manage, and organize your files
+  display_order: 4
+
+- name: Security & Privacy
+  slug: security-privacy
+  description: Keep your account secure and manage privacy settings
+  display_order: 5
+
+- name: Troubleshooting
+  slug: troubleshooting
+  description: Solutions to common issues and error messages
+  display_order: 6
+
+- name: API & Integrations
+  slug: api-integrations
+  description: Connect with external services and use the API
+  display_order: 7

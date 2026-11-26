@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/A_symbol.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#0f172a" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="AYZER" />
+    <meta name="application-name" content="AYZER" />
+    <!-- SEC-F-007: Content Security Policy
+         - default-src 'self': Only allow resources from same origin by default
+         - script-src 'self': Scripts only from same origin (Vite injects 'unsafe-inline' in dev)
+         - style-src 'self' 'unsafe-inline': Styles from same origin + inline (required for Tailwind)
+         - img-src 'self' data: blob: http://localhost:*: Images from same origin, data URIs, blob URLs, and local dev
+         - font-src 'self': Fonts only from same origin
+         - connect-src 'self' wss: ws: http://localhost:*: Allow API calls, WebSocket, and local dev
+         - base-uri 'self': Restrict <base> tag to same origin
+         - form-action 'self': Forms can only submit to same origin
+         Note: For production, move CSP to HTTP headers and add frame-ancestors 'none' there
+               (frame-ancestors is ignored in meta tags per CSP spec)
+    -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https: http://localhost:*; font-src 'self' data:; connect-src 'self' wss: ws: https: http://localhost:*; base-uri 'self'; form-action 'self';" />
+    <title>AYZER</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

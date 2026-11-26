@@ -1,0 +1,884 @@
+# System-wide notification templates
+
+- code: s3_storage_warning
+  name: S3 Storage Warning
+  description: Alert sent to super admins when S3 storage usage exceeds threshold
+  channel: email
+  subject: "S3 Storage Alert: Usage at {usage_percent}%"
+  is_active: true
+  variables:
+    user_name: string
+    current_bytes: string
+    current_gb: string
+    total_bytes: string
+    total_gb: string
+    usage_percent: string
+    threshold_percent: string
+    bucket_name: string
+  body_text: |
+    Hello {user_name},
+
+    This is an automated alert regarding S3 storage usage.
+
+    Current Status:
+    - Storage Used: {current_gb} GB ({current_bytes} bytes)
+    - Total Capacity: {total_gb} GB ({total_bytes} bytes)
+    - Usage: {usage_percent}%
+    - Alert Threshold: {threshold_percent}% remaining
+
+    Your S3 bucket "{bucket_name}" has exceeded the warning threshold.
+
+    Recommended Actions:
+    1. Review and clean up unused or old files
+    2. Implement file retention policies
+    3. Consider increasing storage capacity
+    4. Monitor upload patterns and user activity
+
+    This is an automated notification. You will not receive another alert for 24 hours unless the threshold is crossed again.
+
+    Best regards,
+    System Administrator
+  body_html: |
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <style>
+            body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+            .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+            .header { background-color: #f44336; color: white; padding: 20px; border-radius: 5px; text-align: center; }
+            .content { background-color: #f9f9f9; padding: 20px; border-radius: 5px; margin-top: 20px; }
+            .stats { background-color: white; padding: 15px; border-left: 4px solid #f44336; margin: 20px 0; }
+            .stats-item { margin: 10px 0; }
+            .stats-label { font-weight: bold; color: #666; }
+            .actions { background-color: #fff3cd; border-left: 4px solid #ffc107; padding: 15px; margin: 20px 0; }
+            .actions h3 { margin-top: 0; color: #856404; }
+            .footer { text-align: center; margin-top: 30px; color: #666; font-size: 12px; }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="header">
+                <h1>S3 Storage Alert</h1>
+            </div>
+            <div class="content">
+                <p>Hello {user_name},</p>
+                <p>This is an automated alert regarding S3 storage usage.</p>
+
+                <div class="stats">
+                    <h3 style="margin-top: 0;">Current Status</h3>
+                    <div class="stats-item">
+                        <span class="stats-label">Storage Used:</span> {current_gb} GB ({current_bytes} bytes)
+                    </div>
+                    <div class="stats-item">
+                        <span class="stats-label">Total Capacity:</span> {total_gb} GB ({total_bytes} bytes)
+                    </div>
+                    <div class="stats-item">
+                        <span class="stats-label">Usage:</span> <strong>{usage_percent}%</strong>
+                    </div>
+                    <div class="stats-item">
+                        <span class="stats-label">Alert Threshold:</span> {threshold_percent}% remaining
+                    </div>
+                    <div class="stats-item">
+                        <span class="stats-label">Bucket Name:</span> {bucket_name}
+                    </div>
+                </div>
+
+                <p><strong>Your S3 bucket has exceeded the warning threshold.</strong></p>
+
+                <div class="actions">
+                    <h3>Recommended Actions</h3>
+                    <ol>
+                        <li>Review and clean up unused or old files</li>
+                        <li>Implement file retention policies</li>
+                        <li>Consider increasing storage capacity</li>
+                        <li>Monitor upload patterns and user activity</li>
+                    </ol>
+                </div>
+
+                <p><em>This is an automated notification. You will not receive another alert for 24 hours unless the threshold is crossed again.</em></p>
+            </div>
+            <div class="footer">
+                <p>This is an automated system notification.</p>
+            </div>
+        </div>
+    </body>
+    </html>
+
+- code: local_storage_warning
+  name: Local Storage Warning
+  description: Alert sent to super admins when local storage usage exceeds threshold
+  channel: email
+  subject: "Local Storage Alert: Usage at {usage_percent}%"
+  is_active: true
+  variables:
+    user_name: string
+    current_bytes: string
+    current_gb: string
+    total_bytes: string
+    total_gb: string
+    usage_percent: string
+    threshold_percent: string
+  body_text: |
+    Hello {user_name},
+
+    This is an automated alert regarding local storage usage.
+
+    Current Status:
+    - Storage Used: {current_gb} GB ({current_bytes} bytes)
+    - Total Capacity: {total_gb} GB ({total_bytes} bytes)
+    - Usage: {usage_percent}%
+    - Alert Threshold: {threshold_percent}% remaining
+
+    Your local storage has exceeded the warning threshold.
+
+    Recommended Actions:
+    1. Review and clean up unused or old files
+    2. Implement file retention policies
+    3. Consider increasing storage capacity
+    4. Monitor upload patterns and user activity
+
+    This is an automated notification. You will not receive another alert for 24 hours unless the threshold is crossed again.
+
+    Best regards,
+    System Administrator
+  body_html: |
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <style>
+            body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+            .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+            .header { background-color: #ff9800; color: white; padding: 20px; border-radius: 5px; text-align: center; }
+            .content { background-color: #f9f9f9; padding: 20px; border-radius: 5px; margin-top: 20px; }
+            .stats { background-color: white; padding: 15px; border-left: 4px solid #ff9800; margin: 20px 0; }
+            .stats-item { margin: 10px 0; }
+            .stats-label { font-weight: bold; color: #666; }
+            .actions { background-color: #fff3cd; border-left: 4px solid #ffc107; padding: 15px; margin: 20px 0; }
+            .actions h3 { margin-top: 0; color: #856404; }
+            .footer { text-align: center; margin-top: 30px; color: #666; font-size: 12px; }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="header">
+                <h1>Local Storage Alert</h1>
+            </div>
+            <div class="content">
+                <p>Hello {user_name},</p>
+                <p>This is an automated alert regarding local storage usage.</p>
+
+                <div class="stats">
+                    <h3 style="margin-top: 0;">Current Status</h3>
+                    <div class="stats-item">
+                        <span class="stats-label">Storage Used:</span> {current_gb} GB ({current_bytes} bytes)
+                    </div>
+                    <div class="stats-item">
+                        <span class="stats-label">Total Capacity:</span> {total_gb} GB ({total_bytes} bytes)
+                    </div>
+                    <div class="stats-item">
+                        <span class="stats-label">Usage:</span> <strong>{usage_percent}%</strong>
+                    </div>
+                    <div class="stats-item">
+                        <span class="stats-label">Alert Threshold:</span> {threshold_percent}% remaining
+                    </div>
+                </div>
+
+                <p><strong>Your local storage has exceeded the warning threshold.</strong></p>
+
+                <div class="actions">
+                    <h3>Recommended Actions</h3>
+                    <ol>
+                        <li>Review and clean up unused or old files</li>
+                        <li>Implement file retention policies</li>
+                        <li>Consider increasing storage capacity</li>
+                        <li>Monitor upload patterns and user activity</li>
+                    </ol>
+                </div>
+
+                <p><em>This is an automated notification. You will not receive another alert for 24 hours unless the threshold is crossed again.</em></p>
+            </div>
+            <div class="footer">
+                <p>This is an automated system notification.</p>
+            </div>
+        </div>
+    </body>
+    </html>
+
+- code: disk_usage_warning
+  name: Disk Usage Warning
+  description: Alert sent to super admins when filesystem disk usage exceeds threshold
+  channel: email
+  subject: "Disk Usage Alert: {usage_percent}% Used"
+  is_active: true
+  variables:
+    user_name: string
+    usage_percent: string
+    used_gb: string
+    total_gb: string
+    free_gb: string
+    monitored_path: string
+  body_text: |
+    Hello {user_name},
+
+    This is an automated alert regarding filesystem disk usage.
+
+    Current Status:
+    - Disk Used: {used_gb} GB
+    - Total Capacity: {total_gb} GB
+    - Free Space: {free_gb} GB
+    - Usage: {usage_percent}%
+    - Monitored Path: {monitored_path}
+
+    Your filesystem disk usage has exceeded the warning threshold.
+
+    Recommended Actions:
+    1. Review and clean up unused or old files
+    2. Check for large log files or temporary files
+    3. Consider expanding disk capacity
+    4. Monitor upload patterns and user activity
+
+    This is an automated notification. You will not receive another alert for 24 hours unless the threshold is crossed again.
+
+    Best regards,
+    System Administrator
+  body_html: |
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <style>
+            body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+            .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+            .header { background-color: #e65100; color: white; padding: 20px; border-radius: 5px; text-align: center; }
+            .content { background-color: #f9f9f9; padding: 20px; border-radius: 5px; margin-top: 20px; }
+            .stats { background-color: white; padding: 15px; border-left: 4px solid #e65100; margin: 20px 0; }
+            .stats-item { margin: 10px 0; }
+            .stats-label { font-weight: bold; color: #666; }
+            .actions { background-color: #fff3cd; border-left: 4px solid #ffc107; padding: 15px; margin: 20px 0; }
+            .actions h3 { margin-top: 0; color: #856404; }
+            .footer { text-align: center; margin-top: 30px; color: #666; font-size: 12px; }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="header">
+                <h1>Disk Usage Alert</h1>
+            </div>
+            <div class="content">
+                <p>Hello {user_name},</p>
+                <p>This is an automated alert regarding filesystem disk usage.</p>
+
+                <div class="stats">
+                    <h3 style="margin-top: 0;">Current Status</h3>
+                    <div class="stats-item">
+                        <span class="stats-label">Disk Used:</span> {used_gb} GB
+                    </div>
+                    <div class="stats-item">
+                        <span class="stats-label">Total Capacity:</span> {total_gb} GB
+                    </div>
+                    <div class="stats-item">
+                        <span class="stats-label">Free Space:</span> {free_gb} GB
+                    </div>
+                    <div class="stats-item">
+                        <span class="stats-label">Usage:</span> <strong>{usage_percent}%</strong>
+                    </div>
+                    <div class="stats-item">
+                        <span class="stats-label">Monitored Path:</span> {monitored_path}
+                    </div>
+                </div>
+
+                <p><strong>Your filesystem disk usage has exceeded the warning threshold.</strong></p>
+
+                <div class="actions">
+                    <h3>Recommended Actions</h3>
+                    <ol>
+                        <li>Review and clean up unused or old files</li>
+                        <li>Check for large log files or temporary files</li>
+                        <li>Consider expanding disk capacity</li>
+                        <li>Monitor upload patterns and user activity</li>
+                    </ol>
+                </div>
+
+                <p><em>This is an automated notification. You will not receive another alert for 24 hours unless the threshold is crossed again.</em></p>
+            </div>
+            <div class="footer">
+                <p>This is an automated system notification.</p>
+            </div>
+        </div>
+    </body>
+    </html>
+
+- code: security_brute_force_alert
+  name: Security Brute Force Alert
+  description: Alert sent to super admins when brute force attack is detected
+  channel: email
+  subject: "Security Alert: Brute Force Attack Detected"
+  is_active: true
+  variables:
+    user_name: string
+    event_count: string
+    blocked_ips_count: string
+    blocked_ips: string
+    detection_time: string
+  body_text: |
+    Hello {user_name},
+
+    SECURITY ALERT: Potential brute force attack detected.
+
+    Detection Summary:
+    - Brute Force Events: {event_count}
+    - Blocked IP Addresses: {blocked_ips_count}
+    - Detection Time: {detection_time}
+
+    Blocked IPs: {blocked_ips}
+
+    Recommended Actions:
+    1. Review the authentication logs for suspicious activity
+    2. Verify that blocked IPs are not legitimate users
+    3. Consider implementing additional security measures
+    4. Monitor for continued attack patterns
+
+    This is an automated security notification. You will not receive another alert for 24 hours.
+
+    Best regards,
+    System Security
+  body_html: |
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <style>
+            body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+            .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+            .header { background-color: #d32f2f; color: white; padding: 20px; border-radius: 5px; text-align: center; }
+            .content { background-color: #f9f9f9; padding: 20px; border-radius: 5px; margin-top: 20px; }
+            .stats { background-color: white; padding: 15px; border-left: 4px solid #d32f2f; margin: 20px 0; }
+            .stats-item { margin: 10px 0; }
+            .stats-label { font-weight: bold; color: #666; }
+            .alert-box { background-color: #ffebee; border-left: 4px solid #d32f2f; padding: 15px; margin: 20px 0; }
+            .actions { background-color: #fff3cd; border-left: 4px solid #ffc107; padding: 15px; margin: 20px 0; }
+            .actions h3 { margin-top: 0; color: #856404; }
+            .footer { text-align: center; margin-top: 30px; color: #666; font-size: 12px; }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="header">
+                <h1>Security Alert</h1>
+                <p>Brute Force Attack Detected</p>
+            </div>
+            <div class="content">
+                <p>Hello {user_name},</p>
+
+                <div class="alert-box">
+                    <strong>SECURITY ALERT:</strong> Potential brute force attack detected on your system.
+                </div>
+
+                <div class="stats">
+                    <h3 style="margin-top: 0;">Detection Summary</h3>
+                    <div class="stats-item">
+                        <span class="stats-label">Brute Force Events:</span> {event_count}
+                    </div>
+                    <div class="stats-item">
+                        <span class="stats-label">Blocked IP Addresses:</span> {blocked_ips_count}
+                    </div>
+                    <div class="stats-item">
+                        <span class="stats-label">Detection Time:</span> {detection_time}
+                    </div>
+                    <div class="stats-item">
+                        <span class="stats-label">Blocked IPs:</span> {blocked_ips}
+                    </div>
+                </div>
+
+                <div class="actions">
+                    <h3>Recommended Actions</h3>
+                    <ol>
+                        <li>Review the authentication logs for suspicious activity</li>
+                        <li>Verify that blocked IPs are not legitimate users</li>
+                        <li>Consider implementing additional security measures</li>
+                        <li>Monitor for continued attack patterns</li>
+                    </ol>
+                </div>
+
+                <p><em>This is an automated security notification. You will not receive another alert for 24 hours.</em></p>
+            </div>
+            <div class="footer">
+                <p>This is an automated system security notification.</p>
+            </div>
+        </div>
+    </body>
+    </html>
+
+- code: queue_health_alert
+  name: Queue Health Alert
+  description: Alert sent to super admins when queue health issues are detected
+  channel: email
+  subject: "System Alert: Job Queue Health Issues"
+  is_active: true
+  variables:
+    user_name: string
+    queue_depth: string
+    stuck_jobs_count: string
+    workers_online: string
+    workers_offline: string
+    issues: string
+    detection_time: string
+  body_text: |
+    Hello {user_name},
+
+    SYSTEM ALERT: Job queue health issues detected.
+
+    Queue Status:
+    - Queue Depth: {queue_depth} jobs
+    - Stuck Jobs: {stuck_jobs_count}
+    - Workers Online: {workers_online}
+    - Workers Offline: {workers_offline}
+    - Detection Time: {detection_time}
+
+    Issues Detected: {issues}
+
+    Recommended Actions:
+    1. Check worker process status and logs
+    2. Investigate stuck jobs for errors
+    3. Consider scaling up workers if queue depth is high
+    4. Review job timeouts and retry policies
+
+    This is an automated notification. You will not receive another alert for 24 hours.
+
+    Best regards,
+    System Operations
+  body_html: |
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <style>
+            body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+            .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+            .header { background-color: #ff9800; color: white; padding: 20px; border-radius: 5px; text-align: center; }
+            .content { background-color: #f9f9f9; padding: 20px; border-radius: 5px; margin-top: 20px; }
+            .stats { background-color: white; padding: 15px; border-left: 4px solid #ff9800; margin: 20px 0; }
+            .stats-item { margin: 10px 0; }
+            .stats-label { font-weight: bold; color: #666; }
+            .alert-box { background-color: #fff3e0; border-left: 4px solid #ff9800; padding: 15px; margin: 20px 0; }
+            .actions { background-color: #e3f2fd; border-left: 4px solid #2196f3; padding: 15px; margin: 20px 0; }
+            .actions h3 { margin-top: 0; color: #1565c0; }
+            .footer { text-align: center; margin-top: 30px; color: #666; font-size: 12px; }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="header">
+                <h1>Queue Health Alert</h1>
+            </div>
+            <div class="content">
+                <p>Hello {user_name},</p>
+
+                <div class="alert-box">
+                    <strong>Issues Detected:</strong> {issues}
+                </div>
+
+                <div class="stats">
+                    <h3 style="margin-top: 0;">Queue Status</h3>
+                    <div class="stats-item">
+                        <span class="stats-label">Queue Depth:</span> {queue_depth} jobs
+                    </div>
+                    <div class="stats-item">
+                        <span class="stats-label">Stuck Jobs:</span> {stuck_jobs_count}
+                    </div>
+                    <div class="stats-item">
+                        <span class="stats-label">Workers Online:</span> {workers_online}
+                    </div>
+                    <div class="stats-item">
+                        <span class="stats-label">Workers Offline:</span> {workers_offline}
+                    </div>
+                    <div class="stats-item">
+                        <span class="stats-label">Detection Time:</span> {detection_time}
+                    </div>
+                </div>
+
+                <div class="actions">
+                    <h3>Recommended Actions</h3>
+                    <ol>
+                        <li>Check worker process status and logs</li>
+                        <li>Investigate stuck jobs for errors</li>
+                        <li>Consider scaling up workers if queue depth is high</li>
+                        <li>Review job timeouts and retry policies</li>
+                    </ol>
+                </div>
+
+                <p><em>This is an automated notification. You will not receive another alert for 24 hours.</em></p>
+            </div>
+            <div class="footer">
+                <p>This is an automated system notification.</p>
+            </div>
+        </div>
+    </body>
+    </html>
+
+- code: notification_delivery_alert
+  name: Notification Delivery Alert
+  description: Alert sent to super admins when notification delivery failures exceed threshold
+  channel: email
+  subject: "System Alert: Notification Delivery Issues"
+  is_active: true
+  variables:
+    user_name: string
+    issues: string
+    email_success_rate: string
+    sms_success_rate: string
+    detection_time: string
+  body_text: |
+    Hello {user_name},
+
+    SYSTEM ALERT: Notification delivery issues detected.
+
+    Delivery Status:
+    - Email Success Rate: {email_success_rate}
+    - SMS Success Rate: {sms_success_rate}
+    - Detection Time: {detection_time}
+
+    Issues: {issues}
+
+    Recommended Actions:
+    1. Check email/SMS provider status and credentials
+    2. Review notification logs for error patterns
+    3. Verify recipient addresses are valid
+    4. Check for rate limiting or quota issues
+
+    This is an automated notification. You will not receive another alert for 24 hours.
+
+    Best regards,
+    System Operations
+  body_html: |
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <style>
+            body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+            .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+            .header { background-color: #9c27b0; color: white; padding: 20px; border-radius: 5px; text-align: center; }
+            .content { background-color: #f9f9f9; padding: 20px; border-radius: 5px; margin-top: 20px; }
+            .stats { background-color: white; padding: 15px; border-left: 4px solid #9c27b0; margin: 20px 0; }
+            .stats-item { margin: 10px 0; }
+            .stats-label { font-weight: bold; color: #666; }
+            .alert-box { background-color: #f3e5f5; border-left: 4px solid #9c27b0; padding: 15px; margin: 20px 0; }
+            .actions { background-color: #e3f2fd; border-left: 4px solid #2196f3; padding: 15px; margin: 20px 0; }
+            .actions h3 { margin-top: 0; color: #1565c0; }
+            .footer { text-align: center; margin-top: 30px; color: #666; font-size: 12px; }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="header">
+                <h1>Notification Delivery Alert</h1>
+            </div>
+            <div class="content">
+                <p>Hello {user_name},</p>
+
+                <div class="alert-box">
+                    <strong>Issues Detected:</strong> {issues}
+                </div>
+
+                <div class="stats">
+                    <h3 style="margin-top: 0;">Delivery Status</h3>
+                    <div class="stats-item">
+                        <span class="stats-label">Email Success Rate:</span> {email_success_rate}
+                    </div>
+                    <div class="stats-item">
+                        <span class="stats-label">SMS Success Rate:</span> {sms_success_rate}
+                    </div>
+                    <div class="stats-item">
+                        <span class="stats-label">Detection Time:</span> {detection_time}
+                    </div>
+                </div>
+
+                <div class="actions">
+                    <h3>Recommended Actions</h3>
+                    <ol>
+                        <li>Check email/SMS provider status and credentials</li>
+                        <li>Review notification logs for error patterns</li>
+                        <li>Verify recipient addresses are valid</li>
+                        <li>Check for rate limiting or quota issues</li>
+                    </ol>
+                </div>
+
+                <p><em>This is an automated notification. You will not receive another alert for 24 hours.</em></p>
+            </div>
+            <div class="footer">
+                <p>This is an automated system notification.</p>
+            </div>
+        </div>
+    </body>
+    </html>
+
+- code: db_pool_alert
+  name: Database Pool Alert
+  description: Alert sent to super admins when database connection pool utilization is high
+  channel: email
+  subject: "System Alert: Database Pool High Utilization ({utilization_percent})"
+  is_active: true
+  variables:
+    user_name: string
+    utilization_percent: string
+    connections_in_use: string
+    pool_size: string
+    overflow: string
+    threshold_percent: string
+    detection_time: string
+  body_text: |
+    Hello {user_name},
+
+    SYSTEM ALERT: Database connection pool utilization is high.
+
+    Pool Status:
+    - Current Utilization: {utilization_percent}
+    - Connections In Use: {connections_in_use}
+    - Pool Size: {pool_size}
+    - Overflow Connections: {overflow}
+    - Alert Threshold: {threshold_percent}
+    - Detection Time: {detection_time}
+
+    Recommended Actions:
+    1. Review application query patterns for inefficiencies
+    2. Check for connection leaks in application code
+    3. Consider increasing pool size if load is legitimate
+    4. Monitor database performance metrics
+
+    This is an automated notification. You will not receive another alert for 24 hours.
+
+    Best regards,
+    System Operations
+  body_html: |
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <style>
+            body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+            .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+            .header { background-color: #3f51b5; color: white; padding: 20px; border-radius: 5px; text-align: center; }
+            .content { background-color: #f9f9f9; padding: 20px; border-radius: 5px; margin-top: 20px; }
+            .stats { background-color: white; padding: 15px; border-left: 4px solid #3f51b5; margin: 20px 0; }
+            .stats-item { margin: 10px 0; }
+            .stats-label { font-weight: bold; color: #666; }
+            .alert-box { background-color: #e8eaf6; border-left: 4px solid #3f51b5; padding: 15px; margin: 20px 0; }
+            .actions { background-color: #e3f2fd; border-left: 4px solid #2196f3; padding: 15px; margin: 20px 0; }
+            .actions h3 { margin-top: 0; color: #1565c0; }
+            .footer { text-align: center; margin-top: 30px; color: #666; font-size: 12px; }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="header">
+                <h1>Database Pool Alert</h1>
+                <p>High Connection Pool Utilization</p>
+            </div>
+            <div class="content">
+                <p>Hello {user_name},</p>
+
+                <div class="alert-box">
+                    <strong>Warning:</strong> Database connection pool utilization has exceeded the threshold.
+                </div>
+
+                <div class="stats">
+                    <h3 style="margin-top: 0;">Pool Status</h3>
+                    <div class="stats-item">
+                        <span class="stats-label">Current Utilization:</span> <strong>{utilization_percent}</strong>
+                    </div>
+                    <div class="stats-item">
+                        <span class="stats-label">Connections In Use:</span> {connections_in_use}
+                    </div>
+                    <div class="stats-item">
+                        <span class="stats-label">Pool Size:</span> {pool_size}
+                    </div>
+                    <div class="stats-item">
+                        <span class="stats-label">Overflow Connections:</span> {overflow}
+                    </div>
+                    <div class="stats-item">
+                        <span class="stats-label">Alert Threshold:</span> {threshold_percent}
+                    </div>
+                    <div class="stats-item">
+                        <span class="stats-label">Detection Time:</span> {detection_time}
+                    </div>
+                </div>
+
+                <div class="actions">
+                    <h3>Recommended Actions</h3>
+                    <ol>
+                        <li>Review application query patterns for inefficiencies</li>
+                        <li>Check for connection leaks in application code</li>
+                        <li>Consider increasing pool size if load is legitimate</li>
+                        <li>Monitor database performance metrics</li>
+                    </ol>
+                </div>
+
+                <p><em>This is an automated notification. You will not receive another alert for 24 hours.</em></p>
+            </div>
+            <div class="footer">
+                <p>This is an automated system notification.</p>
+            </div>
+        </div>
+    </body>
+    </html>
+
+- code: user_type_expiry
+  name: User Type Expiry Notification
+  description: Notification sent to users when their user type assignment has expired
+  channel: email
+  subject: "User Type Expired: {user_type_name}"
+  is_active: true
+  variables:
+    user_name: string
+    user_type_name: string
+    organization_name: string
+    expired_at: string
+  body_text: |
+    Hello {user_name},
+
+    Your user type assignment has expired.
+
+    Details:
+    - User Type: {user_type_name}
+    - Organization: {organization_name}
+    - Expired: {expired_at}
+
+    The permissions associated with this user type are no longer active.
+
+    If you believe this is an error or need to renew your access, please contact your organization administrator.
+
+    Best regards,
+    System Administrator
+  body_html: |
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <style>
+            body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+            .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+            .header { background-color: #ff9800; color: white; padding: 20px; border-radius: 5px; text-align: center; }
+            .content { background-color: #f9f9f9; padding: 20px; border-radius: 5px; margin-top: 20px; }
+            .details { background-color: white; padding: 15px; border-left: 4px solid #ff9800; margin: 20px 0; }
+            .details-item { margin: 10px 0; }
+            .details-label { font-weight: bold; color: #666; }
+            .alert-box { background-color: #fff3e0; border-left: 4px solid #ff9800; padding: 15px; margin: 20px 0; }
+            .footer { text-align: center; margin-top: 30px; color: #666; font-size: 12px; }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="header">
+                <h1>User Type Expired</h1>
+            </div>
+            <div class="content">
+                <p>Hello {user_name},</p>
+
+                <div class="alert-box">
+                    <strong>Notice:</strong> Your user type assignment has expired.
+                </div>
+
+                <div class="details">
+                    <h3 style="margin-top: 0;">Expiry Details</h3>
+                    <div class="details-item">
+                        <span class="details-label">User Type:</span> {user_type_name}
+                    </div>
+                    <div class="details-item">
+                        <span class="details-label">Organization:</span> {organization_name}
+                    </div>
+                    <div class="details-item">
+                        <span class="details-label">Expired:</span> {expired_at}
+                    </div>
+                </div>
+
+                <p>The permissions associated with this user type are no longer active.</p>
+
+                <p>If you believe this is an error or need to renew your access, please contact your organization administrator.</p>
+            </div>
+            <div class="footer">
+                <p>This is an automated system notification.</p>
+            </div>
+        </div>
+    </body>
+    </html>
+
+- code: scheduled_report_ready
+  name: Scheduled Report Ready
+  description: Notification sent when a scheduled report has been generated
+  channel: email
+  subject: "Report Ready: {report_name}"
+  is_active: true
+  variables:
+    report_name: string
+    report_type: string
+    generated_at: string
+    download_url: string
+    row_count: string
+  body_text: |
+    Hello,
+
+    Your scheduled report is ready for download.
+
+    Report Details:
+    - Name: {report_name}
+    - Type: {report_type}
+    - Generated: {generated_at}
+    - Rows: {row_count}
+
+    Download your report:
+    {download_url}
+
+    Note: This download link will expire in 24 hours.
+
+    Best regards,
+    System Administrator
+  body_html: |
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <style>
+            body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+            .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+            .header { background-color: #4CAF50; color: white; padding: 20px; border-radius: 5px; text-align: center; }
+            .content { background-color: #f9f9f9; padding: 20px; border-radius: 5px; margin-top: 20px; }
+            .details { background-color: white; padding: 15px; border-left: 4px solid #4CAF50; margin: 20px 0; }
+            .details-item { margin: 10px 0; }
+            .details-label { font-weight: bold; color: #666; }
+            .button { display: inline-block; background-color: #4CAF50; color: white; padding: 12px 24px; text-decoration: none; border-radius: 5px; margin: 20px 0; }
+            .button:hover { background-color: #45a049; }
+            .note { font-size: 12px; color: #666; font-style: italic; }
+            .footer { text-align: center; margin-top: 30px; color: #666; font-size: 12px; }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="header">
+                <h1>Report Ready</h1>
+            </div>
+            <div class="content">
+                <p>Hello,</p>
+                <p>Your scheduled report is ready for download.</p>
+
+                <div class="details">
+                    <h3 style="margin-top: 0;">Report Details</h3>
+                    <div class="details-item">
+                        <span class="details-label">Name:</span> {report_name}
+                    </div>
+                    <div class="details-item">
+                        <span class="details-label">Type:</span> {report_type}
+                    </div>
+                    <div class="details-item">
+                        <span class="details-label">Generated:</span> {generated_at}
+                    </div>
+                    <div class="details-item">
+                        <span class="details-label">Rows:</span> {row_count}
+                    </div>
+                </div>
+
+                <p style="text-align: center;">
+                    <a href="{download_url}" class="button">Download Report</a>
+                </p>
+
+                <p class="note">Note: This download link will expire in 24 hours.</p>
+            </div>
+            <div class="footer">
+                <p>This is an automated system notification.</p>
+            </div>
+        </div>
+    </body>
+    </html>

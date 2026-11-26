@@ -1,0 +1,30 @@
+# Ruff configuration for AYZER Webapp Backend
+# Ensures consistent import ordering and code style
+
+[lint]
+select = [
+    "E",    # pycodestyle errors
+    "W",    # pycodestyle warnings
+    "F",    # Pyflakes
+    "I",    # isort
+    "UP",   # pyupgrade
+]
+ignore = [
+    "E501", # line too long (handled by black)
+]
+
+[lint.isort]
+# Use absolute imports throughout for consistency
+force-single-line = false
+# Known first-party package
+known-first-party = ["src"]
+# Import sections order
+section-order = ["future", "standard-library", "third-party", "first-party", "local-folder"]
+# Force all imports to be absolute (no relative imports)
+force-sort-within-sections = true
+# Lines between import sections
+lines-after-imports = 2
+
+[lint.per-file-ignores]
+# Allow relative imports in __init__.py files for package re-exports
+"__init__.py" = ["F401"]

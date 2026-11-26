@@ -1,0 +1,31 @@
+# Test users to create with their roles
+
+- email: owner@test.com
+  password: Admin@123
+  first_name: Owner
+  last_name: Test
+  role: owner
+
+- email: admin@test.com
+  password: Admin@123
+  first_name: Admin
+  last_name: Test
+  role: admin
+
+- email: user@test.com
+  password: Admin@123
+  first_name: User
+  last_name: Test
+  role: member
+
+- email: qa@test.com
+  password: Admin@123
+  first_name: QA
+  last_name: Tester
+  role: tester
+
+- email: performance_test@test.com
+  password: Admin@123
+  first_name: Performance
+  last_name: Tester
+  role: admin

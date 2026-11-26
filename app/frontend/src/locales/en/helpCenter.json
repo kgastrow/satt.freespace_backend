@@ -1,0 +1,34 @@
+{
+  "title": "Help Center",
+  "subtitle": "Find answers to your questions and learn how to make the most of our platform",
+  "searchPlaceholder": "Search for help articles and FAQs...",
+  "searching": "Searching...",
+  "searchResults": "Found {{count}} results",
+  "noSearchResults": "No results found for your search",
+  "categories": {
+    "title": "Browse by Category",
+    "all": "All Categories"
+  },
+  "tabs": {
+    "faqs": "FAQs",
+    "articles": "Articles"
+  },
+  "faqs": {
+    "noFaqs": "No FAQs available"
+  },
+  "articles": {
+    "noArticles": "No articles available"
+  },
+  "contactSupport": {
+    "title": "Need More Help?",
+    "description": "Can't find what you're looking for? Get in touch with our support team.",
+    "button": "Contact Support"
+  },
+  "backToHelpCenter": "Back to Help Center",
+  "article": {
+    "notFound": "Article Not Found",
+    "notFoundDescription": "The article you're looking for doesn't exist or has been removed.",
+    "backButton": "Back to Help Center",
+    "helpful": "Was this article helpful?"
+  }
+}

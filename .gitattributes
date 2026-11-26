@@ -1,0 +1,21 @@
+# Auto-resolve merge conflicts on documentation-table files where two parallel
+# feature branches append independent rows. `merge=union` keeps both sides'
+# additions, which is the right semantic for table rows — the parallel
+# modules genuinely want both rows preserved.
+#
+# Intentionally NOT auto-resolved here (routed to the /resolve_merge_conflict
+# agent in adw_ship_iso.py instead):
+#   - Python registry files (api/v1/__init__.py, models/__init__.py,
+#     core/response_codes.py). Union is a dumb text merge and can produce
+#     silently-duplicated imports or `v1_router.include_router(X)` calls
+#     that py_compile does not catch (Python tolerates duplicate imports;
+#     FastAPI raises only at registration time on path collision).
+#   - TypeScript config arrays (adminNav.ts, routes.ts). TS files get no
+#     fast post-merge validation, so union-produced duplicates would slip
+#     past until next build.
+#
+# The agent's /resolve_merge_conflict spec explicitly dedupes identifiers
+# during its append-only-union strategy, which is the safety the dumb
+# `merge=union` driver lacks.
+
+.claude/commands/conditional_docs.md merge=union

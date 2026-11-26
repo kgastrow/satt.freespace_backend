@@ -1,0 +1,200 @@
+# API Key Rate Limits per permission
+# requests_per_minute: steady-state limit
+# burst_limit: max burst above steady rate
+
+# Users - moderate limits, read-heavy expected
+- permission_code: users:read
+  requests_per_minute: 120
+  burst_limit: 150
+
+- permission_code: users:write
+  requests_per_minute: 30
+  burst_limit: 50
+
+- permission_code: users:delete
+  requests_per_minute: 10
+  burst_limit: 20
+
+# Roles - administrative, lower frequency
+- permission_code: roles:read
+  requests_per_minute: 60
+  burst_limit: 100
+
+- permission_code: roles:write
+  requests_per_minute: 20
+  burst_limit: 30
+
+- permission_code: roles:delete
+  requests_per_minute: 10
+  burst_limit: 15
+
+# User Roles - administrative operations
+- permission_code: user_roles:read
+  requests_per_minute: 60
+  burst_limit: 100
+
+- permission_code: user_roles:assign
+  requests_per_minute: 30
+  burst_limit: 50
+
+- permission_code: user_roles:revoke
+  requests_per_minute: 20
+  burst_limit: 30
+
+# Audit Logs - read-only, can be heavy for reports
+- permission_code: audit_logs:read
+  requests_per_minute: 60
+  burst_limit: 100
+
+# Notifications - read-heavy, write moderate
+- permission_code: notifications:read
+  requests_per_minute: 120
+  burst_limit: 200
+
+- permission_code: notifications:write
+  requests_per_minute: 60
+  burst_limit: 100
+
+- permission_code: notifications:send
+  requests_per_minute: 30
+  burst_limit: 60
+
+# Notification Templates - administrative
+- permission_code: notification_templates:read
+  requests_per_minute: 60
+  burst_limit: 100
+
+- permission_code: notification_templates:write
+  requests_per_minute: 20
+  burst_limit: 30
+
+- permission_code: notification_templates:delete
+  requests_per_minute: 10
+  burst_limit: 15
+
+# Notification Settings - rarely changed
+- permission_code: notification_settings:read
+  requests_per_minute: 60
+  burst_limit: 100
+
+- permission_code: notification_settings:write
+  requests_per_minute: 10
+  burst_limit: 20
+
+# Notification Categories - administrative
+- permission_code: notification_categories:read
+  requests_per_minute: 60
+  burst_limit: 100
+
+- permission_code: notification_categories:write
+  requests_per_minute: 20
+  burst_limit: 30
+
+- permission_code: notification_categories:delete
+  requests_per_minute: 10
+  burst_limit: 15
+
+# Files - can be heavy for uploads/downloads
+- permission_code: files:read
+  requests_per_minute: 120
+  burst_limit: 200
+
+- permission_code: files:write
+  requests_per_minute: 30
+  burst_limit: 60
+
+- permission_code: files:delete
+  requests_per_minute: 20
+  burst_limit: 30
+
+- permission_code: files:admin
+  requests_per_minute: 30
+  burst_limit: 50
+
+# File Settings - rarely changed
+- permission_code: file_settings:read
+  requests_per_minute: 30
+  burst_limit: 50
+
+- permission_code: file_settings:write
+  requests_per_minute: 10
+  burst_limit: 15
+
+# Metrics - dashboards may poll frequently
+- permission_code: metrics:read
+  requests_per_minute: 60
+  burst_limit: 120
+
+# Organization - administrative
+- permission_code: organization:read
+  requests_per_minute: 60
+  burst_limit: 100
+
+- permission_code: organization:write
+  requests_per_minute: 10
+  burst_limit: 20
+
+# API Keys - sensitive operations
+- permission_code: api_keys:read
+  requests_per_minute: 30
+  burst_limit: 50
+
+- permission_code: api_keys:write
+  requests_per_minute: 10
+  burst_limit: 20
+
+- permission_code: api_keys:delete
+  requests_per_minute: 10
+  burst_limit: 15
+
+# Feedback - user-generated content
+- permission_code: feedback:submit
+  requests_per_minute: 10
+  burst_limit: 20
+
+- permission_code: feedback:view
+  requests_per_minute: 60
+  burst_limit: 100
+
+- permission_code: feedback:respond
+  requests_per_minute: 30
+  burst_limit: 50
+
+- permission_code: feedback:delete
+  requests_per_minute: 10
+  burst_limit: 15
+
+# Payments - sensitive financial operations
+- permission_code: payments:read
+  requests_per_minute: 60
+  burst_limit: 100
+
+- permission_code: payments:create
+  requests_per_minute: 20
+  burst_limit: 30
+
+- permission_code: payments:refund
+  requests_per_minute: 10
+  burst_limit: 15
+
+# Payment Settings - administrative
+- permission_code: payment_settings:read
+  requests_per_minute: 30
+  burst_limit: 50
+
+- permission_code: payment_settings:write
+  requests_per_minute: 10
+  burst_limit: 15
+
+# Payment Methods - user operations
+- permission_code: payment_methods:read
+  requests_per_minute: 60
+  burst_limit: 100
+
+- permission_code: payment_methods:write
+  requests_per_minute: 20
+  burst_limit: 30
+
+- permission_code: payment_methods:delete
+  requests_per_minute: 10
+  burst_limit: 20

@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <linearGradient id="rocketGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#ff6b6b;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ff3838;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Rocket body -->
+  <path d="M 50 10 L 65 70 L 50 65 L 35 70 Z" fill="url(#rocketGradient)" stroke="#cc0000" stroke-width="1"/>
+
+  <!-- Rocket nose cone -->
+  <path d="M 50 10 L 58 25 L 50 22 L 42 25 Z" fill="#ffd700" stroke="#cc9900" stroke-width="1"/>
+
+  <!-- Window -->
+  <circle cx="50" cy="40" r="8" fill="#87ceeb" stroke="#4682b4" stroke-width="1.5"/>
+  <circle cx="50" cy="40" r="5" fill="#b0e0e6" opacity="0.6"/>
+
+  <!-- Left fin -->
+  <path d="M 35 55 L 20 75 L 35 70 Z" fill="#4a90e2" stroke="#2c5f8d" stroke-width="1"/>
+
+  <!-- Right fin -->
+  <path d="M 65 55 L 80 75 L 65 70 Z" fill="#4a90e2" stroke="#2c5f8d" stroke-width="1"/>
+
+  <!-- Flame -->
+  <path d="M 42 70 Q 40 80 45 90 Q 50 85 50 90 Q 50 85 55 90 Q 60 80 58 70 Z" fill="#ffa500" opacity="0.8"/>
+  <path d="M 45 75 Q 44 82 47 88 Q 50 84 53 88 Q 56 82 55 75 Z" fill="#ffff00" opacity="0.9"/>
+</svg>

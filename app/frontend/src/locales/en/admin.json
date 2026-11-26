@@ -1,0 +1,2188 @@
+{
+  "title": "Administration",
+  "description": "Manage organization settings and users",
+  "openMenu": "Open menu",
+  "selectFromSidebar": "Select an option from the sidebar to get started.",
+  "nav": {
+    "organization": {
+      "title": "Organization",
+      "settings": "Settings",
+      "sso": "SSO",
+      "twoFactor": "2FA"
+    },
+    "users": {
+      "title": "Users",
+      "manage": "Manage Users",
+      "onboarding": "Onboarding Review"
+    },
+    "communication": {
+      "title": "Communication",
+      "notifications": "Notifications",
+      "announcements": "Announcements",
+      "changelog": "Changelog",
+      "emailSettings": "Email Settings"
+    },
+    "content": {
+      "title": "Content",
+      "files": "Files",
+      "apiKeys": "API Keys",
+      "about": "About Page"
+    },
+    "monitoring": {
+      "title": "Monitoring",
+      "auditLogs": "Audit Logs",
+      "feedback": "Feedback",
+      "reports": "Reports"
+    }
+  },
+  "users": {
+    "pageTitle": "User Management",
+    "pageDescription": "Manage users in your organization",
+    "createButton": "Create User",
+    "emptyMessage": "No users found",
+    "table": {
+      "name": "Name",
+      "email": "Email",
+      "phone": "Phone",
+      "userTypes": "User Types",
+      "createdVia": "Created Via",
+      "joined": "Joined",
+      "lastLogin": "Last Login",
+      "storage": "Storage",
+      "status": "Status",
+      "emailVerified": "Email Verified",
+      "active": "Active",
+      "suspended": "Suspended",
+      "roles": "Roles",
+      "admin": "Super Admin",
+      "columns": "Columns",
+      "noPhone": "No phone",
+      "searchPlaceholder": "Search users..."
+    },
+    "filters": {
+      "search": "Search users...",
+      "status": "Status",
+      "userType": "User Type",
+      "createdVia": "Created Via",
+      "emailVerified": "Email Verified",
+      "all": "All",
+      "active": "Active",
+      "suspended": "Suspended",
+      "verified": "Verified",
+      "notVerified": "Not Verified"
+    },
+    "createdVia": {
+      "email": "Email",
+      "google": "Google",
+      "microsoft": "Microsoft",
+      "apple": "Apple",
+      "sso": "SSO"
+    },
+    "status": {
+      "active": "Active",
+      "suspended": "Suspended"
+    },
+    "badges": {
+      "admin": "Admin"
+    },
+    "onboardingStatus": {
+      "pending": "Pending",
+      "in_progress": "In Progress",
+      "completed": "Completed",
+      "approved": "Approved",
+      "rejected": "Rejected"
+    },
+    "actions": {
+      "edit": "Edit",
+      "manageRoles": "Manage Roles",
+      "suspend": "Suspend",
+      "unsuspend": "Unsuspend",
+      "delete": "Delete"
+    },
+    "createDialog": {
+      "title": "Create User",
+      "description": "Add a new user to your organization",
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "email": "Email",
+      "password": "Password",
+      "phone": "Phone (optional)",
+      "isAdmin": "Super Admin",
+      "cancel": "Cancel",
+      "create": "Create",
+      "creating": "Creating..."
+    },
+    "editDialog": {
+      "title": "Edit User",
+      "description": "Update user information",
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "email": "Email",
+      "password": "New Password (leave blank to keep current)",
+      "phone": "Phone (optional)",
+      "isAdmin": "Super Admin",
+      "cancel": "Cancel",
+      "save": "Save",
+      "saving": "Saving..."
+    },
+    "deleteDialog": {
+      "title": "Delete User",
+      "description": "Are you sure you want to delete {{firstName}} {{lastName}}? This action cannot be undone.",
+      "delete": "Delete"
+    },
+    "roleDialog": {
+      "title": "Manage Roles",
+      "description": "Manage roles for {{firstName}} {{lastName}}",
+      "currentRoles": "Current Roles",
+      "loading": "Loading...",
+      "noRoles": "No roles assigned",
+      "noRolesAvailable": "No roles available",
+      "selectPlaceholder": "Select a role to add",
+      "add": "Add",
+      "adding": "Adding...",
+      "roleName": "Role",
+      "assigned": "Assigned"
+    },
+    "suspendDialog": {
+      "title": "Suspend User",
+      "description": "Suspend {{firstName}} {{lastName}}? They will not be able to log in until unsuspended.",
+      "reason": "Reason (optional)",
+      "reasonPlaceholder": "Enter suspension reason...",
+      "sendNotification": "Send email notification to user",
+      "cancel": "Cancel",
+      "suspend": "Suspend",
+      "suspending": "Suspending..."
+    },
+    "unsuspendDialog": {
+      "title": "Unsuspend User",
+      "description": "Unsuspend {{firstName}} {{lastName}}? They will be able to log in again.",
+      "unsuspend": "Unsuspend"
+    },
+    "toast": {
+      "createSuccess": "User created successfully",
+      "createError": "Failed to create user",
+      "updateSuccess": "User updated successfully",
+      "updateError": "Failed to update user",
+      "deleteSuccess": "User deleted successfully",
+      "deleteError": "Failed to delete user",
+      "suspendSuccess": "User suspended successfully",
+      "suspendError": "Failed to suspend user",
+      "unsuspendSuccess": "User unsuspended successfully",
+      "unsuspendError": "Failed to unsuspend user",
+      "roleAssignSuccess": "Role assigned successfully",
+      "roleAssignError": "Failed to assign role",
+      "roleRevokeSuccess": "Role revoked successfully",
+      "roleRevokeError": "Failed to revoke role"
+    },
+    "detail": {
+      "title": "User Details",
+      "backToList": "Back to Users",
+      "notFound": "User Not Found",
+      "notFoundDescription": "The requested user could not be found or has been deleted.",
+      "tabs": {
+        "overview": "Overview",
+        "sessions": "Sessions",
+        "security": "Security",
+        "files": "Files & Storage",
+        "feedback": "Feedback",
+        "activity": "Activity"
+      },
+      "sections": {
+        "basicInfo": "Basic Information",
+        "roles": "Roles",
+        "userTypes": "User Types",
+        "rolesAndTypes": "Roles & User Types",
+        "suspensionInfo": "Suspension Details",
+        "notificationPrefs": "Notification Preferences",
+        "twoFactor": "Two-Factor Authentication",
+        "identityProviders": "Identity Providers",
+        "loginMethods": "Login Methods",
+        "storageOverview": "Storage Overview",
+        "filesByType": "Files by Type",
+        "feedback": "Feedback",
+        "dataExports": "Data Exports",
+        "impersonationHistory": "Impersonation History",
+        "loginHistory": "Login History"
+      },
+      "fields": {
+        "email": "Email",
+        "phone": "Phone",
+        "firstName": "First Name",
+        "lastName": "Last Name",
+        "firstNamePlaceholder": "Enter first name",
+        "lastNamePlaceholder": "Enter last name",
+        "phonePlaceholder": "Enter phone number",
+        "createdVia": "Created Via",
+        "joined": "Joined",
+        "lastUpdated": "Last Updated",
+        "roles": "Roles",
+        "userTypes": "User Types",
+        "suspensionReason": "Suspension Reason",
+        "suspendedAt": "Suspended At",
+        "suspendedBy": "Suspended By"
+      },
+      "verified": "Verified",
+      "unverified": "Unverified",
+      "emailUndeliverable": "Email may not be deliverable",
+      "noRoles": "No roles assigned",
+      "noUserTypes": "No user types assigned",
+      "notifications": {
+        "email": "Email",
+        "sms": "SMS",
+        "push": "Push",
+        "inApp": "In-App"
+      },
+      "noSessions": "No Active Sessions",
+      "noSessionsDescription": "This user has no active sessions.",
+      "currentSession": "Current",
+      "lastActive": "Last active",
+      "invalidateSession": "Revoke Session",
+      "invalidateSessionDialog": {
+        "title": "Revoke Session",
+        "description": "Are you sure you want to revoke this session? The user will be logged out from this device."
+      },
+      "twoFactor": {
+        "status": "Status",
+        "enabled": "Enabled",
+        "disabled": "Disabled",
+        "verifiedAt": "Verified At",
+        "backupCodes": "Backup Codes",
+        "remaining": "remaining",
+        "disabledDescription": "Two-factor authentication has been disabled for this user",
+        "disableFailed": "Failed to disable two-factor authentication",
+        "disableHelp": "Use this to help users who are locked out of their account and cannot access their authenticator app."
+      },
+      "linkedOn": "Linked on",
+      "noIdentityProviders": "No linked identity providers",
+      "identityProviders": {
+        "email": "Email & Password"
+      },
+      "noFiles": "No Files",
+      "noFilesDescription": "This user has not uploaded any files.",
+      "storage": {
+        "used": "used",
+        "total": "total",
+        "totalFiles": "Total Files"
+      },
+      "fileTypes": {
+        "images": "Images",
+        "videos": "Videos",
+        "documents": "Documents",
+        "audio": "Audio",
+        "other": "Other"
+      },
+      "noActivity": "No Activity",
+      "noActivityDescription": "This user has no recent activity to display.",
+      "noLoginHistory": "No login history available",
+      "loginHistory": {
+        "success": "Success",
+        "failed": "Failed",
+        "authMethod": "Auth Method",
+        "ipAddress": "IP Address",
+        "location": "Location",
+        "device": "Device"
+      },
+      "noFeedback": "No feedback submitted",
+      "noDataExports": "No data exports requested",
+      "feedbackTypes": {
+        "bug": "Bug",
+        "suggestion": "Suggestion",
+        "complaint": "Complaint",
+        "praise": "Praise",
+        "other": "Other"
+      },
+      "exportStatus": {
+        "pending": "Pending",
+        "processing": "Processing",
+        "completed": "Completed",
+        "failed": "Failed"
+      },
+      "exportExpired": "Expired",
+      "impersonationEnded": "Ended",
+      "impersonationOngoing": "Ongoing",
+      "andMore": "+{{count}} more",
+      "saved": "Changes Saved",
+      "savedDescription": "User information has been updated successfully.",
+      "saveFailed": "Failed to save changes. Please try again.",
+      "notificationPrefSaved": "Notification preference updated",
+      "notificationPrefFailed": "Failed to update notification preference",
+      "notificationPrefsReadOnly": "Only super admins can modify notification preferences",
+      "selectRole": "Select a role",
+      "roleAssigned": "Role Assigned",
+      "roleAssignedDescription": "The role has been assigned to this user.",
+      "roleAssignFailed": "Failed to assign role",
+      "roleRevoked": "Role Revoked",
+      "roleRevokedDescription": "The role has been removed from this user.",
+      "roleRevokeFailed": "Failed to revoke role",
+      "selectUserType": "Select a user type",
+      "userTypeAssigned": "User Type Assigned",
+      "userTypeAssignedDescription": "The user type has been assigned successfully.",
+      "userTypeAssignFailed": "Failed to assign user type",
+      "userTypeRevoked": "User Type Revoked",
+      "userTypeRevokedDescription": "The user type has been removed from this user.",
+      "userTypeRevokeFailed": "Failed to revoke user type",
+      "onboardedAt": "Onboarded on {{date}}",
+      "onboardingReset": "Onboarding Reset",
+      "onboardingResetDescription": "The user's onboarding has been reset and they will need to complete it again.",
+      "onboardingResetFailed": "Failed to reset onboarding",
+      "revokeUserTypeTitle": "Revoke User Type",
+      "revokeUserTypeDescription": "Are you sure you want to revoke the {{name}} user type from this user? They will lose access to features associated with this user type.",
+      "resetOnboardingTitle": "Reset Onboarding",
+      "resetOnboardingDescription": "Are you sure you want to reset the onboarding for {{name}}? The user will need to complete the onboarding process again.",
+      "disable2FATitle": "Disable Two-Factor Authentication",
+      "disable2FADescription": "This will disable 2FA for this user. They will be able to log in without a verification code. Use this only to help users who are locked out of their account.",
+      "actions": {
+        "addRole": "Add Role",
+        "assignUserType": "Assign User Type",
+        "revokeUserType": "Revoke",
+        "resetOnboarding": "Reset Onboarding",
+        "viewOnboarding": "View Onboarding",
+        "disable2FA": "Disable 2FA",
+        "sendPasswordReset": "Send Password Reset"
+      },
+      "passwordReset": {
+        "title": "Send Password Reset Email",
+        "description": "This will send a password reset email to {{email}}. The user can use the link to set a new password.",
+        "sent": "Password reset email sent successfully",
+        "failed": "Failed to send password reset email"
+      },
+      "suspendDialog": {
+        "title": "Suspend User",
+        "description": "Are you sure you want to suspend {{name}}? They will be logged out and unable to access the platform."
+      },
+      "unsuspendDialog": {
+        "title": "Unsuspend User",
+        "description": "Are you sure you want to unsuspend {{name}}? They will be able to log in again."
+      },
+      "deleteDialog": {
+        "title": "Delete User",
+        "description": "Are you sure you want to delete {{name}}? This action cannot be undone."
+      },
+      "toast": {
+        "suspendSuccess": "User suspended successfully",
+        "suspendError": "Failed to suspend user",
+        "unsuspendSuccess": "User unsuspended successfully",
+        "unsuspendError": "Failed to unsuspend user",
+        "deleteSuccess": "User deleted successfully",
+        "deleteError": "Failed to delete user",
+        "sessionInvalidated": "Session revoked successfully",
+        "sessionInvalidateError": "Failed to revoke session"
+      }
+    }
+  },
+  "impersonation": {
+    "banner": {
+      "viewing": "Viewing as:",
+      "endButton": "End Impersonation",
+      "ending": "Ending...",
+      "endSuccess": "Impersonation ended successfully",
+      "endError": "Failed to end impersonation"
+    },
+    "indicator": {
+      "end": "End"
+    },
+    "button": {
+      "label": "Impersonate",
+      "starting": "Starting...",
+      "startSuccess": "Now viewing as {{firstName}} {{lastName}}",
+      "startError": "Failed to start impersonation"
+    }
+  },
+  "roles": {
+    "pageTitle": "Role Management",
+    "pageDescription": "Create and manage roles for your organization",
+    "createButton": "Create Role",
+    "emptyMessage": "No roles found",
+    "table": {
+      "name": "Name",
+      "description": "Description",
+      "defaultOnRegistration": "Default",
+      "default": "Default",
+      "created": "Created"
+    },
+    "form": {
+      "defaultOnRegistration": "Default on Registration",
+      "defaultOnRegistrationDescription": "Automatically assign this role to new users when they register"
+    },
+    "actions": {
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "createDialog": {
+      "title": "Create Role",
+      "description": "Add a new role to your organization",
+      "name": "Name",
+      "descriptionLabel": "Description (optional)",
+      "cancel": "Cancel",
+      "create": "Create",
+      "creating": "Creating..."
+    },
+    "editDialog": {
+      "title": "Edit Role",
+      "description": "Update role information",
+      "name": "Name",
+      "descriptionLabel": "Description (optional)",
+      "cancel": "Cancel",
+      "save": "Save",
+      "saving": "Saving..."
+    },
+    "deleteDialog": {
+      "title": "Delete Role",
+      "description": "Are you sure you want to delete the role \"{{name}}\"? Users with this role will lose it.",
+      "delete": "Delete"
+    },
+    "toast": {
+      "createSuccess": "Role created successfully",
+      "createError": "Failed to create role",
+      "updateSuccess": "Role updated successfully",
+      "updateError": "Failed to update role",
+      "deleteSuccess": "Role deleted successfully",
+      "deleteError": "Failed to delete role"
+    }
+  },
+  "auditLogs": {
+    "pageTitle": "Audit Logs",
+    "pageDescription": "View activity history and changes in your organization",
+    "emptyMessage": "No audit logs found",
+    "table": {
+      "timestamp": "Timestamp",
+      "actor": "Actor",
+      "action": "Action",
+      "resource": "Resource",
+      "viewDetails": "View Details"
+    },
+    "filters": {
+      "resourceType": "Resource Type",
+      "action": "Action",
+      "fromDate": "From Date",
+      "toDate": "To Date",
+      "clearFilters": "Clear Filters",
+      "all": "All",
+      "user": "User",
+      "role": "Role",
+      "organization": "Organization",
+      "create": "Create",
+      "update": "Update",
+      "delete": "Delete",
+      "search": "Search",
+      "searchPlaceholder": "Search by resource name..."
+    },
+    "detailsDialog": {
+      "title": "Audit Log Details",
+      "actor": "Actor",
+      "action": "Action",
+      "resourceType": "Resource Type",
+      "resourceId": "Resource ID",
+      "changes": "Changes"
+    }
+  },
+  "metrics": {
+    "pageTitle": "System Metrics",
+    "pageDescription": "Monitor system health and performance",
+    "autoRefresh": "Auto-refresh (10s)",
+    "refresh": "Refresh",
+    "refreshing": "Refreshing...",
+    "errorMessage": "Metrics endpoint not available. Please ensure the backend metrics API is configured.",
+    "retry": "Retry",
+    "requests": {
+      "title": "HTTP Requests",
+      "description": "Request rate and performance",
+      "rate": "Rate",
+      "avgLatency": "Avg Latency",
+      "errorRate": "Error Rate",
+      "total": "Total"
+    },
+    "database": {
+      "title": "Database",
+      "description": "Connection pool status",
+      "poolSize": "Pool Size",
+      "inUse": "In Use",
+      "available": "Available"
+    },
+    "cache": {
+      "title": "Cache",
+      "description": "Redis cache status",
+      "status": "Status",
+      "connected": "Connected",
+      "disconnected": "Disconnected",
+      "hitRate": "Hit Rate"
+    },
+    "users": {
+      "title": "Active Users",
+      "description": "Currently active users",
+      "subtitle": "in the last 5 minutes"
+    },
+    "jobs": {
+      "title": "Background Jobs",
+      "description": "Task queue status",
+      "pending": "Pending",
+      "inProgress": "In Progress",
+      "failed": "Failed (1h)",
+      "queueDepth": "Queue Depth",
+      "stuckJobs": "Stuck Jobs",
+      "workersOnline": "Workers Online"
+    },
+    "system": {
+      "title": "System Resources",
+      "description": "CPU and memory usage",
+      "cpu": "CPU",
+      "memory": "Memory",
+      "uptime": "Uptime"
+    },
+    "security": {
+      "title": "Security",
+      "description": "Authentication security metrics",
+      "failedLogins": "Failed Logins (24h)",
+      "failed2fa": "Failed 2FA (24h)",
+      "apiKeyFailures": "API Key Failures",
+      "bruteForceEvents": "Brute Force Events"
+    },
+    "notifications": {
+      "title": "Notifications",
+      "description": "Notification delivery metrics",
+      "emailSuccessRate": "Email Success Rate",
+      "smsSuccessRate": "SMS Success Rate",
+      "totalSent": "Total Sent (24h)",
+      "totalFailed": "Total Failed (24h)"
+    },
+    "rateLimit": {
+      "title": "Rate Limiting",
+      "description": "API rate limit violations",
+      "totalViolations": "Total Violations",
+      "topEndpoints": "Top Endpoints",
+      "topIPs": "Top IPs"
+    }
+  },
+  "notifications": {
+    "bulk": {
+      "verifiedContact": {
+        "label": "Only send to verified contacts",
+        "description": {
+          "email": "Skips recipients whose email address is not verified. Recommended to improve delivery rates.",
+          "phone": "Skips recipients whose phone number is not verified. Recommended to improve delivery rates.",
+          "none": "In-app notifications are delivered inside the app, so there is no contact address to verify."
+        }
+      }
+    },
+    "pageTitle": "Notifications",
+    "pageDescription": "Send and manage notifications",
+    "sendButton": "Send Notification",
+    "emptyMessage": "No notifications found",
+    "stats": {
+      "sentToday": "Sent Today",
+      "deliveryRate": "Delivery Rate",
+      "failedToday": "Failed Today",
+      "pendingQueue": "Pending Queue"
+    },
+    "quickActions": {
+      "bulkCampaign": "Bulk Campaign",
+      "templates": "Templates",
+      "categories": "Categories",
+      "settings": "Settings"
+    },
+    "filters": {
+      "allChannels": "All Channels",
+      "email": "Email",
+      "sms": "SMS",
+      "whatsapp": "WhatsApp",
+      "inApp": "In-App",
+      "allStatus": "All Status",
+      "sent": "Sent",
+      "queued": "Queued",
+      "delivered": "Delivered",
+      "failed": "Failed",
+      "pending": "Pending"
+    },
+    "table": {
+      "channel": "Channel",
+      "recipient": "Recipient",
+      "subject": "Subject/Preview",
+      "status": "Status",
+      "sentTime": "Sent"
+    },
+    "send": {
+      "pageTitle": "Send Notification",
+      "pageDescription": "Send a notification to a user",
+      "backButton": "Back",
+      "channelSection": {
+        "title": "Channel & Recipient",
+        "description": "Choose how and where to send the notification",
+        "channel": "Channel",
+        "channelPlaceholder": "Select channel",
+        "recipient": "Recipient",
+        "userPlaceholder": "Select a user",
+        "searchUsers": "Search users...",
+        "noUsersFound": "No users found.",
+        "recipientUserDescription": "Select the user to receive the notification",
+        "you": "You",
+        "noPhone": "no phone"
+      },
+      "contentSection": {
+        "title": "Content",
+        "description": "Define the notification content",
+        "useTemplate": "Use Template",
+        "useTemplateDescription": "Use a pre-defined template instead of custom content",
+        "template": "Template",
+        "templatePlaceholder": "Select a template",
+        "subject": "Subject",
+        "subjectPlaceholder": "Email subject",
+        "message": "Message",
+        "messagePlaceholder": "Enter your message..."
+      },
+      "optionsSection": {
+        "title": "Options",
+        "urgent": "Urgent",
+        "urgentDescription": "Bypass quiet hours and send immediately"
+      },
+      "actions": {
+        "cancel": "Cancel",
+        "send": "Send Notification",
+        "sending": "Sending..."
+      },
+      "toast": {
+        "success": "Notification sent successfully",
+        "error": "Failed to send notification"
+      }
+    }
+  },
+  "announcements": {
+    "pageTitle": "Announcements",
+    "pageDescription": "Create and manage announcements for your organization or platform",
+    "createButton": "Create Announcement",
+    "emptyMessage": "No announcements found",
+    "table": {
+      "title": "Title",
+      "priority": "Priority",
+      "status": "Status",
+      "scope": "Scope",
+      "dismissible": "Dismissible",
+      "created": "Created"
+    },
+    "status": {
+      "scheduled": "Scheduled",
+      "active": "Active",
+      "expired": "Expired"
+    },
+    "scope": {
+      "platform": "Platform",
+      "organization": "Organization"
+    },
+    "priority": {
+      "critical": "Critical",
+      "high": "High",
+      "normal": "Normal",
+      "low": "Low"
+    },
+    "actions": {
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "form": {
+      "title": "Title",
+      "body": "Body",
+      "priority": "Priority",
+      "backgroundColor": "Background Color",
+      "backgroundColorDescription": "Leave empty to use default color based on priority",
+      "textColor": "Text Color",
+      "textColorDescription": "Leave empty to use default text color",
+      "dismissible": "Dismissible",
+      "dismissibleDescription": "Allow users to dismiss this announcement",
+      "platformWide": "Platform Wide",
+      "platformWideDescription": "Show to all users (super admin only)",
+      "featuredImage": "Featured Image",
+      "featuredImageAlt": "Featured image preview",
+      "removeImage": "Remove image",
+      "optional": "optional",
+      "ctaSection": "Call to Action (Optional)",
+      "ctaText": "Button Text",
+      "ctaUrl": "Button URL",
+      "ctaDismisses": "CTA Dismisses",
+      "ctaDismissesDescription": "Clicking the CTA will dismiss the announcement",
+      "schedulingSection": "Scheduling (Optional)",
+      "startTime": "Start Time",
+      "endTime": "End Time"
+    },
+    "preview": {
+      "title": "Preview",
+      "titlePlaceholder": "Announcement Title",
+      "bodyPlaceholder": "Your announcement message will appear here..."
+    },
+    "createDialog": {
+      "title": "Create Announcement",
+      "description": "Create a new announcement for users",
+      "cancel": "Cancel",
+      "preview": "Preview & Create"
+    },
+    "editDialog": {
+      "title": "Edit Announcement",
+      "description": "Update announcement details",
+      "cancel": "Cancel",
+      "preview": "Preview & Save"
+    },
+    "previewDialog": {
+      "title": "Preview Announcement",
+      "description": "Review how your announcement will appear to users before publishing",
+      "desktop": "Desktop",
+      "mobile": "Mobile",
+      "back": "Back to Edit",
+      "confirm": "Publish Announcement",
+      "saving": "Publishing..."
+    },
+    "deleteDialog": {
+      "title": "Delete Announcement",
+      "description": "Are you sure you want to delete \"{{title}}\"? This action cannot be undone.",
+      "delete": "Delete"
+    },
+    "toast": {
+      "createSuccess": "Announcement created successfully",
+      "createError": "Failed to create announcement",
+      "updateSuccess": "Announcement updated successfully",
+      "updateError": "Failed to update announcement",
+      "deleteSuccess": "Announcement deleted successfully",
+      "deleteError": "Failed to delete announcement"
+    }
+  },
+  "changelog": {
+    "pageTitle": "Changelog",
+    "pageDescription": "Create and manage release notes for your users",
+    "createButton": "Create Entry",
+    "emptyMessage": "No changelog entries found",
+    "table": {
+      "version": "Version",
+      "title": "Title",
+      "category": "Category",
+      "status": "Status",
+      "scope": "Scope",
+      "releaseDate": "Release Date"
+    },
+    "status": {
+      "published": "Published",
+      "draft": "Draft"
+    },
+    "scope": {
+      "platform": "Platform",
+      "organization": "Organization"
+    },
+    "categories": {
+      "feature": "Feature",
+      "improvement": "Improvement",
+      "bugfix": "Bug Fix",
+      "breaking": "Breaking",
+      "other": "Other"
+    },
+    "actions": {
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "form": {
+      "version": "Version",
+      "title": "Title",
+      "body": "Body",
+      "bodyDescription": "Markdown content describing the changes",
+      "category": "Category",
+      "releaseDate": "Release Date",
+      "published": "Published",
+      "platformWide": "Platform Wide",
+      "platformWideDescription": "Show to all users (super admin only)"
+    },
+    "createDialog": {
+      "title": "Create Changelog Entry",
+      "description": "Add a new release note for users",
+      "create": "Create"
+    },
+    "editDialog": {
+      "title": "Edit Changelog Entry",
+      "description": "Update changelog entry details"
+    },
+    "deleteDialog": {
+      "title": "Delete Changelog Entry",
+      "description": "Are you sure you want to delete \"{{title}}\"? This action cannot be undone.",
+      "delete": "Delete"
+    },
+    "toast": {
+      "createSuccess": "Changelog entry created successfully",
+      "createError": "Failed to create changelog entry",
+      "updateSuccess": "Changelog entry updated successfully",
+      "updateError": "Failed to update changelog entry",
+      "deleteSuccess": "Changelog entry deleted successfully",
+      "deleteError": "Failed to delete changelog entry"
+    }
+  },
+  "navigation": {
+    "changelog": "Changelog"
+  },
+  "cronJobs": {
+    "pageTitle": "Cron Jobs",
+    "pageDescription": "Manage scheduled tasks and jobs",
+    "createButton": "Create Cron Job",
+    "emptyMessage": "No cron jobs found",
+    "table": {
+      "name": "Name",
+      "code": "Code",
+      "schedule": "Schedule",
+      "executions24h": "Executions (24h)",
+      "failures24h": "Failures (24h)",
+      "failureRate": "Failure Rate",
+      "avgDuration": "Avg Duration",
+      "status": "Status",
+      "lastRun": "Last Run",
+      "nextRun": "Next Run",
+      "tooltipCronExpression": "Cron expression"
+    },
+    "status": {
+      "active": "Active",
+      "inactive": "Inactive",
+      "success": "Success",
+      "error": "Error",
+      "running": "Running",
+      "pending": "Pending",
+      "never": "Never"
+    },
+    "actions": {
+      "edit": "Edit",
+      "activate": "Activate",
+      "deactivate": "Deactivate",
+      "triggerManually": "Trigger Manually",
+      "viewHistory": "View History",
+      "delete": "Delete"
+    },
+    "config": {
+      "title": "Configuration",
+      "description": "Settings managed via System Config that control this job's behavior",
+      "noConfig": "This job has no configurable settings",
+      "save": "Save",
+      "saving": "Saving..."
+    },
+    "createDialog": {
+      "title": "Create Cron Job",
+      "description": "Add a new scheduled task",
+      "name": "Name",
+      "description": "Description",
+      "code": "Code",
+      "codePlaceholder": "cleanup_expired_tokens",
+      "codeDescription": "Unique identifier for the job type (lowercase, underscores only)",
+      "scheduleExpression": "Schedule Expression",
+      "scheduleExpressionPlaceholder": "0 0 * * *",
+      "scheduleExpressionDescription": "Cron expression (e.g., \"0 0 * * *\" = daily at midnight)",
+      "active": "Active",
+      "platformWide": "Platform-wide",
+      "enableForNewOrgs": "Enable for new orgs",
+      "cancel": "Cancel",
+      "create": "Create",
+      "creating": "Creating..."
+    },
+    "editDialog": {
+      "title": "Edit Cron Job",
+      "description": "Update scheduled task configuration",
+      "name": "Name",
+      "description": "Description",
+      "code": "Code",
+      "codeDisabledDescription": "Code cannot be changed after creation",
+      "scheduleExpression": "Schedule Expression",
+      "scheduleExpressionPlaceholder": "0 0 * * *",
+      "scheduleExpressionDescription": "Cron expression (e.g., \"0 0 * * *\" = daily at midnight)",
+      "active": "Active",
+      "enableForNewOrgs": "Enable for new orgs",
+      "cancel": "Cancel",
+      "save": "Save",
+      "saving": "Saving..."
+    },
+    "deleteDialog": {
+      "title": "Delete Cron Job",
+      "description": "Are you sure you want to delete \"{{name}}\"? This will soft-delete the cron job.",
+      "delete": "Delete"
+    },
+    "triggerDialog": {
+      "title": "Trigger Cron Job",
+      "description": "Are you sure you want to manually trigger \"{{name}}\"?",
+      "trigger": "Trigger"
+    },
+    "executionHistoryDialog": {
+      "title": "Execution History - {{name}}",
+      "description": "Recent execution logs for this cron job",
+      "noHistory": "No execution history found",
+      "startedAt": "Started",
+      "completedAt": "Completed: {{time}}",
+      "error": "Error: {{message}}"
+    },
+    "toast": {
+      "createSuccess": "Cron job created successfully",
+      "createError": "Failed to create cron job",
+      "updateSuccess": "Cron job updated successfully",
+      "updateError": "Failed to update cron job",
+      "deleteSuccess": "Cron job deleted successfully",
+      "deleteError": "Failed to delete cron job",
+      "activateSuccess": "Cron job activated",
+      "deactivateSuccess": "Cron job deactivated",
+      "toggleError": "Failed to toggle cron job",
+      "triggerSuccess": "Cron job triggered successfully",
+      "triggerError": "Failed to trigger cron job",
+      "configUpdateSuccess": "Configuration updated successfully",
+      "configUpdateError": "Failed to update configuration"
+    },
+    "validation": {
+      "nameRequired": "Name is required",
+      "codeRequired": "Code is required",
+      "codeFormat": "Code must be lowercase letters, numbers, and underscores only",
+      "scheduleExpressionRequired": "Schedule expression is required",
+      "scheduleExpressionFormat": "Invalid cron expression (e.g., \"0 0 * * *\")"
+    }
+  },
+  "helpCenter": {
+    "landing": {
+      "pageTitle": "Help Center Management",
+      "pageDescription": "Manage help articles, FAQs, and categories",
+      "articles": {
+        "title": "Articles",
+        "description": "Create and manage help articles with rich content",
+        "button": "Manage Articles"
+      },
+      "faqs": {
+        "title": "FAQs",
+        "description": "Create and organize frequently asked questions",
+        "button": "Manage FAQs"
+      },
+      "categories": {
+        "title": "Categories",
+        "description": "Organize content into searchable categories",
+        "button": "Manage Categories"
+      }
+    },
+    "articles": {
+      "pageTitle": "Help Articles",
+      "pageDescription": "Create and manage help center articles",
+      "createButton": "Create Article",
+      "emptyMessage": "No articles found",
+      "table": {
+        "title": "Title",
+        "slug": "Slug",
+        "status": "Status",
+        "scope": "Scope",
+        "published": "Published"
+      },
+      "actions": {
+        "edit": "Edit",
+        "delete": "Delete"
+      },
+      "form": {
+        "title": "Title",
+        "slug": "Slug",
+        "slugDescription": "URL-friendly identifier (lowercase letters, numbers, and hyphens only)",
+        "category": "Category",
+        "categoryPlaceholder": "Select a category",
+        "content": "Content",
+        "contentDescription": "Markdown content for the article",
+        "featuredImage": "Featured Image URL",
+        "imageUrlOrUpload": "You can upload an image above or enter a URL here",
+        "status": "Status",
+        "platformWide": "Platform Wide",
+        "platformWideDescription": "Show to all organizations (super admin only)"
+      },
+      "createDialog": {
+        "title": "Create Article",
+        "description": "Add a new help article",
+        "cancel": "Cancel",
+        "preview": "Preview & Create"
+      },
+      "editDialog": {
+        "title": "Edit Article",
+        "description": "Update article details",
+        "cancel": "Cancel",
+        "preview": "Preview & Save"
+      },
+      "previewDialog": {
+        "title": "Preview Article",
+        "description": "Review how your article will appear to users before publishing",
+        "back": "Back to Edit",
+        "confirm": "Publish Article",
+        "saving": "Publishing..."
+      },
+      "deleteDialog": {
+        "title": "Delete Article",
+        "description": "Are you sure you want to delete \"{{title}}\"? This action cannot be undone.",
+        "delete": "Delete"
+      },
+      "toast": {
+        "createSuccess": "Article created successfully",
+        "createError": "Failed to create article",
+        "updateSuccess": "Article updated successfully",
+        "updateError": "Failed to update article",
+        "deleteSuccess": "Article deleted successfully",
+        "deleteError": "Failed to delete article",
+        "reorderSuccess": "Articles reordered successfully",
+        "reorderError": "Failed to reorder articles"
+      }
+    },
+    "faqs": {
+      "pageTitle": "Help FAQs",
+      "pageDescription": "Manage frequently asked questions",
+      "createButton": "Create FAQ",
+      "emptyMessage": "No FAQs found",
+      "table": {
+        "order": "Order",
+        "question": "Question",
+        "status": "Status",
+        "scope": "Scope"
+      },
+      "actions": {
+        "edit": "Edit",
+        "delete": "Delete"
+      },
+      "form": {
+        "question": "Question",
+        "answer": "Answer",
+        "category": "Category",
+        "categoryPlaceholder": "Select a category",
+        "status": "Status",
+        "displayOrder": "Display Order",
+        "displayOrderDescription": "Order in which this FAQ appears (lower numbers appear first)",
+        "platformWide": "Platform Wide",
+        "platformWideDescription": "Show to all organizations (super admin only)"
+      },
+      "createDialog": {
+        "title": "Create FAQ",
+        "description": "Add a new frequently asked question",
+        "cancel": "Cancel",
+        "create": "Create",
+        "creating": "Creating..."
+      },
+      "editDialog": {
+        "title": "Edit FAQ",
+        "description": "Update FAQ details",
+        "cancel": "Cancel",
+        "save": "Save",
+        "saving": "Saving..."
+      },
+      "deleteDialog": {
+        "title": "Delete FAQ",
+        "description": "Are you sure you want to delete this FAQ? This action cannot be undone.",
+        "delete": "Delete"
+      },
+      "toast": {
+        "createSuccess": "FAQ created successfully",
+        "createError": "Failed to create FAQ",
+        "updateSuccess": "FAQ updated successfully",
+        "updateError": "Failed to update FAQ",
+        "deleteSuccess": "FAQ deleted successfully",
+        "deleteError": "Failed to delete FAQ",
+        "reorderSuccess": "FAQs reordered successfully",
+        "reorderError": "Failed to reorder FAQs"
+      }
+    },
+    "categories": {
+      "pageTitle": "Help Categories",
+      "pageDescription": "Organize help content into categories",
+      "createButton": "Create Category",
+      "emptyMessage": "No categories found",
+      "table": {
+        "order": "Order",
+        "name": "Name",
+        "slug": "Slug",
+        "description": "Description"
+      },
+      "actions": {
+        "edit": "Edit",
+        "delete": "Delete"
+      },
+      "form": {
+        "name": "Name",
+        "slug": "Slug",
+        "slugDescription": "URL-friendly identifier (lowercase letters, numbers, and hyphens only)",
+        "description": "Description",
+        "displayOrder": "Display Order",
+        "displayOrderDescription": "Order in which this category appears (lower numbers appear first)"
+      },
+      "createDialog": {
+        "title": "Create Category",
+        "description": "Add a new help category",
+        "cancel": "Cancel",
+        "create": "Create",
+        "creating": "Creating..."
+      },
+      "editDialog": {
+        "title": "Edit Category",
+        "description": "Update category details",
+        "cancel": "Cancel",
+        "save": "Save",
+        "saving": "Saving..."
+      },
+      "deleteDialog": {
+        "title": "Delete Category",
+        "description": "Are you sure you want to delete \"{{name}}\"? Articles and FAQs in this category will need to be reassigned.",
+        "delete": "Delete"
+      },
+      "toast": {
+        "createSuccess": "Category created successfully",
+        "createError": "Failed to create category",
+        "updateSuccess": "Category updated successfully",
+        "updateError": "Failed to update category",
+        "deleteSuccess": "Category deleted successfully",
+        "deleteError": "Failed to delete category",
+        "reorderSuccess": "Categories reordered successfully",
+        "reorderError": "Failed to reorder categories"
+      }
+    },
+    "status": {
+      "draft": "Draft",
+      "published": "Published"
+    },
+    "scope": {
+      "platform": "Platform",
+      "organization": "Organization"
+    },
+    "form": {
+      "optional": "optional"
+    },
+    "reorder": {
+      "reorderButton": "Reorder",
+      "saveOrder": "Save Order",
+      "saving": "Saving...",
+      "cancel": "Cancel",
+      "instructions": "Drag and drop items to change their display order. Click 'Save Order' when done."
+    }
+  },
+  "requestLogs": {
+    "pageTitle": "Request Logs",
+    "pageDescription": "View and search API request/response logs for debugging",
+    "emptyMessage": "No request logs found",
+    "triggerCleanup": "Cleanup Old Logs",
+    "cleaningUp": "Cleaning up...",
+    "table": {
+      "timestamp": "Timestamp",
+      "method": "Method",
+      "path": "Path",
+      "status": "Status",
+      "duration": "Duration",
+      "ipAddress": "IP Address",
+      "viewDetails": "View Details"
+    },
+    "filters": {
+      "method": "Method",
+      "path": "Path",
+      "pathPlaceholder": "/api/...",
+      "statusRange": "Status Code",
+      "fromDate": "From Date",
+      "toDate": "To Date",
+      "userEmail": "User Email",
+      "userEmailPlaceholder": "user@example.com",
+      "clearFilters": "Clear Filters",
+      "all": "All"
+    },
+    "detailsDialog": {
+      "title": "Request Log Details",
+      "method": "Method",
+      "statusCode": "Status Code",
+      "duration": "Duration",
+      "path": "Path",
+      "ipAddress": "IP Address",
+      "organizationId": "Organization ID",
+      "userId": "User ID",
+      "userAgent": "User Agent",
+      "requestBody": "Request Body",
+      "responseBody": "Response Body",
+      "errorTraceback": "Error Stack Trace"
+    },
+    "toast": {
+      "cleanupSuccess": "Log cleanup job triggered successfully",
+      "cleanupError": "Failed to trigger log cleanup"
+    },
+    "settings": {
+      "title": "Logging Configuration",
+      "description": "Configure request/response logging behavior",
+      "enabled": {
+        "label": "Enable Request Logging",
+        "description": "Capture API requests for debugging purposes"
+      },
+      "dbEnabled": {
+        "label": "Store in Database",
+        "description": "Save logs to database for viewing in this page"
+      },
+      "maxBodySize": {
+        "label": "Max Body Size (bytes)",
+        "description": "Maximum request/response body size to capture (1KB - 100KB)"
+      },
+      "retentionDays": {
+        "label": "Retention Period (days)",
+        "description": "Number of days to keep logs before automatic cleanup (1-365)"
+      },
+      "saveButton": "Save Configuration",
+      "saving": "Saving...",
+      "saveSuccess": "Configuration saved successfully",
+      "saveError": "Failed to save configuration"
+    },
+    "pagination": {
+      "showing": "Showing {{count}} logs",
+      "page": "Page {{page}}",
+      "first": "First",
+      "previous": "Previous",
+      "next": "Next"
+    }
+  },
+  "maintenance": {
+    "pageTitle": "Maintenance Mode",
+    "pageDescription": "Configure and schedule system maintenance",
+    "updateSuccess": "Maintenance settings updated successfully",
+    "activeAlert": {
+      "title": "Maintenance Mode Active",
+      "description": "The system is currently in maintenance mode. Regular users cannot access the application."
+    },
+    "settingsCard": {
+      "title": "Maintenance Configuration",
+      "description": "Enable, schedule, and configure maintenance mode for the system"
+    },
+    "fields": {
+      "enabled": {
+        "label": "Maintenance Mode Enabled",
+        "description": "Activate maintenance mode immediately"
+      },
+      "message": {
+        "label": "Maintenance Message",
+        "placeholder": "The system is currently undergoing maintenance. We'll be back soon!",
+        "description": "Message displayed to users during maintenance"
+      },
+      "scheduledStart": {
+        "label": "Scheduled Start Time",
+        "description": "When maintenance will automatically begin (disabled when maintenance is active)"
+      },
+      "scheduledEnd": {
+        "label": "Scheduled End Time",
+        "description": "When maintenance is estimated to complete"
+      },
+      "allowSuperAdmin": {
+        "label": "Allow Super Admin Access",
+        "description": "Allow super admins to access the application during maintenance"
+      }
+    },
+    "schedulingSection": "Schedule Maintenance",
+    "scheduledCard": {
+      "title": "Scheduled Maintenance",
+      "startTime": "Start Time",
+      "endTime": "End Time"
+    },
+    "actions": {
+      "save": "Save Settings",
+      "saving": "Saving...",
+      "clearSchedule": "Clear Schedule"
+    },
+    "validation": {
+      "messageMaxLength": "Message cannot exceed 500 characters",
+      "endAfterStart": "End time must be after start time",
+      "startInFuture": "Start time must be in the future"
+    },
+    "historyCard": {
+      "title": "Maintenance History",
+      "description": "View past maintenance periods and their details"
+    },
+    "history": {
+      "status": "Status",
+      "scheduledStart": "Scheduled Start",
+      "actualStart": "Actual Start",
+      "actualEnd": "Actual End",
+      "startedBy": "Started By",
+      "endedBy": "Ended By",
+      "noHistory": "No maintenance history found",
+      "statuses": {
+        "scheduled": "Scheduled",
+        "active": "Active",
+        "completed": "Completed",
+        "cancelled": "Cancelled"
+      }
+    }
+  },
+  "twoFactor": {
+    "pageTitle": "Two-Factor Authentication",
+    "pageDescription": "Manage two-factor authentication settings for your organization",
+    "updateSuccess": "2FA settings updated successfully",
+    "settingsCard": {
+      "title": "2FA Policy Settings",
+      "description": "Configure two-factor authentication requirements for your organization"
+    },
+    "fields": {
+      "policy": {
+        "label": "2FA Policy",
+        "placeholder": "Select policy",
+        "description": "Control whether 2FA is required for users in your organization",
+        "options": {
+          "disabled": "Disabled - 2FA not available",
+          "optional": "Optional - Users can choose to enable 2FA",
+          "mandatory": "Mandatory - All users must enable 2FA"
+        }
+      },
+      "gracePeriod": {
+        "label": "Grace Period (days)",
+        "description": "Number of days before 2FA becomes mandatory after policy change"
+      },
+      "appName": {
+        "label": "Authenticator App Name",
+        "placeholder": "My Organization",
+        "description": "Custom name shown in authenticator apps (e.g., Google Authenticator). Leave empty to use the default app name."
+      }
+    },
+    "actions": {
+      "save": "Save Settings",
+      "saving": "Saving..."
+    },
+    "validation": {
+      "policyRequired": "Policy is required",
+      "gracePeriodRequired": "Grace period is required",
+      "gracePeriodInvalid": "Grace period must be a number",
+      "gracePeriodInteger": "Grace period must be a whole number",
+      "gracePeriodMin": "Grace period must be at least 1 day",
+      "gracePeriodMax": "Grace period cannot exceed 30 days"
+    },
+    "notAllowed": {
+      "title": "2FA Not Enabled",
+      "description": "Two-factor authentication has not been enabled for your organization by the super administrator. Please contact support to enable this feature."
+    },
+    "enforcementAlert": {
+      "title": "2FA Enforcement Active",
+      "description": "Two-factor authentication will be enforced starting {{date}}. Users without 2FA enabled have been notified."
+    },
+    "usersCard": {
+      "title": "Users Without 2FA",
+      "description": "{{count}} users in your organization have not enabled 2FA"
+    }
+  },
+  "featureFlags": {
+    "pageTitle": "Feature Flags",
+    "pageDescription": "Manage feature flags to control feature rollout across organizations",
+    "createButton": "Create Feature Flag",
+    "emptyMessage": "No feature flags found",
+    "table": {
+      "key": "Key",
+      "name": "Name",
+      "description": "Description",
+      "noDescription": "No description",
+      "defaultEnabled": "Default State",
+      "enabled": "Enabled",
+      "disabled": "Disabled",
+      "overrides": "Overrides"
+    },
+    "actions": {
+      "edit": "Edit",
+      "overrides": "Manage Overrides",
+      "delete": "Delete"
+    },
+    "createDialog": {
+      "title": "Create Feature Flag",
+      "description": "Add a new feature flag to control feature availability"
+    },
+    "editDialog": {
+      "title": "Edit Feature Flag",
+      "description": "Update feature flag configuration"
+    },
+    "deleteDialog": {
+      "title": "Delete Feature Flag",
+      "description": "Are you sure you want to delete the feature flag \"{{name}}\"? This will remove all organization overrides.",
+      "confirm": "Delete"
+    },
+    "form": {
+      "key": "Key",
+      "keyPlaceholder": "new_feature_name",
+      "keyDescription": "Unique identifier (lowercase, underscores only)",
+      "name": "Name",
+      "namePlaceholder": "New Feature Name",
+      "nameDescription": "Display name for this feature flag",
+      "description": "Description",
+      "descriptionPlaceholder": "Describe what this feature flag controls...",
+      "descriptionDescription": "Optional description of the feature",
+      "defaultEnabled": "Default Enabled",
+      "defaultEnabledDescription": "Whether this feature is enabled by default for all organizations",
+      "cancel": "Cancel",
+      "create": "Create",
+      "save": "Save",
+      "creating": "Creating...",
+      "saving": "Saving..."
+    },
+    "overrideDialog": {
+      "title": "Manage Overrides - {{flagName}}",
+      "description": "Configure per-organization overrides for this feature flag",
+      "noOverrides": "No organization overrides configured",
+      "organization": "Organization",
+      "organizationPlaceholder": "Select organization",
+      "enabled": "Enabled",
+      "enabledDescription": "Enable or disable this feature for the selected organization",
+      "addButton": "Add Override",
+      "adding": "Adding...",
+      "table": {
+        "organization": "Organization",
+        "enabled": "Enabled",
+        "disabled": "Disabled",
+        "actions": "Actions"
+      },
+      "deleteOverride": "Remove Override",
+      "deleting": "Removing..."
+    },
+    "toast": {
+      "createSuccess": "Feature flag created successfully",
+      "createError": "Failed to create feature flag",
+      "updateSuccess": "Feature flag updated successfully",
+      "updateError": "Failed to update feature flag",
+      "deleteSuccess": "Feature flag deleted successfully",
+      "deleteError": "Failed to delete feature flag",
+      "overrideCreateSuccess": "Override added successfully",
+      "overrideCreateError": "Failed to add override",
+      "overrideDeleteSuccess": "Override removed successfully",
+      "overrideDeleteError": "Failed to remove override"
+    },
+    "validation": {
+      "keyRequired": "Key is required",
+      "keyFormat": "Key must be lowercase letters, numbers, and underscores only",
+      "nameRequired": "Name is required",
+      "organizationRequired": "Organization is required"
+    }
+  },
+  "userTypes": {
+    "pageTitle": "User Types",
+    "pageDescription": "Manage user types and their onboarding flows",
+    "createButton": "Create User Type",
+    "emptyMessage": "No user types found",
+    "table": {
+      "name": "Name",
+      "description": "Description",
+      "status": "Status",
+      "onboarding": "Onboarding",
+      "active": "Active",
+      "inactive": "Inactive",
+      "default": "Default",
+      "requiresOnboarding": "Requires Onboarding",
+      "manualReview": "Manual Review"
+    },
+    "actions": {
+      "edit": "Edit",
+      "manageSteps": "Manage Steps",
+      "delete": "Delete"
+    },
+    "createDialog": {
+      "title": "Create User Type",
+      "description": "Add a new user type with optional onboarding flow"
+    },
+    "editDialog": {
+      "title": "Edit User Type",
+      "description": "Update user type configuration"
+    },
+    "deleteDialog": {
+      "title": "Delete User Type",
+      "description": "Are you sure you want to delete the user type \"{{name}}\"? This will also delete all associated onboarding steps.",
+      "confirm": "Delete"
+    },
+    "form": {
+      "name": "Name",
+      "namePlaceholder": "e.g., Individual, Business",
+      "code": "Code",
+      "codePlaceholder": "e.g., individual, business",
+      "description": "Description",
+      "descriptionPlaceholder": "Describe this user type...",
+      "displayOrder": "Display Order",
+      "isActive": "Active",
+      "isActiveDescription": "Whether this user type is available for selection",
+      "isDefault": "Default Type",
+      "isDefaultDescription": "Set as the default user type for new users",
+      "requiresOnboarding": "Requires Onboarding",
+      "requiresOnboardingDescription": "Users must complete onboarding steps after registration",
+      "requiresManualReview": "Manual Review",
+      "requiresManualReviewDescription": "Admin must approve onboarding before completion"
+    },
+    "toast": {
+      "createSuccess": "User type created successfully",
+      "createError": "Failed to create user type",
+      "updateSuccess": "User type updated successfully",
+      "updateError": "Failed to update user type",
+      "deleteSuccess": "User type deleted successfully",
+      "deleteError": "Failed to delete user type"
+    }
+  },
+  "onboardingSteps": {
+    "pageTitle": "Onboarding Steps",
+    "pageTitleWithUserType": "Onboarding Steps - {{userType}}",
+    "pageDescription": "Configure the onboarding steps users must complete",
+    "stepsListTitle": "Steps",
+    "stepsListDescription": "Click a step to edit its configuration",
+    "editorTitle": "Step Editor",
+    "editorDescription": "Select a step to edit or create a new one",
+    "selectStepPrompt": "No Step Selected",
+    "selectStepDescription": "Select a step from the list to edit, or click 'Add Step' to create a new one",
+    "dialogTitle": "Onboarding Steps - {{userType}}",
+    "dialogDescription": "Configure the onboarding steps users must complete",
+    "addStep": "Add Step",
+    "emptyMessage": "No onboarding steps configured. Add steps to create an onboarding flow.",
+    "noDescription": "No description",
+    "active": "Active",
+    "inactive": "Inactive",
+    "verification": "Verification",
+    "stepNumber": "Step {{number}}",
+    "createStep": {
+      "title": "Add Onboarding Step",
+      "description": "Configure a new step in the onboarding flow"
+    },
+    "editStep": {
+      "title": "Edit Onboarding Step",
+      "description": "Update step configuration"
+    },
+    "deleteDialog": {
+      "title": "Delete Step",
+      "description": "Are you sure you want to delete the step \"{{name}}\"? This cannot be undone.",
+      "confirm": "Delete"
+    },
+    "form": {
+      "name": "Step Name",
+      "namePlaceholder": "e.g., Personal Information",
+      "code": "Step Code",
+      "codePlaceholder": "e.g., personal_info",
+      "description": "Description",
+      "descriptionPlaceholder": "Describe what information is collected...",
+      "stepOrder": "Step Order",
+      "requiredFields": "Required Fields (JSON)",
+      "requiredFieldsDescription": "Define form fields as JSON. Each field should have type, label, and optional validation.",
+      "invalidJson": "Invalid JSON format",
+      "isActive": "Active",
+      "isActiveDescription": "Include this step in the onboarding flow",
+      "requiresVerification": "Phone Verification",
+      "requiresVerificationDescription": "This step requires phone number verification via OTP"
+    },
+    "toast": {
+      "createSuccess": "Step created successfully",
+      "createError": "Failed to create step",
+      "updateSuccess": "Step updated successfully",
+      "updateError": "Failed to update step",
+      "deleteSuccess": "Step deleted successfully",
+      "deleteError": "Failed to delete step"
+    }
+  },
+  "common": {
+    "cancel": "Cancel",
+    "create": "Create",
+    "creating": "Creating...",
+    "save": "Save",
+    "saving": "Saving..."
+  },
+  "organizations": {
+    "twoFactor": {
+      "columnHeader": "2FA Allowed",
+      "tooltip": {
+        "enabled": "2FA is allowed for this organization",
+        "disabled": "2FA is not allowed for this organization"
+      },
+      "toast": {
+        "enableSuccess": "2FA enabled for organization",
+        "disableSuccess": "2FA disabled for organization",
+        "updateError": "Failed to update 2FA settings"
+      }
+    },
+    "editDialog": {
+      "title": "Edit Organization",
+      "description": "Update organization information",
+      "basicTab": "Basic Info",
+      "detailsTab": "Details",
+      "fields": {
+        "name": "Name",
+        "slug": "Slug",
+        "active": "Active",
+        "displayName": "Display Name",
+        "displayNameHelp": "Optional friendly name for the organization",
+        "addressLine1": "Address Line 1",
+        "addressLine2": "Address Line 2",
+        "city": "City",
+        "stateProvince": "State/Province",
+        "postalCode": "Postal Code",
+        "country": "Country",
+        "contactEmail": "Contact Email",
+        "contactPhone": "Contact Phone"
+      },
+      "cancel": "Cancel",
+      "save": "Save",
+      "saving": "Saving..."
+    },
+    "toast": {
+      "updateSuccess": "Organization updated successfully",
+      "updateError": "Failed to update organization"
+    }
+  },
+  "onboardingReview": {
+    "pageTitle": "Onboarding Review Queue",
+    "pageDescription": "Review and approve pending user onboarding submissions",
+    "backToAdmin": "Back to Admin",
+    "emptyMessage": "No pending onboarding submissions",
+    "emptyDescription": "New submissions will appear here when users complete their onboarding",
+    "tabs": {
+      "pending": "Pending",
+      "changeRequested": "Change Requested",
+      "approved": "Approved",
+      "rejected": "Rejected"
+    },
+    "actionRequired": "Action Required",
+    "search": {
+      "placeholder": "Search by name or email..."
+    },
+    "filter": {
+      "allUserTypes": "All User Types"
+    },
+    "list": {
+      "pending": "Pending Submissions",
+      "selectToReview": "Select a submission to review",
+      "selectToReviewDescription": "Click on a submission from the list to view details and take action"
+    },
+    "keyboard": {
+      "navigate": "to navigate",
+      "previous": "Previous submission",
+      "next": "Next submission"
+    },
+    "pagination": {
+      "showing": "Showing {{start}}-{{end}} of {{total}}",
+      "previous": "Previous",
+      "next": "Next"
+    },
+    "table": {
+      "user": "User",
+      "email": "Email",
+      "userType": "User Type",
+      "submittedAt": "Submitted",
+      "status": "Status"
+    },
+    "status": {
+      "pendingReview": "Pending Review"
+    },
+    "actions": {
+      "review": "Review"
+    },
+    "dialog": {
+      "title": "Review Onboarding Submission",
+      "description": "Review the submitted onboarding data and approve or reject the submission",
+      "loading": "Loading submission details...",
+      "notFound": "Submission not found",
+      "userInfo": "User Information",
+      "name": "Name",
+      "email": "Email",
+      "userType": "User Type",
+      "submittedAt": "Submitted At",
+      "submittedData": "Submitted Data",
+      "rejectReason": "Rejection Reason",
+      "rejectReasonPlaceholder": "Provide a reason for rejection...",
+      "close": "Close",
+      "reject": "Reject",
+      "requestChanges": "Request Changes",
+      "approve": "Approve",
+      "approving": "Approving...",
+      "rejecting": "Rejecting...",
+      "confirmReject": "Confirm Rejection",
+      "confirmRequestChange": "Request Changes",
+      "changeCommentPlaceholder": "Describe what changes are needed...",
+      "cancel": "Cancel",
+      "noData": "No data submitted for this step"
+    },
+    "comments": {
+      "title": "Review Comments",
+      "addPlaceholder": "Add a comment..."
+    },
+    "toast": {
+      "approveSuccess": "Onboarding approved successfully",
+      "approveError": "Failed to approve onboarding",
+      "rejectSuccess": "Onboarding rejected successfully",
+      "rejectError": "Failed to reject onboarding",
+      "changeRequestSuccess": "Changes requested successfully",
+      "changeRequestError": "Failed to request changes",
+      "commentAddedSuccess": "Comment added successfully",
+      "commentAddedError": "Failed to add comment"
+    },
+    "validation": {
+      "rejectReasonRequired": "Please provide a rejection reason",
+      "changeCommentRequired": "Please provide a comment explaining what changes are needed"
+    },
+    "confirm": {
+      "approveTitle": "Approve Submission",
+      "approveDescription": "Are you sure you want to approve the onboarding submission for {{name}}? This will grant them {{userType}} access to the platform.",
+      "rejectTitle": "Reject Submission",
+      "rejectDescription": "Are you sure you want to reject the onboarding submission for {{name}}? Please provide a reason below.",
+      "requestChangeTitle": "Request Changes",
+      "requestChangeDescription": "Request changes from {{name}}. They will be notified and can edit their submission."
+    },
+    "file": {
+      "loading": "Loading file...",
+      "notFound": "File not found",
+      "downloadError": "Failed to download file"
+    },
+    "expiry": {
+      "setExpiryDate": "Set expiry date for this user type assignment",
+      "description": "When expired, the permissions associated with this user type will no longer apply.",
+      "selectDate": "Select expiry date..."
+    }
+  },
+  "systemConfig": {
+    "pageTitle": "System Configuration",
+    "pageDescription": "Manage system-wide configuration settings",
+    "createButton": "Create Config",
+    "emptyMessage": "No configuration entries found",
+    "table": {
+      "key": "Key",
+      "value": "Value",
+      "lastUpdated": "Last Updated",
+      "sensitive": "Sensitive value (encrypted)"
+    },
+    "actions": {
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "createDialog": {
+      "title": "Create Configuration",
+      "description": "Add a new system configuration entry",
+      "key": "Configuration Key",
+      "keyPlaceholder": "e.g., cleanup.notifications.retention_days",
+      "keyDescription": "Use lowercase letters, numbers, dots, underscores, and hyphens only",
+      "value": "Value",
+      "valuePlaceholder": "Enter value (JSON or plain text)",
+      "valueDescription": "Enter a JSON value or plain text. JSON will be parsed automatically.",
+      "description": "Description",
+      "cancel": "Cancel",
+      "create": "Create",
+      "creating": "Creating..."
+    },
+    "editDialog": {
+      "title": "Edit Configuration",
+      "description": "Update configuration for {{key}}",
+      "key": "Configuration Key",
+      "value": "Value",
+      "valueDescription": "Enter a JSON value or plain text. JSON will be parsed automatically.",
+      "description": "Description",
+      "cancel": "Cancel",
+      "save": "Save",
+      "saving": "Saving..."
+    },
+    "deleteDialog": {
+      "title": "Delete Configuration",
+      "description": "Are you sure you want to delete the configuration \"{{key}}\"? This action cannot be undone.",
+      "delete": "Delete"
+    },
+    "toast": {
+      "createSuccess": "Configuration created successfully",
+      "createError": "Failed to create configuration",
+      "updateSuccess": "Configuration updated successfully",
+      "updateError": "Failed to update configuration",
+      "deleteSuccess": "Configuration deleted successfully",
+      "deleteError": "Failed to delete configuration"
+    },
+    "validation": {
+      "keyRequired": "Configuration key is required",
+      "keyTooLong": "Configuration key cannot exceed 100 characters",
+      "keyFormat": "Key must contain only lowercase letters, numbers, dots, underscores, and hyphens",
+      "valueRequired": "Value is required"
+    }
+  },
+  "fieldBuilder": {
+    "title": "Field Configuration",
+    "tabs": {
+      "visual": "Visual Builder",
+      "json": "Advanced JSON"
+    },
+    "addField": "Add Field",
+    "selectField": "Select a field to edit",
+    "selectFieldType": "Choose a field type to add to your form",
+    "fieldName": "Field Name",
+    "fieldNameDescription": "Unique identifier for this field (lowercase, underscores only)",
+    "emptyMessage": "No fields configured. Add fields to build your form.",
+    "deleteField": "Delete Field",
+    "deleteFieldConfirm": "Are you sure you want to delete this field?",
+    "preview": "Form Preview",
+    "jsonError": "Invalid JSON format",
+    "formatJson": "Format JSON",
+    "jsonDescription": "Edit the JSON directly. Changes will be synced when you switch to Visual mode.",
+    "validation": {
+      "invalidFieldName": "Field name must start with a letter and contain only lowercase letters, numbers, and underscores",
+      "duplicateFieldName": "A field with this name already exists"
+    },
+    "types": {
+      "string": "Text",
+      "stringDescription": "Single line text input",
+      "email": "Email",
+      "emailDescription": "Email address with validation",
+      "number": "Number",
+      "numberDescription": "Numeric input with optional range",
+      "url": "URL",
+      "urlDescription": "Website URL with validation",
+      "textarea": "Long Text",
+      "textareaDescription": "Multi-line text area",
+      "select": "Dropdown",
+      "selectDescription": "Single selection from options",
+      "file": "File Upload",
+      "fileDescription": "Upload files with type/size limits",
+      "checkbox": "Checkbox",
+      "checkboxDescription": "Yes/no toggle",
+      "date": "Date",
+      "dateDescription": "Date picker with optional range",
+      "phone": "Phone",
+      "phoneDescription": "Phone number with format validation",
+      "radio": "Radio Buttons",
+      "radioDescription": "Single selection with visible options",
+      "multiselect": "Multi-Select",
+      "multiselectDescription": "Multiple selections from options"
+    },
+    "properties": {
+      "label": "Label",
+      "labelDescription": "Display name shown to users",
+      "description": "Description",
+      "descriptionDescription": "Help text shown below the field",
+      "placeholder": "Placeholder",
+      "placeholderDescription": "Text shown when field is empty",
+      "required": "Required",
+      "requiredDescription": "User must fill this field",
+      "minLength": "Min Length",
+      "maxLength": "Max Length",
+      "pattern": "Pattern",
+      "patternDescription": "Regex pattern for validation",
+      "min": "Minimum",
+      "max": "Maximum",
+      "rows": "Rows",
+      "rowsDescription": "Number of visible text rows",
+      "options": "Options",
+      "noOptions": "No options configured. Add options for users to select from.",
+      "addOption": "Add Option",
+      "optionValue": "Value",
+      "optionLabel": "Label",
+      "accept": "Accepted File Types",
+      "acceptDescription": "e.g., image/*,.pdf",
+      "maxSize": "Maximum File Size",
+      "defaultChecked": "Default Checked",
+      "defaultCheckedDescription": "Whether the checkbox is checked by default",
+      "minDate": "Minimum Date",
+      "maxDate": "Maximum Date",
+      "dateFormat": "Date Format",
+      "defaultCountry": "Default Country",
+      "phoneFormat": "Phone Format",
+      "layout": "Layout",
+      "layoutHorizontal": "Horizontal",
+      "layoutVertical": "Vertical",
+      "maxSelections": "Maximum Selections",
+      "maxSelectionsPlaceholder": "No limit",
+      "maxSelectionsDescription": "Leave empty for unlimited selections"
+    }
+  },
+  "permissions": {
+    "title": "Permission Management",
+    "description": "Manage system permissions and role assignments",
+    "tabs": {
+      "permissions": "Permissions",
+      "rolePermissions": "Role Permissions",
+      "userTypePermissions": "User Type Permissions"
+    },
+    "createDialog": {
+      "title": "Create Permission",
+      "description": "Create a new permission. The code format is resource:action."
+    },
+    "editDialog": {
+      "title": "Edit Permission",
+      "description": "Update the permission details below."
+    },
+    "form": {
+      "code": "Code",
+      "codePlaceholder": "users:create",
+      "codeDescription": "Format: resource:action (e.g., users:create, reports:view)",
+      "name": "Name",
+      "namePlaceholder": "Create Users",
+      "nameDescription": "A human-readable name for this permission",
+      "descriptionLabel": "Description (optional)",
+      "descriptionPlaceholder": "Allows creating new user accounts...",
+      "cancel": "Cancel",
+      "create": "Create Permission",
+      "creating": "Creating...",
+      "save": "Save Changes",
+      "saving": "Saving..."
+    },
+    "validation": {
+      "codeRequired": "Code is required",
+      "codeFormat": "Code must be in format resource:action (lowercase letters, numbers, underscores)",
+      "nameRequired": "Name is required",
+      "nameTooLong": "Name is too long",
+      "descriptionTooLong": "Description is too long"
+    },
+    "rolePermissions": {
+      "title": "Role Permissions",
+      "description": "Manage permissions for global roles. These permissions apply across all organizations. Users inherit permissions through their role assignments within each organization.",
+      "assignSuccess": "Permission assigned successfully",
+      "revokeSuccess": "Permission revoked successfully",
+      "error": "Failed to update permission"
+    },
+    "userTypePermissions": {
+      "title": "User Type Permissions",
+      "description": "Manage permissions for user types. Users with a specific user type will automatically have these permissions in addition to their role permissions.",
+      "assignSuccess": "Permission assigned successfully",
+      "revokeSuccess": "Permission revoked successfully",
+      "error": "Failed to update permission",
+      "noPermissions": "No permissions found. Create some permissions first.",
+      "noUserTypes": "No user types found. Create some user types first.",
+      "permissionColumn": "Permission",
+      "noDescription": "No description",
+      "assign": "Assign",
+      "revoke": "Revoke",
+      "to": "to",
+      "from": "from"
+    }
+  },
+  "backgroundJobs": {
+    "pageTitle": "Background Jobs",
+    "pageDescription": "Monitor and manage background job execution",
+    "autoRefresh": "Auto-refresh (10s)",
+    "refresh": "Refresh",
+    "refreshing": "Refreshing...",
+    "emptyMessage": "No background jobs found",
+    "queueHealth": {
+      "title": "Queue Health",
+      "description": "Real-time status of the job queue and workers",
+      "healthy": "Healthy",
+      "unhealthy": "Issues Detected",
+      "workersOnline": "Workers Online",
+      "queueDepth": "Queue Depth",
+      "stuckJobs": "Stuck Jobs",
+      "totalWorkers": "Total Workers",
+      "unavailable": "Queue health data unavailable"
+    },
+    "summary": {
+      "totalExecutions": "Total Executions",
+      "totalFailures": "Total Failures",
+      "last24Hours": "Last 24 hours"
+    },
+    "jobTypes": {
+      "title": "Job Types",
+      "description": "All registered background job types and their execution statistics"
+    },
+    "table": {
+      "jobType": "Job Type",
+      "category": "Category",
+      "executions": "Executions (24h)",
+      "failures": "Failures (24h)",
+      "failureRate": "Failure Rate",
+      "avgDuration": "Avg Duration",
+      "lastExecution": "Last Execution",
+      "status": "Status",
+      "actions": "Actions"
+    },
+    "status": {
+      "enabled": "Enabled",
+      "disabled": "Disabled",
+      "never": "Never"
+    },
+    "time": {
+      "justNow": "Just now",
+      "minsAgo": "{{count}}m ago",
+      "hoursAgo": "{{count}}h ago"
+    },
+    "badge": {
+      "cron": "Cron"
+    },
+    "categories": {
+      "email": "Email",
+      "cleanup": "Cleanup",
+      "notifications": "Notifications",
+      "files": "Files",
+      "data": "Data",
+      "payments": "Payments",
+      "security": "Security",
+      "system": "System"
+    },
+    "toast": {
+      "enableSuccess": "Job type enabled",
+      "disableSuccess": "Job type disabled",
+      "toggleError": "Failed to toggle job type"
+    },
+    "errors": {
+      "queueHealthTitle": "Could not load queue health",
+      "statsTitle": "Could not load job statistics",
+      "unknown": "An unexpected error occurred. Please try again."
+    }
+  },
+  "about": {
+    "title": "About Page Settings",
+    "description": "Configure the content displayed on the About page in user settings",
+    "info": {
+      "title": "Content Settings",
+      "description": "Enter plain text or HTML content that will be displayed to users on the About page. HTML content supports basic formatting like headings, paragraphs, lists, and links."
+    },
+    "tabs": {
+      "edit": "Edit",
+      "preview": "Preview"
+    },
+    "contentSection": {
+      "title": "About Content",
+      "description": "Enter the content for the About page"
+    },
+    "fields": {
+      "contentType": {
+        "label": "Content Type",
+        "placeholder": "Select content type",
+        "description": "Choose whether to use plain text or HTML formatting",
+        "options": {
+          "html": "HTML (Rich Text)",
+          "plain": "Plain Text"
+        }
+      },
+      "content": {
+        "label": "Content",
+        "placeholderHtml": "<h2>About Our Platform</h2>\n<p>Enter your HTML content here...</p>",
+        "placeholderPlain": "Enter your plain text content here...",
+        "descriptionHtml": "Enter HTML content. Supports headings, paragraphs, lists, links, and basic formatting.",
+        "descriptionPlain": "Enter plain text content. Line breaks will be preserved."
+      }
+    },
+    "preview": {
+      "title": "Content Preview",
+      "description": "This is how the content will appear to users"
+    },
+    "actions": {
+      "save": "Save Changes"
+    },
+    "toast": {
+      "updateSuccess": "About page content updated successfully",
+      "updateError": "Failed to update about page content"
+    }
+  },
+  "navigation": {
+    "about": "About Page",
+    "reports": "Reports"
+  },
+  "reports": {
+    "title": "Reports",
+    "pageTitle": "Reports",
+    "pageDescription": "Generate, schedule, and download reports",
+    "tabs": {
+      "reports": "Generated Reports",
+      "schedules": "Schedules"
+    },
+    "generateButton": "Generate Report",
+    "createScheduleButton": "Create Schedule",
+    "emptyMessage": "No reports found",
+    "emptyScheduleMessage": "No schedules found",
+    "table": {
+      "name": "Name",
+      "type": "Type",
+      "status": "Status",
+      "rows": "Rows",
+      "created": "Created",
+      "completed": "Completed",
+      "schedule": "Schedule",
+      "active": "Active",
+      "lastRun": "Last Run",
+      "nextRun": "Next Run",
+      "recipients": "Recipients"
+    },
+    "status": {
+      "pending": "Pending",
+      "processing": "Processing",
+      "completed": "Completed",
+      "failed": "Failed"
+    },
+    "filters": {
+      "allTypes": "All Types",
+      "allStatus": "All Status"
+    },
+    "actions": {
+      "download": "Download",
+      "delete": "Delete",
+      "edit": "Edit",
+      "activate": "Activate",
+      "deactivate": "Deactivate"
+    },
+    "createDialog": {
+      "title": "Generate Report",
+      "description": "Generate a new report from available templates",
+      "reportType": "Report Type",
+      "reportTypePlaceholder": "Select a report type",
+      "name": "Report Name",
+      "namePlaceholder": "Enter a name for this report",
+      "descriptionLabel": "Description (optional)",
+      "descriptionPlaceholder": "Enter a description...",
+      "cancel": "Cancel",
+      "generate": "Generate",
+      "generating": "Generating..."
+    },
+    "createScheduleDialog": {
+      "title": "Create Report Schedule",
+      "description": "Set up automatic report generation",
+      "reportType": "Report Type",
+      "reportTypePlaceholder": "Select a report type",
+      "name": "Schedule Name",
+      "namePlaceholder": "Enter a name for this schedule",
+      "descriptionLabel": "Description (optional)",
+      "descriptionPlaceholder": "Enter a description...",
+      "scheduleExpression": "Schedule (Cron)",
+      "scheduleExpressionPlaceholder": "0 8 * * 1",
+      "scheduleExpressionDescription": "Cron expression (e.g., \"0 8 * * 1\" = every Monday at 8am)",
+      "recipients": "Recipients",
+      "recipientsPlaceholder": "Enter email addresses",
+      "recipientsDescription": "Comma-separated email addresses to receive the report",
+      "cancel": "Cancel",
+      "create": "Create",
+      "creating": "Creating..."
+    },
+    "editScheduleDialog": {
+      "title": "Edit Schedule",
+      "description": "Update schedule configuration",
+      "cancel": "Cancel",
+      "save": "Save",
+      "saving": "Saving..."
+    },
+    "deleteDialog": {
+      "title": "Delete Report",
+      "description": "Are you sure you want to delete \"{{name}}\"? This action cannot be undone.",
+      "delete": "Delete"
+    },
+    "deleteScheduleDialog": {
+      "title": "Delete Schedule",
+      "description": "Are you sure you want to delete the schedule \"{{name}}\"? This action cannot be undone.",
+      "delete": "Delete"
+    },
+    "toast": {
+      "generateSuccess": "Report generation started",
+      "generateError": "Failed to start report generation",
+      "deleteSuccess": "Report deleted successfully",
+      "deleteError": "Failed to delete report",
+      "downloadError": "Failed to download report",
+      "scheduleCreateSuccess": "Schedule created successfully",
+      "scheduleCreateError": "Failed to create schedule",
+      "scheduleUpdateSuccess": "Schedule updated successfully",
+      "scheduleUpdateError": "Failed to update schedule",
+      "scheduleDeleteSuccess": "Schedule deleted successfully",
+      "scheduleDeleteError": "Failed to delete schedule",
+      "scheduleActivateSuccess": "Schedule activated",
+      "scheduleDeactivateSuccess": "Schedule deactivated",
+      "scheduleToggleError": "Failed to update schedule status"
+    },
+    "validation": {
+      "nameRequired": "Name is required",
+      "reportTypeRequired": "Report type is required",
+      "scheduleExpressionRequired": "Schedule expression is required",
+      "scheduleExpressionFormat": "Invalid cron expression",
+      "recipientsRequired": "At least one recipient is required",
+      "recipientsFormat": "Invalid email address format"
+    },
+    "types": {
+      "users_report": "Users Report"
+    }
+  },
+  "invitations": {
+    "title": "Pending Invitations",
+    "invite": "Invite User",
+    "inviteTitle": "Invite a User",
+    "inviteDescription": "Send an invitation email to a new user. They'll receive a link to create their account.",
+    "emailLabel": "Email Address",
+    "emailPlaceholder": "user@example.com",
+    "rolesLabel": "Assign Roles (optional)",
+    "rolesPlaceholder": "Select roles...",
+    "userTypesLabel": "Assign User Types (optional)",
+    "userTypesPlaceholder": "Select user types...",
+    "sendInvite": "Send Invitation",
+    "sending": "Sending...",
+    "noInvitations": "No pending invitations",
+    "invitedBy": "Invited by",
+    "expires": "Expires",
+    "revokeButton": "Revoke",
+    "revokeConfirm": "Revoke this invitation?",
+    "revokeConfirmDescription": "The invitation link will immediately become invalid.",
+    "revokeSuccess": "Invitation revoked",
+    "revokeError": "Failed to revoke invitation",
+    "sendSuccess": "Invitation sent successfully",
+    "sendError": "Failed to send invitation",
+    "alreadyPending": "A pending invitation already exists for this email",
+    "columnEmail": "Email",
+    "columnInvitedBy": "Invited By",
+    "columnExpires": "Expires",
+    "columnActions": "Actions"
+  }
+}

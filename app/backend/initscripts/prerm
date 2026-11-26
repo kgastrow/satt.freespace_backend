@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+echo "Stopping AYZER Backend services..."
+systemctl stop ayzer_worker.service || true
+systemctl stop ayzer_backend.service || true
+
+echo "Removing AYZER Backend services..."
+systemctl disable ayzer_worker.service || true
+systemctl disable ayzer_backend.service || true
+
+echo "Removing Apache sites..."
+a2dissite ayzer_backend.conf || true
+systemctl reload apache2 || true

@@ -1,0 +1,286 @@
+# Default permissions definitions
+# Each permission defines access control for a specific action
+
+- code: users:read
+  name: View Users
+  description: View users in the organization
+  display_order: 0
+
+- code: users:write
+  name: Manage Users
+  description: Create and update users
+  display_order: 1
+
+- code: users:delete
+  name: Delete Users
+  description: Delete users from the organization
+  display_order: 2
+
+- code: roles:read
+  name: View Roles
+  description: View roles in the organization
+  display_order: 0
+
+- code: roles:write
+  name: Manage Roles
+  description: Create and update roles
+  display_order: 1
+
+- code: roles:delete
+  name: Delete Roles
+  description: Delete roles from the organization
+  display_order: 2
+
+- code: user_roles:read
+  name: View User Roles
+  description: View role assignments
+  display_order: 0
+
+- code: user_roles:assign
+  name: Assign Roles
+  description: Assign roles to users
+  display_order: 1
+
+- code: user_roles:revoke
+  name: Revoke Roles
+  description: Revoke roles from users
+  display_order: 2
+
+- code: audit_logs:read
+  name: View Audit Logs
+  description: View audit logs and activity history
+  display_order: 0
+
+- code: notifications:read
+  name: View Notifications
+  description: View notification history
+  display_order: 0
+
+- code: notifications:write
+  name: Manage Notifications
+  description: Create and manage notifications
+  display_order: 1
+
+- code: notifications:send
+  name: Send Notifications
+  description: Send notifications to users
+  display_order: 2
+
+- code: notification_templates:read
+  name: View Templates
+  description: View notification templates
+  display_order: 0
+
+- code: notification_templates:write
+  name: Manage Templates
+  description: Create and update notification templates
+  display_order: 1
+
+- code: notification_templates:delete
+  name: Delete Templates
+  description: Delete notification templates
+  display_order: 2
+
+- code: notification_settings:read
+  name: View Notification Settings
+  description: View notification settings
+  display_order: 0
+
+- code: notification_settings:write
+  name: Manage Notification Settings
+  description: Update notification settings
+  display_order: 1
+
+- code: notification_categories:read
+  name: View Categories
+  description: View notification categories
+  display_order: 0
+
+- code: notification_categories:write
+  name: Manage Categories
+  description: Create and update notification categories
+  display_order: 1
+
+- code: notification_categories:delete
+  name: Delete Categories
+  description: Delete notification categories
+  display_order: 2
+
+- code: notification_providers:read
+  name: View Notification Providers
+  description: View notification provider configuration (incl. Web Push/VAPID)
+  display_order: 0
+
+- code: notification_providers:write
+  name: Manage Notification Providers
+  description: Manage notification provider configuration (incl. Web Push/VAPID)
+  display_order: 1
+
+- code: files:read
+  name: View Files
+  description: View and download files
+  display_order: 0
+
+- code: files:write
+  name: Upload Files
+  description: Upload and update files
+  display_order: 1
+
+- code: files:delete
+  name: Delete Files
+  description: Delete files
+  display_order: 2
+
+- code: files:admin
+  name: Administer Files
+  description: Manage all files and view usage
+  display_order: 3
+
+- code: file_settings:read
+  name: View File Settings
+  description: View file storage settings
+  display_order: 0
+
+- code: file_settings:write
+  name: Manage File Settings
+  description: Update file storage settings
+  display_order: 1
+
+- code: metrics:read
+  name: View Metrics
+  description: View system metrics and dashboard
+  display_order: 0
+
+- code: organization:read
+  name: View Organization
+  description: View organization details
+  display_order: 0
+
+- code: organization:write
+  name: Manage Organization
+  description: Update organization settings
+  display_order: 1
+
+- code: sso:read
+  name: View SSO Settings
+  description: View SSO configuration for the organization
+  display_order: 0
+
+- code: sso:write
+  name: Manage SSO Settings
+  description: Configure SSO providers and settings
+  display_order: 1
+
+- code: api_keys:read
+  name: View API Keys
+  description: View API keys for the organization
+  display_order: 0
+
+- code: api_keys:write
+  name: Manage API Keys
+  description: Create and update API keys
+  display_order: 1
+
+- code: api_keys:delete
+  name: Revoke API Keys
+  description: Revoke API keys for the organization
+  display_order: 2
+
+- code: feedback:submit
+  name: Submit Feedback
+  description: Submit feedback, bug reports, and suggestions
+  display_order: 0
+
+- code: feedback:view
+  name: View Feedback
+  description: View all feedback submitted in the organization
+  display_order: 1
+
+- code: feedback:respond
+  name: Respond to Feedback
+  description: Add responses and update feedback status
+  display_order: 2
+
+- code: feedback:delete
+  name: Delete Feedback
+  description: Delete feedback entries
+  display_order: 3
+
+# Payment permissions - super admin only by default
+- code: payments:read
+  name: View Payments
+  description: View payment history and transaction details
+  display_order: 0
+
+- code: payments:create
+  name: Create Payments
+  description: Create checkout sessions and process payments
+  display_order: 1
+
+- code: payments:refund
+  name: Process Refunds
+  description: Issue full or partial refunds for payments
+  display_order: 2
+
+- code: payment_settings:read
+  name: View Payment Settings
+  description: View payment provider configuration
+  display_order: 0
+
+- code: payment_settings:write
+  name: Manage Payment Settings
+  description: Configure payment providers and settings
+  display_order: 1
+
+- code: payment_methods:read
+  name: View Payment Methods
+  description: View saved payment methods
+  display_order: 0
+
+- code: payment_methods:write
+  name: Manage Payment Methods
+  description: Add and update saved payment methods
+  display_order: 1
+
+- code: payment_methods:delete
+  name: Delete Payment Methods
+  description: Remove saved payment methods
+  display_order: 2
+
+# Feature flag permissions
+- code: feature_flags:bypass
+  name: Bypass Feature Flags
+  description: Allows bypassing feature flag restrictions for testing purposes
+  display_order: 0
+
+# About page permissions
+- code: about:read
+  name: View About Page
+  description: View the about page content
+  display_order: 0
+
+- code: about:write
+  name: Manage About Page
+  description: Edit the about page content including HTML
+  display_order: 1
+
+# Report permissions
+- code: reports:read
+  name: View Reports
+  description: View and download generated reports
+  display_order: 0
+
+- code: reports:write
+  name: Generate Reports
+  description: Create and generate new reports
+  display_order: 1
+
+- code: reports:delete
+  name: Delete Reports
+  description: Delete reports and schedules
+  display_order: 2
+
+- code: reports:schedule
+  name: Schedule Reports
+  description: Create and manage report schedules
+  display_order: 3
