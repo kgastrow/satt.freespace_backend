@@ -33,8 +33,14 @@ from src.services.freespace.clock import ensure_utc
 from src.services.freespace.fcm_auth import (
     AccessTokenProvider,
     FcmCredentialsError,
+    FcmTokenUnavailableError,
     ServiceAccountTokenProvider,
 )
+
+
+# error_code of a send that failed because no OAuth token could be fetched
+# for a transient (network) reason; classified RETRYABLE.
+TOKEN_UNAVAILABLE_ERROR_CODE = "NETWORK_OAUTH_TOKEN_UNAVAILABLE"
 
 
 class FcmResultKind(StrEnum):
@@ -407,6 +413,13 @@ class HttpFcmClient:
             logger.error(f"Freespace FCM: credentials unusable: {exc}")
             return FcmSendResult(
                 kind=FcmResultKind.AUTH_FAILURE, error_code="CREDENTIALS_ERROR"
+            )
+        except FcmTokenUnavailableError as exc:
+            # OAuth endpoint unreachable: nothing reached FCM, safe to retry.
+            logger.warning(f"Freespace FCM: token refresh unavailable: {exc}")
+            return FcmSendResult(
+                kind=FcmResultKind.RETRYABLE,
+                error_code=TOKEN_UNAVAILABLE_ERROR_CODE,
             )
         started = time.perf_counter()
         try:

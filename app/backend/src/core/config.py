@@ -361,6 +361,8 @@ class Settings(BaseSettings):
     # BF-18: per ingest key, enforced by the dedicated ingest limiter (D4),
     # not slowapi. Same "N/period" syntax.
     RATE_LIMIT_FREESPACE_INGEST: str = "12/minute"
+    # Failed ingest authentications, per IP
+    RATE_LIMIT_FREESPACE_INGEST_AUTH_FAILURES: str = "30/minute"
 
     @model_validator(mode="after")
     def _resolve_public_url_aliases(self) -> "Settings":

@@ -11,9 +11,11 @@ from datetime import datetime
 from typing import Any
 import uuid
 
-from sqlalchemy import func, select, update
+from sqlalchemy import delete, func, select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from src.models.device import DeviceSite
+from src.models.ingest_key import IngestKey
 from src.models.organization import Organization
 from src.models.site import Site
 from src.models.site_message_template import SiteMessageTemplate
@@ -93,7 +95,9 @@ def site_snapshot_values(site: Site, fields: tuple[str, ...]) -> dict[str, Any]:
 
 
 async def soft_delete_site(session: AsyncSession, site: Site, now: datetime) -> None:
-    """Soft delete the site and its zones and templates (D12)."""
+    """Soft delete the site with its zones, templates and ingest keys, and drop
+    the device selections of it (D12, as the organization cascade does). The
+    caller invalidates the availability cache after commit."""
     site.deleted_time = now
     site.managed = False
     site.listed = False
@@ -110,4 +114,11 @@ async def soft_delete_site(session: AsyncSession, site: Site, now: datetime) -> 
         )
         .values(deleted_time=now)
     )
+    await session.execute(
+        update(IngestKey)
+        .where(IngestKey.site_id == site.id, IngestKey.deleted_time.is_(None))
+        .values(deleted_time=now)
+    )
+    # Sanctioned hard delete (D12): a selection is not tenant data.
+    await session.execute(delete(DeviceSite).where(DeviceSite.site_id == site.id))
     await session.flush()

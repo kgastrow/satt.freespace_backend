@@ -711,7 +711,7 @@ async def _hard_delete_freespace_rows(
     zone_snapshot -> zone; device_site, snapshots, engine state, ingest keys,
     templates, zones -> site. Devices themselves are not tenant data (a phone
     is not owned by an organization); only their selection of this
-    organization's sites goes. ``created_by`` of app keys points at a user of
+    organization's sites goes. ``created_by`` of app and ingest keys points at a user of
     the organization, so it is cleared before the users are deleted.
     """
     from sqlalchemy import update as sql_update
@@ -782,16 +782,17 @@ async def _hard_delete_freespace_rows(
         result = await session.execute(stmt)
         deleted[name] = result.rowcount
 
-    # App keys are global; only the creator reference may block the user purge.
-    await session.execute(
-        sql_update(AppKey)
-        .where(
-            AppKey.created_by.in_(
-                select(User.id).where(User.organization_id == org_uuid)
-            )
+    # App keys are global, and ingest keys of OTHER organizations' sites may
+    # have been created by this organization's users (e.g. a super admin);
+    # only the creator reference may block the user purge. These are the only
+    # Freespace user foreign keys.
+    org_user_ids = select(User.id).where(User.organization_id == org_uuid)
+    for key_model in (AppKey, IngestKey):
+        await session.execute(
+            sql_update(key_model)
+            .where(key_model.created_by.in_(org_user_ids))
+            .values(created_by=None)
         )
-        .values(created_by=None)
-    )
 
 
 async def hard_delete_organization(session: AsyncSession, org_id: str) -> dict:

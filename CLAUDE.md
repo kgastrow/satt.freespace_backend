@@ -47,8 +47,8 @@ Frontend (from `app/frontend/`):
 6. Once dependencies are installed, python venv is at app/backend/.venv
 7. Never manually write migrations - always autogenerate them with `make migrate-new` after completing model changes in source code
 8. **i18n is mandatory** - All frontend user-facing text must use i18n. Add translations to ALL locale files (en, etc)
-9. **API Router Registration** - New API routers must be registered in `app/backend/src/api/v1/__init__.py` (not `src/api/__init__.py`). Import the module and call `v1_router.include_router(module.router)`
-10. **NEVER hard delete** - Always use soft deletes by setting `deleted_time`
+9. **API Router Registration** - New API routers must be registered in `app/backend/src/api/v1/__init__.py` (not `src/api/__init__.py`). Import the module and call `v1_router.include_router(module.router)`. Exception: the Freespace public `/v1` routers (ingest, app, devices, mock) are mounted outside `v1_router` via `src/api/freespace_public/__init__.py: include_freespace_public_routers()`, called from `main.py`.
+10. **NEVER hard delete** - Always use soft deletes by setting `deleted_time`. Exception (Freespace): retention purges, device erasure and `device_site` selection rows are hard deleted, because devices are not tenant data and the spec requires real erasure.
 11. **Always include tenant isolation tests** for any CRUD operation
 12. **All exception handling** must use `create_http_exception` with `detail_code`
 13. **API router order matters** - More specific routes before generic ones

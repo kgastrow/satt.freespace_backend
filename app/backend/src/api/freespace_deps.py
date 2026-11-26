@@ -17,8 +17,9 @@ from __future__ import annotations
 from dataclasses import dataclass
 import json
 from typing import Annotated
+import uuid
 
-from fastapi import Depends, Header, Request, status
+from fastapi import Depends, Header, HTTPException, Request, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.api.deps import get_session
@@ -51,7 +52,7 @@ class IngestAuth:
     key: IngestKey
 
 
-def _ingest_unauthorized(detail: str, detail_code: str):
+def _ingest_unauthorized(detail: str, detail_code: str) -> HTTPException:
     return create_http_exception(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail=detail,
@@ -69,34 +70,39 @@ async def get_ingest_site(
     """Authenticate a ParkIT publisher by its ingest key (BF-10).
 
     Every 401 is counted for the ingest rejection-rate alert (BF-82): these
-    rejections write no ``site_event``."""
+    rejections write no ``site_event``. Failed authentications are also
+    limited per client IP (review F5): over that budget the answer is 429
+    ``ingest.rate_limited`` and the rejection is not recorded."""
     from src.services.freespace.alerts import record_ingest_rejection
+    from src.services.freespace.ingest_rate_limit import check_auth_failure_limit
 
     now = clock.now()
+
+    async def reject(
+        key_id: uuid.UUID | None, detail: str, detail_code: str
+    ) -> HTTPException:
+        await check_auth_failure_limit(get_client_ip(request), now)
+        await record_ingest_rejection(key_id, now)
+        return _ingest_unauthorized(detail, detail_code)
+
     if not authorization:
-        await record_ingest_rejection(None, now)
-        raise _ingest_unauthorized("Missing ingest key", "ingest.unauthorized")
+        raise await reject(None, "Missing ingest key", "ingest.unauthorized")
     scheme, _, token = authorization.partition(" ")
     token = token.strip()
     if scheme.lower() != "bearer" or not token or not is_valid_key_format(token):
-        await record_ingest_rejection(None, now)
-        raise _ingest_unauthorized("Invalid ingest key", "ingest.unauthorized")
+        raise await reject(None, "Invalid ingest key", "ingest.unauthorized")
 
     found = await get_ingest_key_with_site_by_hash(session, hash_key(token))
     if found is None:
-        await record_ingest_rejection(None, now)
-        raise _ingest_unauthorized("Invalid ingest key", "ingest.unauthorized")
+        raise await reject(None, "Invalid ingest key", "ingest.unauthorized")
     key, site = found
 
     if key.revoked_at is not None:
-        await record_ingest_rejection(key.id, now)
-        raise _ingest_unauthorized("Ingest key revoked", "ingest.key_revoked")
+        raise await reject(key.id, "Ingest key revoked", "ingest.key_revoked")
     if key.expires_at is not None and ensure_utc(key.expires_at) <= now:
-        await record_ingest_rejection(key.id, now)
-        raise _ingest_unauthorized("Ingest key expired", "ingest.key_expired")
+        raise await reject(key.id, "Ingest key expired", "ingest.key_expired")
     if not ingest_key_is_valid(key, now):  # defensive: any future validity rule
-        await record_ingest_rejection(key.id, now)
-        raise _ingest_unauthorized("Invalid ingest key", "ingest.unauthorized")
+        raise await reject(key.id, "Invalid ingest key", "ingest.unauthorized")
 
     await touch_ingest_key(session, key, now, get_client_ip(request))
     await session.commit()

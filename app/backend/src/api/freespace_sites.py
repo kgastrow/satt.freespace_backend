@@ -75,6 +75,7 @@ from src.serialisers.freespace_templates import (
     UpdateTemplatesResponse,
 )
 from src.services.audit import audit_service, get_client_ip, get_user_agent
+from src.services.freespace.availability_cache import invalidate_availability_cache
 from src.services.freespace.clock import Clock, get_clock
 from src.services.freespace.events import write_event
 from src.services.freespace.loaders import load_engine_state_row
@@ -482,6 +483,7 @@ async def delete_site_endpoint(
             after={},
             delete=True,
         )
+        await invalidate_availability_cache(site.slug)
         return DeleteSiteResponse(
             message="Site deleted successfully",
             message_code=get_response_code("site.deleted"),
@@ -577,6 +579,7 @@ async def update_site_config_endpoint(
                 after=after,
             )
             await session.refresh(site)
+            await invalidate_availability_cache(site.slug)
         return UpdateSiteConfigResponse(
             message="Site settings updated successfully",
             message_code=get_response_code("site.config_updated"),

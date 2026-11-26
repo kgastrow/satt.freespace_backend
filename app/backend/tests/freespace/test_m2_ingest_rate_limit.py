@@ -122,7 +122,7 @@ class TestLimiter:
         async def boom(*a, **k):
             raise ConnectionError("down")
 
-        monkeypatch.setattr(fs_redis, "zcard", boom)
+        monkeypatch.setattr(fs_redis, "eval", boom)  # atomic Lua window (F6)
         h = bearer(fs_ingest_key[0])
         for _ in range(15):
             assert (await rl_client.post("/ingest", headers=h)).status_code == 200

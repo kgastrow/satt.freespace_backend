@@ -14,7 +14,8 @@ import type {
 export function mockOrigin(): string {
   const base = import.meta.env.VITE_API_URL || 'http://localhost:8000/api/v1'
   try {
-    return new URL(base).origin
+    // Relative bases (e.g. `/api/v1`) resolve against the SPA's own origin.
+    return new URL(base, window.location.origin).origin
   } catch {
     return ''
   }
@@ -38,13 +39,26 @@ async function mockFetch<T>(path: string, init?: RequestInit): Promise<QueryResu
   }
 }
 
+function isMockStatusBody(
+  body: unknown,
+): body is { mockTime: string; offsetSeconds: number } {
+  return (
+    typeof body === 'object' &&
+    body !== null &&
+    typeof (body as { mockTime?: unknown }).mockTime === 'string'
+  )
+}
+
 export const mockApi = api.injectEndpoints({
   endpoints: (builder) => ({
     /** 404 (or unreachable) means mock mode is off: resolved as `enabled: false`. */
     getMockStatus: builder.query<MockStatus, void>({
       queryFn: async () => {
         const result = await mockFetch<{ mockTime: string; offsetSeconds: number }>('/mock/status')
-        if ('data' in result) return { data: { enabled: true, ...result.data } }
+        // A 2xx that is not the status JSON (e.g. an SPA index.html fallback) is not mock mode.
+        if ('data' in result && isMockStatusBody(result.data)) {
+          return { data: { enabled: true, ...result.data } }
+        }
         return { data: { enabled: false } }
       },
       providesTags: [{ type: 'MockStatus', id: 'STATUS' }],

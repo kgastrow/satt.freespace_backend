@@ -77,6 +77,10 @@ REJECTION_THRESHOLD_PER_MIN: Final = 10  # BF-82: more than 10 a minute
 REJECTION_WINDOW_S: Final = 60
 REJECTION_EPISODE_TTL_S: Final = 900
 REJECTION_COUNTER_TTL_S: Final = 300
+# Hard cap on one rejection sorted set (review F5). The alert only needs to know
+# the rate exceeds REJECTION_THRESHOLD_PER_MIN, so keeping the newest entries
+# is enough; trimming on write bounds memory between once-a-minute ticks.
+REJECTION_COUNTER_MAX_ENTRIES: Final = 1000
 FCM_ALERT_COOLDOWN_S: Final = 3600
 CEILING_MARKER_TTL_S: Final = 7200
 
@@ -418,8 +422,14 @@ async def record_ingest_rejection(
     key = REDIS_REJECTION_KEY_PREFIX + subject
     ts = ensure_utc(now).timestamp()
     try:
-        await redis.zadd(key, {f"{ts}:{uuid.uuid4().hex}": ts})
-        await redis.expire(key, REJECTION_COUNTER_TTL_S)
+        async with redis.pipeline(transaction=True) as pipe:
+            pipe.zadd(key, {f"{ts}:{uuid.uuid4().hex}": ts})
+            # Trim on write: drop entries outside the alert window, then keep
+            # only the newest REJECTION_COUNTER_MAX_ENTRIES.
+            pipe.zremrangebyscore(key, "-inf", ts - REJECTION_WINDOW_S)
+            pipe.zremrangebyrank(key, 0, -(REJECTION_COUNTER_MAX_ENTRIES + 1))
+            pipe.expire(key, REJECTION_COUNTER_TTL_S)
+            await pipe.execute()
     except Exception as exc:
         logger.warning(
             f"Freespace: cannot count ingest rejection: {type(exc).__name__}"

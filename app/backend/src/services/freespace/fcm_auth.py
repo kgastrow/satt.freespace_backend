@@ -27,6 +27,12 @@ class FcmCredentialsError(RuntimeError):
     refused to mint a token for it. Treated like an FCM 401/403 (BF-66)."""
 
 
+class FcmTokenUnavailableError(RuntimeError):
+    """A token refresh failed for a TRANSIENT reason (network / DNS / timeout
+    talking to Google's OAuth endpoint). Nothing was sent to FCM, so the send
+    is RETRYABLE; this is NOT a credential failure."""
+
+
 class AccessTokenProvider(Protocol):
     """Anything that yields a bearer token for FCM. ``invalidate`` forces a
     refresh on the next call (used after a 401 from FCM)."""
@@ -73,7 +79,19 @@ class ServiceAccountTokenProvider:
 
         try:
             credentials.refresh(Request())
+        except (
+            google.auth.exceptions.TransportError,
+            google.auth.exceptions.TimeoutError,
+            TimeoutError,
+            ConnectionError,
+        ) as exc:
+            # Google's token endpoint was not reached / did not answer (DNS,
+            # connect, timeout): the credential itself is fine, try again later.
+            raise FcmTokenUnavailableError(
+                f"FCM OAuth token endpoint unreachable ({type(exc).__name__})"
+            ) from exc
         except google.auth.exceptions.GoogleAuthError as exc:
+            # RefreshError & co: Google refused the credential.
             raise FcmCredentialsError(
                 f"FCM OAuth token refresh failed ({type(exc).__name__})"
             ) from exc
