@@ -38,7 +38,9 @@ from src.services.cron import (  # noqa: F401
     cleanup_expired_refresh_tokens_handler,
     cleanup_old_bg_job_executions_handler,
     cleanup_old_notifications_handler,
+    cleanup_old_request_logs_configured_handler,
     cleanup_old_request_logs_handler,
+    freespace_daily_purge_handler,
     process_hard_deletions_handler,
     process_scheduled_reports_handler,
     s3_migration_handler,
@@ -77,6 +79,9 @@ __all__ = [
     "update_geoip_database_handler",
     # Reports
     "process_scheduled_reports_handler",
+    # Freespace
+    "freespace_daily_purge_handler",
+    "cleanup_old_request_logs_configured_handler",
     # Constants
     "MIN_THRESHOLD_PERCENT",
     "MAX_THRESHOLD_PERCENT",

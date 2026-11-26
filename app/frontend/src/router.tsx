@@ -67,6 +67,7 @@ const OnboardingReviewPage = lazyNamed(() => import('@/pages/admin/OnboardingRev
 const OrganizationsPage = lazyNamed(() => import('@/pages/admin/OrganizationsPage'), 'OrganizationsPage')
 const OrganizationMembersPage = lazyNamed(() => import('@/pages/admin/OrganizationMembersPage'), 'OrganizationMembersPage')
 const PermissionsPage = lazyNamed(() => import('@/pages/admin/PermissionsPage'), 'PermissionsPage')
+const AppKeysPage = lazyNamed(() => import('@/pages/admin/AppKeysPage'), 'AppKeysPage')
 const CronJobsPage = lazyNamed(() => import('@/pages/admin/CronJobsPage'), 'CronJobsPage')
 const FeatureFlagsPage = lazyNamed(() => import('@/pages/admin/FeatureFlagsPage'), 'FeatureFlagsPage')
 const UserTypesPage = lazyNamed(() => import('@/pages/admin/UserTypesPage'), 'UserTypesPage')
@@ -317,6 +318,14 @@ export const router = createBrowserRouter([
                 element: (
                   <LazyPage>
                     <OrganizationMembersPage />
+                  </LazyPage>
+                ),
+              },
+              {
+                path: 'app-keys',
+                element: (
+                  <LazyPage>
+                    <AppKeysPage />
                   </LazyPage>
                 ),
               },

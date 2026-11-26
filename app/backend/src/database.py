@@ -244,6 +244,9 @@ def create_async_engine_from_config(use_direct: bool = False) -> AsyncEngine:
                 "connect_args": connect_args,
             }
 
+    # Statement parameters never go into exception text (and so never into logs
+    # or request-log tracebacks): they carry secrets (FCM tokens, key hashes).
+    engine_kwargs["hide_parameters"] = True
     return create_async_engine(database_url, **engine_kwargs)
 
 

@@ -1,5 +1,6 @@
 import { useMemo } from 'react'
 import { usePermissions } from './usePermissions'
+import { useGetMockStatusQuery } from '@/features/sites/mockApi'
 import {
   mainNavigation,
   adminNavigation,
@@ -66,6 +67,12 @@ export interface UseNavigationReturn {
  */
 export function useNavigation(type: NavigationType): UseNavigationReturn {
   const { hasAnyPermission, hasAllPermissions, isSuperAdmin } = usePermissions()
+  // Mock-mode items (simulator) appear only while GET /mock/status answers 200.
+  // Only the admin sidebar has such items, so only it asks.
+  const { data: mockStatus } = useGetMockStatusQuery(undefined, {
+    skip: type !== 'admin-sidebar',
+  })
+  const mockMode = mockStatus?.enabled === true
 
   // Select navigation config based on type
   const config = useMemo(() => {
@@ -89,6 +96,8 @@ export function useNavigation(type: NavigationType): UseNavigationReturn {
      * Filter a single navigation item and its children
      */
     const filterItem = (item: NavItem): NavItem | null => {
+      if (item.requiresMockMode && !mockMode) return null
+
       // Check permissions if specified
       if (item.permissions && item.permissions.length > 0) {
         const hasAccess = item.requireAll
@@ -131,7 +140,7 @@ export function useNavigation(type: NavigationType): UseNavigationReturn {
     return config
       .map(filterSection)
       .filter((section): section is NavSection => section !== null)
-  }, [config, hasAnyPermission, hasAllPermissions])
+  }, [config, hasAnyPermission, hasAllPermissions, mockMode])
 
   return {
     sections: filteredNavigation,

@@ -39,7 +39,7 @@ i18n
     fallbackLng: 'en',
     defaultNS,
     supportedLngs: supportedLanguages,
-    ns: ['common', 'auth', 'dashboard', 'files', 'admin', 'platformAdmin', 'errors', 'settings', 'backend', 'push'],
+    ns: ['common', 'auth', 'dashboard', 'files', 'admin', 'platformAdmin', 'errors', 'settings', 'backend', 'push', 'sites'],
     interpolation: {
       escapeValue: false,
     },

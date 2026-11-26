@@ -59,12 +59,25 @@
         "use_ssl": false,
         "sender": "noreply@example.com"
     },
+    "freespace": {
+        "_mock_mode": "Mock/demonstration mode (BF-84): registers /mock/* routes. Read once at startup. With server.debug false the app refuses to start unless mock_mode_acknowledged is also true. Never on in production.",
+        "mock_mode": false,
+        "mock_mode_acknowledged": false,
+        "_fcm_credentials_path": "Path INSIDE the container to the FCM service-account JSON (BF-68). docker-compose.prod.yml mounts the host directory ${FREESPACE_FCM_DIR:-/etc/freespace/fcm} read-only at /run/freespace-fcm for api and worker. Never copy the file into the image or the repository. Empty disables push delivery.",
+        "fcm_credentials_path": "/run/freespace-fcm/service-account.json",
+        "fcm_project_id": ""
+    },
     "rate_limit": {
         "enabled": true,
         "default": "100/minute",
         "login": "5/minute",
         "otp_verify": "5/minute",
-        "otp_send": "3/minute"
+        "otp_send": "3/minute",
+        "freespace_availability": "60/minute",
+        "freespace_sites": "30/minute",
+        "freespace_device_per_id": "10/minute",
+        "freespace_device_per_ip": "30/minute",
+        "freespace_ingest": "12/minute"
     },
     "logging": {
         "level": "INFO",

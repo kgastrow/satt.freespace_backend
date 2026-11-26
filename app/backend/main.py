@@ -316,13 +316,49 @@ class SecurityHeadersMiddleware(BaseHTTPMiddleware):
         return response
 
 
+# Freespace public API (/v1): the standard error shape and code per area.
+_V1_RATE_LIMIT_CODES = (
+    ("/v1/devices/", "device.rate_limited", "Too many requests for this device"),
+    ("/v1/ingest/", "ingest.rate_limited", "Ingest rate limit exceeded"),
+)
+_V1_RATE_LIMIT_DEFAULT = ("common.rate_limited", "Too many requests")
+
+
+def _retry_after_seconds(request: Request, exc: RateLimitExceeded) -> int:
+    """Whole seconds until the exceeded limit's window resets, 1-600."""
+    import math
+    import time
+
+    from src.constants.freespace import RETRY_AFTER_MAX_S, RETRY_AFTER_MIN_S
+
+    seconds: float | None = None
+    try:
+        view = getattr(request.state, "view_rate_limit", None)
+        if view is not None:
+            reset_at, _ = request.app.state.limiter.limiter.get_window_stats(
+                view[0], *view[1]
+            )
+            seconds = reset_at - time.time()
+    except Exception:
+        seconds = None
+    if seconds is None:
+        try:
+            seconds = float(exc.limit.limit.get_expiry())
+        except Exception:
+            seconds = 60.0
+    return int(min(RETRY_AFTER_MAX_S, max(RETRY_AFTER_MIN_S, math.ceil(seconds))))
+
+
 async def rate_limit_exceeded_handler(request: Request, exc: RateLimitExceeded):
     """Custom rate limit exceeded handler that records metrics."""
     # Extract client IP
     ip = request.client.host if request.client else "unknown"
 
-    # Extract endpoint
-    endpoint = request.url.path
+    # Extract endpoint: the route template, never the raw path - a raw path
+    # would turn ids (a Freespace deviceId, BF-35) into Prometheus labels.
+    from src.middleware.metrics import get_path_template
+
+    endpoint = get_path_template(request)
 
     # Extract organization_id from request state if available (set by auth middleware)
     org_id = getattr(request.state, "organization_id", None) or "unknown"
@@ -331,12 +367,34 @@ async def rate_limit_exceeded_handler(request: Request, exc: RateLimitExceeded):
     record_rate_limit_violation(org_id, ip, endpoint)
     record_rate_limit_check(endpoint, allowed=False)
 
+    if request.url.path.startswith("/v1/"):
+        # Freespace public API: standard error shape + integer Retry-After.
+        detail_code, detail = next(
+            (
+                (code, text)
+                for prefix, code, text in _V1_RATE_LIMIT_CODES
+                if request.url.path.startswith(prefix)
+            ),
+            _V1_RATE_LIMIT_DEFAULT,
+        )
+        return JSONResponse(
+            status_code=status.HTTP_429_TOO_MANY_REQUESTS,
+            content={"detail": detail, "detail_code": detail_code},
+            headers={"Retry-After": str(_retry_after_seconds(request, exc))},
+        )
+
     # Delegate to standard slowapi handler for 429 response
     return _rate_limit_exceeded_handler(request, exc)
 
 
 def create_application() -> FastAPI:
     """Create and configure FastAPI application."""
+    # Freespace BF-84 / D13: refuse to start with an unacknowledged mock mode
+    # outside DEBUG - checked first, before anything is registered.
+    from src.services.freespace.mock_mode import validate_mock_mode
+
+    validate_mock_mode(settings)
+
     # Determine if docs should be enabled (default: True, configurable via ENABLE_DOCS)
     enable_docs = getattr(settings, 'ENABLE_DOCS', True)
 
@@ -521,7 +579,11 @@ Authorization: Bearer <your-jwt-token>
         request.state.error_traceback = error_traceback
 
         # Print exception with stack trace to stdout
-        print_exception_with_trace(exc, f"Unhandled exception in request: {request.method} {request.url.path}")
+        # Route template, not the raw path: a raw /v1/devices/{id} path would
+        # put a deviceId into the process log (BF-35).
+        from src.middleware.request_response_logging import loggable_path
+
+        print_exception_with_trace(exc, f"Unhandled exception in request: {request.method} {loggable_path(request)}")
         # Log to file as well
         logger.error(f"Unhandled exception: {exc}", exc_info=True)
         return JSONResponse(
@@ -533,22 +595,48 @@ Authorization: Bearer <your-jwt-token>
         )
 
     # Health check endpoints
-    @app.get("/health", tags=["health"])
-    async def health_check():
+    @app.get("/health/live", tags=["health"])
+    @limiter.exempt
+    async def health_live():
         """LIVENESS probe: can this process serve at all?
 
         Deliberately checks NOTHING, and must stay that way. A liveness probe
         that tests dependencies restarts the app when the database goes down -
-        which does not fix the database, and kills a process that could still
-        serve cached reads and every route that never touches Postgres.
-        Dependency state belongs in /health/detailed, which is the readiness
-        signal. Do not "fix" this endpoint by making it probe anything.
+        or, here, when only the worker's engine tick is stale - which does not
+        fix anything and kills a process that could still serve. Container and
+        deploy probes use this URL; uptime monitoring uses /health.
 
         Never anything but 200 while the process is up: that is the whole point.
         `no-store` so a cached verdict can never stand in for a live one.
         """
         return JSONResponse(
             content={"status": "healthy"},
+            headers={"Cache-Control": "no-store"},
+        )
+
+    @app.get("/health", tags=["health"])
+    @limiter.exempt
+    async def health_check():
+        """Freespace service health (BF-80), for uptime monitoring.
+
+        200 when the database answers and the engine tick ran recently, 503
+        otherwise. Unauthenticated and status only: no version, host, error
+        text or configuration (``src/services/freespace/health.py``). Not a
+        liveness probe - a stale worker tick must not restart the API; probes
+        use /health/live.
+        """
+        from src.database import AsyncSessionLocal
+        from src.services.freespace.clock import get_clock
+        from src.services.freespace.health import check_health
+
+        report = await check_health(AsyncSessionLocal, await get_clock())
+        return JSONResponse(
+            status_code=(
+                status.HTTP_200_OK
+                if report.healthy
+                else status.HTTP_503_SERVICE_UNAVAILABLE
+            ),
+            content=report.to_dict(),
             headers={"Cache-Control": "no-store"},
         )
 
@@ -577,7 +665,7 @@ Authorization: Bearer <your-jwt-token>
         with no failover pool, the 503 exists to make monitoring truthful, not
         to shed traffic. Nothing in a deploy script, load balancer or health
         gate may treat it as "pull the box out of service" - with one box that
-        turns a degraded site into a dark one. Probe /health for liveness; this
+        turns a degraded site into a dark one. Probe /health/live for liveness; this
         endpoint is not that.
         """
         health: dict = {"status": "healthy", "components": {}}
@@ -676,6 +764,16 @@ Authorization: Bearer <your-jwt-token>
             f"missing from this process: {e}",
             exc_info=True,
         )
+
+    # Freespace public wire API at /v1 (D1): ParkIT intake and the mobile app
+    # address /v1/ingest/..., /v1/sites..., /v1/devices/... exactly as the
+    # functional description writes them. Mock routes (BF-84) exist only when
+    # mock mode is on (validated at the top of this function). An import
+    # failure here is not swallowed: a missing /v1 surface must stop the
+    # process.
+    from src.api.freespace_public import include_freespace_public_routers
+
+    include_freespace_public_routers(app, settings)
 
     # Include WebSocket router at root level (outside /api/v1 for cleaner URL)
     try:

@@ -23,6 +23,7 @@ import {
   userNotificationPreference,
 } from './fixtures'
 import type { User } from '@/types/auth'
+import { siteHandlers } from './sitesHandlers'
 
 // Base URL for API - exported for use in test files
 export const API_BASE = 'http://localhost:8000/api/v1'
@@ -1238,4 +1239,5 @@ export const handlers = [
   ...notificationHandlers,
   ...ssoHandlers,
   ...maintenanceHandlers,
+  ...siteHandlers,
 ]

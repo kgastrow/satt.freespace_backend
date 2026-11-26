@@ -15,11 +15,16 @@ organized by functional area:
     - health: System health monitoring
     - maintenance: Data lifecycle and external updates
     - reports: Report generation
+    - freespace_purge: Freespace retention purge (BF-73)
 """
 
 from src.services.cron.files import (
     cleanup_deleted_files_handler,
     cleanup_expired_exports_handler,
+)
+from src.services.cron.freespace_purge import (
+    cleanup_old_request_logs_configured_handler,
+    freespace_daily_purge_handler,
 )
 from src.services.cron.health import (
     check_brute_force_alerts_handler,
@@ -87,6 +92,9 @@ __all__ = [
     "update_geoip_database_handler",
     # Reports
     "process_scheduled_reports_handler",
+    # Freespace
+    "freespace_daily_purge_handler",
+    "cleanup_old_request_logs_configured_handler",
     # Constants (for backward compatibility)
     "MIN_THRESHOLD_PERCENT",
     "MAX_THRESHOLD_PERCENT",

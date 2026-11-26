@@ -1,0 +1,44 @@
+[Unit]
+Description=Freespace nightly PostgreSQL backup (BF-83)
+After=network.target postgresql.service
+# The script itself is owned by module M9: scripts/backup/freespace_backup.sh.
+# It reads its destination and retention from the environment file below.
+
+[Service]
+Type=oneshot
+User=www-data
+Group=www-data
+WorkingDirectory=/opt/freespace/backend
+# Configuration for the script, never in the unit itself (full list in the
+# header of scripts/backup/freespace_backup.sh):
+#   FREESPACE_BACKUP_DIR=/var/backups/freespace        local destination
+#   FREESPACE_BACKUP_RETENTION_DAYS=14                  BF-83: keep 14 days
+#   FREESPACE_BACKUP_OFFSITE=user@backup.example.com:/srv/freespace/   rsync/scp target
+#   FREESPACE_BACKUP_OFFSITE_METHOD=rsync               rsync (default) or scp
+#   FREESPACE_BACKUP_RCLONE_REMOTE=remote:freespace     rclone destination (optional,
+#                                                      with RCLONE_CONFIG=/etc/freespace/rclone.conf)
+#   FREESPACE_BACKUP_SSH_KEY=/etc/freespace/backup_ed25519           key for rsync/scp
+#   FREESPACE_BACKUP_SSH_KNOWN_HOSTS=/etc/freespace/backup_known_hosts  pinned host key
+#   FREESPACE_BACKUP_ALLOW_LOCAL_ONLY=false             an empty off-site destination
+#                                                      (OFFSITE and RCLONE_REMOTE both empty)
+#                                                      FAILS the run unless this is "true"
+#   plus the database connection: PGHOST, PGPORT=5432 (PostgreSQL directly, not
+#   PgBouncer), PGUSER, PGDATABASE, PGPASSFILE=/etc/freespace/pgpass.
+# ProtectHome=true hides /home, /root and /run/user, and ProtectSystem=strict
+# makes the rest read-only: the SSH key, known_hosts, .pgpass and rclone.conf
+# must live under /etc/freespace/ (mode 0600, owner www-data), never in a home
+# directory. The environment file is mode 0600, owner root or www-data; see
+# docs/freespace-deployment.md section 2.10.
+EnvironmentFile=/etc/freespace/backup.env
+ExecStart=/opt/freespace/backend/scripts/backup/freespace_backup.sh
+Nice=10
+IOSchedulingClass=idle
+TimeoutStartSec=2h
+
+# Hardening
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+# Local destination must be writable. Keep in step with FREESPACE_BACKUP_DIR.
+ReadWritePaths=/var/backups/freespace

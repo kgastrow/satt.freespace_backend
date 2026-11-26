@@ -179,6 +179,20 @@ JOB_TYPES: list[JobTypeDefinition] = [
         category=CATEGORY_SYSTEM,
         is_cron=True,
     ),
+    # Freespace tasks
+    JobTypeDefinition(
+        code="fanout_advisory_task",
+        name="Freespace Advisory Fan-out",
+        description="Send one Freespace advisory to eligible devices through FCM",
+        category=CATEGORY_NOTIFICATIONS,
+    ),
+    JobTypeDefinition(
+        code="engine_tick",
+        name="Freespace Engine Tick",
+        description="Evaluate every Freespace site once a minute and recover stuck fan-outs",
+        category=CATEGORY_SYSTEM,
+        is_cron=True,
+    ),
     JobTypeDefinition(
         code="system_cron_scheduler_task",
         name="Cron Scheduler",

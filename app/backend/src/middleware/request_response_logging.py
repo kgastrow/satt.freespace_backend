@@ -45,6 +45,36 @@ def setup_request_logger(log_file: str) -> logging.Logger:
     return logger
 
 
+# Keys whose value must never be partially shown (Freespace BF-35, D5). Compared
+# case-insensitively with ``_`` and ``-`` removed, so ``fcmToken``, ``fcm_token``
+# and ``FCM-TOKEN`` all match.
+FULL_MASK_KEYS = ("fcmtoken", "deviceid")
+
+# Matched route templates cannot be used for unmatched requests; under this
+# prefix the raw path may carry a deviceId (a bearer secret), so never log it.
+DEVICE_PATH_PREFIX = "/v1/devices/"
+UNMATCHED_DEVICE_PATH = "/v1/devices/{unmatched}"
+
+
+def _normalise_key(key: str) -> str:
+    return key.lower().replace("_", "").replace("-", "")
+
+
+def loggable_path(request: Request) -> str:
+    """The path to log: the matched route template (``/v1/devices/{device_id}``)
+    so path parameters (deviceId) never reach the log. Unmatched requests keep
+    the raw path, except under ``/v1/devices/`` where it is redacted."""
+    scope = getattr(request, "scope", None)
+    route = scope.get("route") if isinstance(scope, dict) else None
+    template = getattr(route, "path", None)
+    if isinstance(template, str) and template:
+        return template
+    raw = request.url.path
+    if raw.startswith(DEVICE_PATH_PREFIX):
+        return UNMATCHED_DEVICE_PATH
+    return raw
+
+
 def sanitize_data(data: dict) -> dict:
     """
     Sanitize sensitive fields in data before logging.
@@ -107,7 +137,9 @@ def sanitize_data(data: dict) -> dict:
 
     sanitized: dict[str, Any] = {}
     for key, value in data.items():
-        if any(sensitive in key.lower() for sensitive in sensitive_keys):
+        if any(full in _normalise_key(str(key)) for full in FULL_MASK_KEYS):
+            sanitized[key] = "********"
+        elif any(sensitive in key.lower() for sensitive in sensitive_keys):
             if isinstance(value, str) and len(value) > 4:
                 sanitized[key] = value[:4] + "****"
             else:
@@ -161,6 +193,8 @@ class RequestResponseLoggingMiddleware(BaseHTTPMiddleware):
 
         # Capture request details
         method = request.method
+        # Raw path only for exclusion and as a fallback; the template is
+        # resolved after routing (``scope["route"]`` is set during call_next).
         path = request.url.path
         start_time = time.perf_counter()
 
@@ -221,6 +255,9 @@ class RequestResponseLoggingMiddleware(BaseHTTPMiddleware):
         finally:
             # Calculate duration
             duration_ms = (time.perf_counter() - start_time) * 1000
+
+            # Log the route template, never the raw path (BF-35, D5)
+            path = loggable_path(request)
 
             # Prepare log entry
             log_entry = {

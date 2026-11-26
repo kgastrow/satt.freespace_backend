@@ -9,7 +9,8 @@ User=www-data
 Group=www-data
 WorkingDirectory=/opt/freespace/backend
 Environment="PATH=/opt/freespace/backend/venv/bin"
-EnvironmentFile=/opt/freespace/backend/.env
+# Optional (leading '-'): configuration lives in config.json in WorkingDirectory.
+EnvironmentFile=-/opt/freespace/backend/.env
 
 # --forwarded-allow-ips IS THE LOAD-BEARING HALF OF CLIENT-IP TRUST.
 #
@@ -23,6 +24,10 @@ EnvironmentFile=/opt/freespace/backend/.env
 # brute-force lockout: unlimited password attempts by rotating the header, and
 # a targeted lockout of any user by sending their address.
 #
+# The API binds 127.0.0.1 ONLY (BN-1: only the proxy's 443 is public, and the
+# proxy-written X-Real-IP is only trustworthy if nothing can bypass the proxy).
+# Do not change --host to 0.0.0.0 on a host with a public interface.
+#
 # 127.0.0.1 is correct when the reverse proxy (nginx/Apache/Caddy) runs on this
 # same host, which is what this unit assumes. uvicorn then takes the RIGHTMOST
 # entry the proxy did not itself forward -- the value the proxy appended, which
@@ -35,17 +40,19 @@ EnvironmentFile=/opt/freespace/backend/.env
 # reach for '*': set "server": {"trusted_client_ip_header": "CF-Connecting-IP"}
 # in config.json and lock the origin so only the edge can reach it.
 ExecStart=/opt/freespace/backend/venv/bin/uvicorn main:app \
-    --host 0.0.0.0 \
+    --host 127.0.0.1 \
     --port 8000 \
     --workers 4 \
     --loop uvloop \
     --http httptools \
     --proxy-headers \
+    --no-access-log \
     --forwarded-allow-ips='127.0.0.1'
 
 ExecReload=/bin/kill -s HUP $MAINPID
 Restart=always
 RestartSec=5
+TimeoutStopSec=30
 StandardOutput=journal
 StandardError=journal
 
@@ -55,6 +62,10 @@ PrivateTmp=true
 ProtectSystem=strict
 ProtectHome=true
 ReadWritePaths=/opt/freespace/backend/logs
+# FCM service-account JSON (BF-68): outside the repository and any web root,
+# root:www-data 0640, in a 0750 directory. Its path is freespace.fcm_credentials_path
+# in config.json (/etc/freespace/fcm/service-account.json).
+ReadOnlyPaths=-/etc/freespace/fcm
 
 [Install]
 WantedBy=multi-user.target

@@ -13,6 +13,7 @@ import {
   BarChart3,
   Settings,
   Activity,
+  Smartphone,
 } from 'lucide-react'
 
 export interface PlatformAdminNavItem {
@@ -96,6 +97,19 @@ export const platformAdminNavConfig: PlatformAdminNavCategory[] = [
         labelKey: 'platformAdmin:nav.platform.systemConfig',
         path: '/platform-admin/system-config',
         icon: Settings,
+      },
+    ],
+  },
+  {
+    id: 'freespace',
+    labelKey: 'platformAdmin:nav.freespace.title',
+    icon: Smartphone,
+    items: [
+      {
+        id: 'app-keys',
+        labelKey: 'platformAdmin:nav.freespace.appKeys',
+        path: '/platform-admin/app-keys',
+        icon: Key,
       },
     ],
   },

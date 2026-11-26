@@ -37,8 +37,11 @@ sendgrid==6.11.0
 # Rate Limiting
 slowapi==0.1.9
 
-# HTTP Client (async)
-httpx==0.28.1
+# HTTP Client (async). http2 extra: Freespace FCM HTTP v1 fan-out (BF-64)
+httpx[http2]==0.28.1
+
+# Google service-account OAuth for FCM HTTP v1 (Freespace, BF-68)
+google-auth==2.38.0
 aiofiles==24.1.0
 
 # SMS/Notifications

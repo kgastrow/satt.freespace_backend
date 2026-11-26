@@ -153,6 +153,10 @@ def get_path_template(request: Request) -> str:
     # Fallback to raw path (grouped to avoid cardinality explosion)
     path = request.url.path
 
+    # A deviceId is a bearer secret (BF-35): never use it as a label value.
+    if path.startswith("/v1/devices/"):
+        return "/v1/devices/{unmatched}"
+
     # Simple grouping for common patterns
     parts = path.split("/")
     normalized_parts = []

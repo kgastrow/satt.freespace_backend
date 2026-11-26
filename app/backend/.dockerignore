@@ -64,6 +64,15 @@ docker-compose*.yml
 # Config files (mounted as volumes)
 config.json
 
+# Secrets never go into an image (BF-68): FCM service accounts, keys, env files
+service-account*.json
+*service_account*.json
+*credentials*.json
+fcm/
+*.pem
+*.key
+backups/
+
 # Alembic (migrations run separately)
 # alembic/
 

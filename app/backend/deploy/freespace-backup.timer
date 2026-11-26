@@ -1,0 +1,13 @@
+[Unit]
+Description=Run the Freespace PostgreSQL backup every night (BF-83)
+
+[Timer]
+# 02:15 server time. Server time zone is UTC unless you changed it.
+OnCalendar=*-*-* 02:15:00
+# Spread start by up to 10 minutes; run at next boot if the host was down.
+RandomizedDelaySec=600
+Persistent=true
+Unit=freespace-backup.service
+
+[Install]
+WantedBy=timers.target

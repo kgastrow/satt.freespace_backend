@@ -3,6 +3,9 @@ from src.models.announcement_dismissal import AnnouncementDismissal
 from src.models.api_key import ApiKey, ApiKeyScope
 from src.models.api_key_permission import ApiKeyPermission
 from src.models.api_key_rate_limit import ApiKeyRateLimit
+
+# Freespace models (specs/freespace_contracts.md)
+from src.models.app_key import AppKey
 from src.models.audit_log import AuditLog
 from src.models.background_job import BackgroundJobExecution
 from src.models.bulk_notification import BulkNotification
@@ -15,6 +18,7 @@ from src.models.changelog_view import ChangelogView
 from src.models.cron_job import CronJobDefinition, CronJobExecution, CronJobStatus
 from src.models.data_deletion_request import DataDeletionRequest, DeletionStatus
 from src.models.data_export_request import DataExportRequest, ExportStatus
+from src.models.device import Device, DeviceSite
 from src.models.email_change_request import (
     EmailChangeRequest,
     EmailChangeStatus,
@@ -35,6 +39,7 @@ from src.models.file_usage import FileUsage
 # Help Center models
 from src.models.help_center import HelpArticle, HelpCategory, HelpFaq
 from src.models.impersonation_session import ImpersonationSession
+from src.models.ingest_key import IngestKey
 
 # Maintenance models
 from src.models.maintenance_history import MaintenanceHistory, MaintenanceStatus
@@ -44,6 +49,7 @@ from src.models.notification_category import NotificationCategory
 # Notification models
 from src.models.notification_provider import NotificationProvider
 from src.models.notification_template import NotificationTemplate
+from src.models.occupancy_history import OccupancyHistory
 from src.models.onboarding_review_comment import (
     CommentAuthorType,
     OnboardingReviewComment,
@@ -72,6 +78,7 @@ from src.models.payment import Invoice, Payment, PaymentEvent, PaymentInvoice
 from src.models.payment_customer import PaymentCustomer, SavedPaymentMethod
 from src.models.permission import Permission
 from src.models.phone_verification import PhoneVerification
+from src.models.push_send import PushSend
 from src.models.refresh_token import RefreshToken
 
 # Report models
@@ -80,6 +87,11 @@ from src.models.report_schedule import ReportSchedule
 from src.models.request_log import RequestLog
 from src.models.role import Role
 from src.models.role_permission import RolePermission
+from src.models.site import Site
+from src.models.site_engine_state import SiteEngineState
+from src.models.site_event import SiteEvent
+from src.models.site_message_template import SiteMessageTemplate
+from src.models.site_snapshot import SiteSnapshot, ZoneSnapshot
 from src.models.system_config import SystemConfig
 from src.models.user import CreatedVia, User
 from src.models.user_identity import UserIdentity
@@ -100,6 +112,7 @@ from src.models.user_type import UserType
 from src.models.user_type_permission import UserTypePermission
 from src.models.user_user_type import OnboardingStatus, UserUserType
 from src.models.web_push_subscription import WebPushSubscription
+from src.models.zone import Zone
 
 
 __all__ = [
@@ -203,4 +216,18 @@ __all__ = [
     # Changelog models
     "Changelog",
     "ChangelogView",
+    # Freespace models
+    "Site",
+    "Zone",
+    "SiteSnapshot",
+    "ZoneSnapshot",
+    "OccupancyHistory",
+    "SiteEngineState",
+    "SiteMessageTemplate",
+    "SiteEvent",
+    "Device",
+    "DeviceSite",
+    "PushSend",
+    "IngestKey",
+    "AppKey",
 ]

@@ -222,6 +222,18 @@ export const api = createApi({
     'ReportType',
     'ReportSchedule',
     'UserTypePermissionMatrix',
+    // Freespace
+    'Site',
+    'SiteConfig',
+    'SiteTemplate',
+    'SiteZone',
+    'IngestKey',
+    'AppKey',
+    'SiteLive',
+    'SiteEvent',
+    'SiteDevices',
+    'SiteHistory',
+    'MockStatus',
   ],
   endpoints: () => ({}),
 })

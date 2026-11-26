@@ -252,7 +252,7 @@ class Settings(BaseSettings):
     # Request/Response Logging
     REQUEST_LOGGING_ENABLED: bool = False
     REQUEST_LOGGING_FILE: str = "request_response.log"
-    REQUEST_LOGGING_EXCLUDED_PATHS: str = "/health,/metrics,/docs,/redoc,/openapi.json"
+    REQUEST_LOGGING_EXCLUDED_PATHS: str = "/health,/health/live,/metrics,/docs,/redoc,/openapi.json"
     REQUEST_LOGGING_MAX_BODY_SIZE: int = 10240  # 10KB
     REQUEST_LOGGING_DB_ENABLED: bool = (
         False  # Store logs in database (in addition to file)
@@ -338,6 +338,29 @@ class Settings(BaseSettings):
 
     # Payment Configuration (nested model)
     payments: PaymentsConfig = PaymentsConfig()
+
+    # ── Freespace (config.json "freespace" block) ─────────────────────────
+    # Startup flags and secret paths only (D13); runtime-tunable deployment
+    # settings live in SystemConfig (src/services/freespace/deployment_settings.py).
+    #
+    # Mock / demonstration mode (BF-84). Read once at startup: when off, the
+    # /mock/* routes are not registered at all (404). With DEBUG off the app
+    # refuses to start unless FREESPACE_MOCK_MODE_ACKNOWLEDGED is also true.
+    FREESPACE_MOCK_MODE: bool = False
+    FREESPACE_MOCK_MODE_ACKNOWLEDGED: bool = False
+    # FCM HTTP v1 service-account JSON (BF-68). Must live OUTSIDE the
+    # repository and any web-served path. Empty = push delivery disabled.
+    FREESPACE_FCM_CREDENTIALS_PATH: str = ""
+    FREESPACE_FCM_PROJECT_ID: str = ""
+
+    # Freespace rate limits (slowapi limit strings, config.json "rate_limit")
+    RATE_LIMIT_FREESPACE_AVAILABILITY: str = "60/minute"  # BF-36, per IP
+    RATE_LIMIT_FREESPACE_SITES: str = "30/minute"  # BF-36, per IP
+    RATE_LIMIT_FREESPACE_DEVICE_PER_ID: str = "10/minute"  # BF-36, per deviceId
+    RATE_LIMIT_FREESPACE_DEVICE_PER_IP: str = "30/minute"  # BF-36, per IP
+    # BF-18: per ingest key, enforced by the dedicated ingest limiter (D4),
+    # not slowapi. Same "N/period" syntax.
+    RATE_LIMIT_FREESPACE_INGEST: str = "12/minute"
 
     @model_validator(mode="after")
     def _resolve_public_url_aliases(self) -> "Settings":
@@ -659,6 +682,15 @@ class Settings(BaseSettings):
                         config_values["RATE_LIMIT_OTP_SEND"] = rate_limit.get(
                             "otp_send", "3/minute"
                         )
+                    for json_key, field_name in (
+                        ("freespace_availability", "RATE_LIMIT_FREESPACE_AVAILABILITY"),
+                        ("freespace_sites", "RATE_LIMIT_FREESPACE_SITES"),
+                        ("freespace_device_per_id", "RATE_LIMIT_FREESPACE_DEVICE_PER_ID"),
+                        ("freespace_device_per_ip", "RATE_LIMIT_FREESPACE_DEVICE_PER_IP"),
+                        ("freespace_ingest", "RATE_LIMIT_FREESPACE_INGEST"),
+                    ):
+                        if json_key in rate_limit:
+                            config_values[field_name] = rate_limit[json_key]
 
                 if "logging" in config_data:
                     logging_config = config_data["logging"]
@@ -681,7 +713,7 @@ class Settings(BaseSettings):
                         config_values["REQUEST_LOGGING_EXCLUDED_PATHS"] = (
                             request_logging.get(
                                 "excluded_paths",
-                                "/health,/metrics,/docs,/redoc,/openapi.json",
+                                "/health,/health/live,/metrics,/docs,/redoc,/openapi.json",
                             )
                         )
                     if "max_body_size" in request_logging:
@@ -833,6 +865,25 @@ class Settings(BaseSettings):
                     if "path" in cookies:
                         config_values["COOKIE_PATH"] = cookies.get(
                             "path", "/api/v1/auth"
+                        )
+
+                if "freespace" in config_data:
+                    freespace = config_data["freespace"]
+                    if "mock_mode" in freespace:
+                        config_values["FREESPACE_MOCK_MODE"] = bool(
+                            freespace.get("mock_mode", False)
+                        )
+                    if "mock_mode_acknowledged" in freespace:
+                        config_values["FREESPACE_MOCK_MODE_ACKNOWLEDGED"] = bool(
+                            freespace.get("mock_mode_acknowledged", False)
+                        )
+                    if "fcm_credentials_path" in freespace:
+                        config_values["FREESPACE_FCM_CREDENTIALS_PATH"] = freespace.get(
+                            "fcm_credentials_path", ""
+                        )
+                    if "fcm_project_id" in freespace:
+                        config_values["FREESPACE_FCM_PROJECT_ID"] = freespace.get(
+                            "fcm_project_id", ""
                         )
 
                 if "testing" in config_data:

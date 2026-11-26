@@ -83,9 +83,22 @@ class TestV1RouterEndpointAvailability:
         assert response.status_code != 404, "Auth login endpoint should be available"
 
     @pytest.mark.asyncio
-    async def test_health_endpoint_not_versioned(self, client):
-        """Test that health endpoint remains at root level (not versioned)."""
-        response = await client.get("/health")
+    async def test_health_endpoint_not_versioned(
+        self, client, monkeypatch, async_session
+    ):
+        """Test that health endpoints remain at root level (not versioned)."""
+        response = await client.get("/health/live")
+        assert response.status_code == 200
+        assert response.json()["status"] == "healthy"
+        # BF-80 service health at root level; fresh grace window, no tick -> 200.
+        from tests.api_tests.test_health_endpoints import _no_tick
+
+        health = _no_tick(monkeypatch, async_session)
+        health.reset_health_state()
+        try:
+            response = await client.get("/health")
+        finally:
+            health.reset_health_state()
         assert response.status_code == 200
         assert response.json()["status"] == "healthy"
 

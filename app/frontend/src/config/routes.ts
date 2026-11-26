@@ -58,6 +58,20 @@ const FeedbackDetailPage = lazyNamed(() => import('@/features/feedback/pages/Fee
 const AboutSettingsPage = lazyNamed(() => import('@/pages/admin/AboutSettingsPage'), 'AboutSettingsPage')
 const ReportsPage = lazyNamed(() => import('@/pages/admin/ReportsPage'), 'ReportsPage')
 
+// Freespace sites section (see features/sites/siteTabs.ts for the tab registry)
+const SitesListPage = lazyNamed(() => import('@/pages/admin/sites/SitesListPage'), 'SitesListPage')
+const SiteOverviewPage = lazyNamed(() => import('@/pages/admin/sites/SiteOverviewPage'), 'SiteOverviewPage')
+const SiteSettingsPage = lazyNamed(() => import('@/pages/admin/sites/SiteSettingsPage'), 'SiteSettingsPage')
+const SiteZonesPage = lazyNamed(() => import('@/pages/admin/sites/SiteZonesPage'), 'SiteZonesPage')
+const SiteTemplatesPage = lazyNamed(() => import('@/pages/admin/sites/SiteTemplatesPage'), 'SiteTemplatesPage')
+const SiteIngestKeysPage = lazyNamed(() => import('@/pages/admin/sites/SiteIngestKeysPage'), 'SiteIngestKeysPage')
+const SiteLivePage = lazyNamed(() => import('@/pages/admin/sites/SiteLivePage'), 'SiteLivePage')
+const SiteHistoryPage = lazyNamed(() => import('@/pages/admin/sites/SiteHistoryPage'), 'SiteHistoryPage')
+const SiteEventsPage = lazyNamed(() => import('@/pages/admin/sites/SiteEventsPage'), 'SiteEventsPage')
+const SiteDevicesPage = lazyNamed(() => import('@/pages/admin/sites/SiteDevicesPage'), 'SiteDevicesPage')
+const DeviceStatsPage = lazyNamed(() => import('@/pages/admin/sites/DeviceStatsPage'), 'DeviceStatsPage')
+const SimulatorPage = lazyNamed(() => import('@/pages/admin/sites/SimulatorPage'), 'SimulatorPage')
+
 // =============================================================================
 // Route Configurations
 // =============================================================================
@@ -67,6 +81,118 @@ const ReportsPage = lazyNamed(() => import('@/pages/admin/ReportsPage'), 'Report
  * These routes are rendered within the AdminLayout and require specific permissions.
  */
 export const adminRoutes: RouteConfig[] = [
+  // ---------------------------------------------------------------------------
+  // Freespace sites. Add further site tabs here (path /admin/sites/:siteId/<tab>)
+  // together with an entry in features/sites/siteTabs.ts.
+  // ---------------------------------------------------------------------------
+  {
+    path: '/admin/sites',
+    component: SitesListPage,
+    requireAuth: true,
+    layout: 'admin',
+    permissions: ['sites:read'],
+    title: 'sites:list.title',
+    breadcrumb: 'sites:nav.sites',
+  },
+  {
+    path: '/admin/sites/:siteId',
+    component: SiteOverviewPage,
+    requireAuth: true,
+    layout: 'admin',
+    permissions: ['sites:read'],
+    title: 'sites:tabs.overview',
+    breadcrumb: 'sites:tabs.overview',
+  },
+  {
+    path: '/admin/sites/:siteId/settings',
+    component: SiteSettingsPage,
+    requireAuth: true,
+    layout: 'admin',
+    permissions: ['sites:read'],
+    title: 'sites:tabs.settings',
+    breadcrumb: 'sites:tabs.settings',
+  },
+  {
+    path: '/admin/sites/:siteId/zones',
+    component: SiteZonesPage,
+    requireAuth: true,
+    layout: 'admin',
+    permissions: ['sites:read'],
+    title: 'sites:tabs.zones',
+    breadcrumb: 'sites:tabs.zones',
+  },
+  {
+    path: '/admin/sites/:siteId/templates',
+    component: SiteTemplatesPage,
+    requireAuth: true,
+    layout: 'admin',
+    permissions: ['sites:read'],
+    title: 'sites:tabs.templates',
+    breadcrumb: 'sites:tabs.templates',
+  },
+  {
+    path: '/admin/sites/:siteId/ingest-keys',
+    component: SiteIngestKeysPage,
+    requireAuth: true,
+    layout: 'admin',
+    permissions: ['sites:read'],
+    title: 'sites:tabs.ingestKeys',
+    breadcrumb: 'sites:tabs.ingestKeys',
+  },
+  {
+    path: '/admin/sites/:siteId/live',
+    component: SiteLivePage,
+    requireAuth: true,
+    layout: 'admin',
+    permissions: ['sites:read'],
+    title: 'sites:tabs.live',
+    breadcrumb: 'sites:tabs.live',
+  },
+  {
+    path: '/admin/sites/:siteId/history',
+    component: SiteHistoryPage,
+    requireAuth: true,
+    layout: 'admin',
+    permissions: ['sites:read'],
+    title: 'sites:tabs.history',
+    breadcrumb: 'sites:tabs.history',
+  },
+  {
+    path: '/admin/sites/:siteId/events',
+    component: SiteEventsPage,
+    requireAuth: true,
+    layout: 'admin',
+    permissions: ['site_events:read'],
+    title: 'sites:tabs.events',
+    breadcrumb: 'sites:tabs.events',
+  },
+  {
+    path: '/admin/sites/:siteId/devices',
+    component: SiteDevicesPage,
+    requireAuth: true,
+    layout: 'admin',
+    permissions: ['sites:read'],
+    title: 'sites:tabs.devices',
+    breadcrumb: 'sites:tabs.devices',
+  },
+  {
+    path: '/admin/device-stats',
+    component: DeviceStatsPage,
+    requireAuth: true,
+    layout: 'admin',
+    permissions: ['sites:read'],
+    title: 'sites:devices.title',
+    breadcrumb: 'sites:devices.title',
+  },
+  {
+    path: '/admin/simulator',
+    component: SimulatorPage,
+    requireAuth: true,
+    layout: 'admin',
+    permissions: ['sites:read'],
+    title: 'sites:simulator.title',
+    breadcrumb: 'sites:simulator.title',
+  },
   {
     path: '/admin/organization',
     component: OrganizationSettingsPage,

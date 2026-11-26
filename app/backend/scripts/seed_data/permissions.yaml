@@ -284,3 +284,39 @@
   name: Schedule Reports
   description: Create and manage report schedules
   display_order: 3
+
+# Freespace (D16) - sites, keys, push and event log
+- code: sites:read
+  name: View Sites
+  description: View Freespace sites, zones, live availability, statistics and history
+  display_order: 0
+
+- code: sites:write
+  name: Manage Sites
+  description: Create and configure Freespace sites, zones and message templates
+  display_order: 1
+
+- code: site_keys:write
+  name: Manage Site Keys
+  description: Create and revoke Freespace ingest keys and app keys
+  display_order: 2
+
+- code: site_push:test
+  name: Send Test Push
+  description: Send a Freespace test push to one device or a site topic
+  display_order: 3
+
+- code: site_push:announce
+  name: Send Announcement
+  description: Send a Freespace announcement to a site topic
+  display_order: 4
+
+- code: site_events:read
+  name: View Site Events
+  description: View and export the Freespace event log
+  display_order: 5
+
+- code: site_alerts:receive
+  name: Receive Site Alerts
+  description: Receive Freespace operator alerts (silent site, FCM failure, device ceiling)
+  display_order: 6

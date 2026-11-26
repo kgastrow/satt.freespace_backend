@@ -169,12 +169,42 @@ async def update_organization(session: AsyncSession, request: dict):
     if validated_request.name:
         org.name = validated_request.name
 
+    active_changed = (
+        validated_request.is_active is not None
+        and validated_request.is_active != org.is_active
+    )
     if validated_request.is_active is not None:
         org.is_active = validated_request.is_active
 
     await session.commit()
     await session.refresh(org)
+    if active_changed:
+        await _invalidate_site_availability_caches(session, org.id)
     return org
+
+
+async def _invalidate_site_availability_caches(
+    session: AsyncSession, organization_id: UUID
+) -> None:
+    """Drop the 5 s Freespace availability cache of every site of an
+    organization whose ``is_active`` flag changed, so the app stops (or starts)
+    serving its sites at once instead of after the cache TTL."""
+    from src.models.site import Site
+    from src.services.freespace.availability_cache import (
+        invalidate_availability_cache,
+    )
+
+    slugs = (
+        (
+            await session.execute(
+                select(Site.slug).where(Site.organization_id == organization_id)
+            )
+        )
+        .scalars()
+        .all()
+    )
+    for slug in slugs:
+        await invalidate_availability_cache(slug)
 
 
 async def delete_organization(session: AsyncSession, org_id: str):
@@ -438,8 +468,10 @@ async def soft_delete_organization_cascade(
         ValueError: If organization not found
     """
     from src.models.bulk_notification import BulkNotification
+    from src.models.device import DeviceSite
     from src.models.file import File
     from src.models.file_usage import FileUsage
+    from src.models.ingest_key import IngestKey
     from src.models.notification import Notification
     from src.models.notification_category import NotificationCategory
     from src.models.notification_template import NotificationTemplate
@@ -449,6 +481,8 @@ async def soft_delete_organization_cascade(
         OrganizationNotificationSettings,
     )
     from src.models.refresh_token import RefreshToken
+    from src.models.site import Site
+    from src.models.site_message_template import SiteMessageTemplate
     from src.models.user import User
     from src.models.user_notification_preference import (
         UserCategoryPreference,
@@ -456,6 +490,7 @@ async def soft_delete_organization_cascade(
     )
     from src.models.user_otp import UserOTP
     from src.models.user_role import UserRole
+    from src.models.zone import Zone
 
     org = await get_organization_by_id(session, org_id)
     if not org:
@@ -610,6 +645,40 @@ async def soft_delete_organization_cascade(
         .values(deleted_time=now)
     )
 
+    # Freespace: sites, zones, message templates and ingest keys (BF-10, BF-30).
+    # Public /v1 endpoints also check the organization itself, so this is the
+    # belt to that braces. Devices are not tenant data: only their selections of
+    # this organization's sites go (D12 sanctions that hard delete).
+    site_slugs = list(
+        (
+            await session.execute(
+                select(Site.slug).where(
+                    Site.organization_id == org_uuid, Site.deleted_time.is_(None)
+                )
+            )
+        )
+        .scalars()
+        .all()
+    )
+    org_site_ids = select(Site.id).where(Site.organization_id == org_uuid)
+    await session.execute(
+        sql_delete(DeviceSite).where(DeviceSite.site_id.in_(org_site_ids))
+    )
+    for freespace_model in (IngestKey, SiteMessageTemplate, Zone):
+        await session.execute(
+            update(freespace_model)
+            .where(
+                freespace_model.organization_id == org_uuid,
+                freespace_model.deleted_time.is_(None),
+            )
+            .values(deleted_time=now)
+        )
+    await session.execute(
+        update(Site)
+        .where(Site.organization_id == org_uuid, Site.deleted_time.is_(None))
+        .values(deleted_time=now, managed=False, listed=False)
+    )
+
     # Hard-delete the deletion request (it's transient)
     await session.execute(
         sql_delete(OrganizationDeletionRequest).where(
@@ -622,7 +691,107 @@ async def soft_delete_organization_cascade(
 
     await session.commit()
     await session.refresh(org)
+
+    # Do not let the 5 s availability cache outlive the sites (fails open).
+    from src.services.freespace.availability_cache import (
+        invalidate_availability_cache,
+    )
+
+    for slug in site_slugs:
+        await invalidate_availability_cache(slug)
     return org
+
+
+async def _hard_delete_freespace_rows(
+    session: AsyncSession, org_uuid: UUID, stats: dict[str, Any]
+) -> None:
+    """Hard-delete the Freespace rows of an organization, children first.
+
+    Order (FK constraints): push_send -> site_event; occupancy_history,
+    zone_snapshot -> zone; device_site, snapshots, engine state, ingest keys,
+    templates, zones -> site. Devices themselves are not tenant data (a phone
+    is not owned by an organization); only their selection of this
+    organization's sites goes. ``created_by`` of app keys points at a user of
+    the organization, so it is cleared before the users are deleted.
+    """
+    from sqlalchemy import update as sql_update
+
+    from src.models.app_key import AppKey
+    from src.models.device import DeviceSite
+    from src.models.ingest_key import IngestKey
+    from src.models.occupancy_history import OccupancyHistory
+    from src.models.push_send import PushSend
+    from src.models.site import Site
+    from src.models.site_engine_state import SiteEngineState
+    from src.models.site_event import SiteEvent
+    from src.models.site_message_template import SiteMessageTemplate
+    from src.models.site_snapshot import SiteSnapshot, ZoneSnapshot
+    from src.models.user import User
+    from src.models.zone import Zone
+
+    site_ids = select(Site.id).where(Site.organization_id == org_uuid)
+    deleted = stats["records_deleted"]
+
+    steps: list[tuple[str, Any]] = [
+        (
+            "freespace_push_sends",
+            sql_delete(PushSend).where(PushSend.organization_id == org_uuid),
+        ),
+        (
+            "freespace_site_events",
+            sql_delete(SiteEvent).where(SiteEvent.organization_id == org_uuid),
+        ),
+        (
+            "freespace_occupancy_history",
+            sql_delete(OccupancyHistory).where(
+                OccupancyHistory.organization_id == org_uuid
+            ),
+        ),
+        (
+            "freespace_device_sites",
+            sql_delete(DeviceSite).where(DeviceSite.site_id.in_(site_ids)),
+        ),
+        (
+            "freespace_zone_snapshots",
+            sql_delete(ZoneSnapshot).where(ZoneSnapshot.organization_id == org_uuid),
+        ),
+        (
+            "freespace_site_snapshots",
+            sql_delete(SiteSnapshot).where(SiteSnapshot.organization_id == org_uuid),
+        ),
+        (
+            "freespace_site_engine_states",
+            sql_delete(SiteEngineState).where(
+                SiteEngineState.organization_id == org_uuid
+            ),
+        ),
+        (
+            "freespace_ingest_keys",
+            sql_delete(IngestKey).where(IngestKey.organization_id == org_uuid),
+        ),
+        (
+            "freespace_site_message_templates",
+            sql_delete(SiteMessageTemplate).where(
+                SiteMessageTemplate.organization_id == org_uuid
+            ),
+        ),
+        ("freespace_zones", sql_delete(Zone).where(Zone.organization_id == org_uuid)),
+        ("freespace_sites", sql_delete(Site).where(Site.organization_id == org_uuid)),
+    ]
+    for name, stmt in steps:
+        result = await session.execute(stmt)
+        deleted[name] = result.rowcount
+
+    # App keys are global; only the creator reference may block the user purge.
+    await session.execute(
+        sql_update(AppKey)
+        .where(
+            AppKey.created_by.in_(
+                select(User.id).where(User.organization_id == org_uuid)
+            )
+        )
+        .values(created_by=None)
+    )
 
 
 async def hard_delete_organization(session: AsyncSession, org_id: str) -> dict:
@@ -707,6 +876,9 @@ async def hard_delete_organization(session: AsyncSession, org_id: str) -> dict:
 
     # Hard-delete all records in order (respecting FK constraints)
     # Order matters - delete child records first
+
+    # 0. Freespace rows (children of Site first; some reference User/Device)
+    await _hard_delete_freespace_rows(session, org_uuid, stats)
 
     # 1. UserCategoryPreference (references User, NotificationCategory)
     result = await session.execute(

@@ -9,13 +9,22 @@ User=www-data
 Group=www-data
 WorkingDirectory=/opt/freespace/backend
 Environment="PATH=/opt/freespace/backend/venv/bin"
-EnvironmentFile=/opt/freespace/backend/.env
+# Optional (leading '-'): configuration lives in config.json in WorkingDirectory.
+EnvironmentFile=-/opt/freespace/backend/.env
 
+# One worker process is enough for the once-a-minute engine tick (cron at
+# second 30, registered in src/workers/worker.py) plus chunked fan-out
+# (max_jobs = 10). The tick and fan-out hold all state in PostgreSQL (BF-5), so
+# a restart loses nothing; a tick that falls inside the restart gap is simply
+# skipped and the next one catches up. Do NOT run a second worker unless you
+# have measured a need: the per-site FOR UPDATE lock makes it safe, not useful.
+# SIGTERM cancels running jobs; ARQ re-queues them (max_tries = 3) and the
+# fan-out is idempotent per device (BF-52, BT-02).
 ExecStart=/opt/freespace/backend/venv/bin/arq src.workers.worker.WorkerSettings
 
-ExecReload=/bin/kill -s HUP $MAINPID
 Restart=always
 RestartSec=5
+TimeoutStopSec=30
 StandardOutput=journal
 StandardError=journal
 
@@ -25,6 +34,8 @@ PrivateTmp=true
 ProtectSystem=strict
 ProtectHome=true
 ReadWritePaths=/opt/freespace/backend/logs
+# FCM service-account JSON (BF-68), see freespace-api.service.
+ReadOnlyPaths=-/etc/freespace/fcm
 
 [Install]
 WantedBy=multi-user.target

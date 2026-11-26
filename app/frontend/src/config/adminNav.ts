@@ -15,6 +15,9 @@ import {
   Info,
   FileBarChart,
   History,
+  MapPinned,
+  Smartphone,
+  FlaskConical,
 } from 'lucide-react'
 
 export interface AdminNavItem {
@@ -23,6 +26,8 @@ export interface AdminNavItem {
   path: string
   icon: LucideIcon
   permissions?: string[]
+  /** Only shown when the backend runs in mock mode (GET /mock/status is not 404) */
+  requiresMockMode?: boolean
 }
 
 export interface AdminNavCategory {
@@ -33,6 +38,35 @@ export interface AdminNavCategory {
 }
 
 export const adminNavConfig: AdminNavCategory[] = [
+  {
+    id: 'sites',
+    labelKey: 'admin:nav.sites.title',
+    icon: MapPinned,
+    items: [
+      {
+        id: 'sites-list',
+        labelKey: 'admin:nav.sites.sites',
+        path: '/admin/sites',
+        icon: MapPinned,
+        permissions: ['sites:read'],
+      },
+      {
+        id: 'sites-device-stats',
+        labelKey: 'admin:nav.sites.deviceStats',
+        path: '/admin/device-stats',
+        icon: Smartphone,
+        permissions: ['sites:read'],
+      },
+      {
+        id: 'sites-simulator',
+        labelKey: 'admin:nav.sites.simulator',
+        path: '/admin/simulator',
+        icon: FlaskConical,
+        permissions: ['sites:read'],
+        requiresMockMode: true,
+      },
+    ],
+  },
   {
     id: 'organization',
     labelKey: 'admin:nav.organization.title',

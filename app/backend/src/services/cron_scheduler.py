@@ -57,7 +57,8 @@ def get_all_cron_handlers() -> dict[str, JobHandler]:
         cleanup_expired_refresh_tokens_handler,
         cleanup_old_bg_job_executions_handler,
         cleanup_old_notifications_handler,
-        cleanup_old_request_logs_handler,
+        cleanup_old_request_logs_configured_handler,
+        freespace_daily_purge_handler,
         process_hard_deletions_handler,
         process_scheduled_reports_handler,
         s3_migration_handler,
@@ -70,7 +71,8 @@ def get_all_cron_handlers() -> dict[str, JobHandler]:
         "cleanup_old_notifications": cleanup_old_notifications_handler,
         "cleanup_deleted_files": cleanup_deleted_files_handler,
         "check_2fa_grace_period": check_2fa_grace_period_handler,
-        "cleanup_old_request_logs": cleanup_old_request_logs_handler,
+        # Honours the request_logs.retention_days SystemConfig key.
+        "cleanup_old_request_logs": cleanup_old_request_logs_configured_handler,
         "cleanup_old_bg_job_executions": cleanup_old_bg_job_executions_handler,
         "s3_storage_monitor": check_s3_storage_handler,
         "local_storage_monitor": check_local_storage_handler,
@@ -86,6 +88,7 @@ def get_all_cron_handlers() -> dict[str, JobHandler]:
         "check_api_key_expiry": check_api_key_expiry_handler,
         "process_scheduled_reports": process_scheduled_reports_handler,
         "s3_migration": s3_migration_handler,
+        "freespace_daily_purge": freespace_daily_purge_handler,
     }
 
 

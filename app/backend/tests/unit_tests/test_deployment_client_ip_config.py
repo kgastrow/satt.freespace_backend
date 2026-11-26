@@ -52,7 +52,7 @@ def test_compose_network_subnet_is_pinned_and_matches_the_allow_list():
     compose = _compose()
     subnets = [
         entry["subnet"]
-        for entry in compose["networks"]["ayzer-webapp-network"]["ipam"]["config"]
+        for entry in compose["networks"]["freespace-network"]["ipam"]["config"]
     ]
     command = compose["services"]["api"]["command"]
     assert any(subnet in command for subnet in subnets), (

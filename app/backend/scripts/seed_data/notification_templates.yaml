@@ -882,3 +882,83 @@
         </div>
     </body>
     </html>
+
+# Freespace operator alerts (BF-82). Sent by src/services/freespace/alerts.py to
+# users holding site_alerts:receive. Plain text only; never device data.
+
+- code: freespace_site_silent
+  name: Freespace Site Silent
+  description: Alert sent when a managed site has sent no accepted occupancy update for ten minutes
+  channel: email
+  subject: "Freespace: no data from {site_name}"
+  is_active: true
+  variables:
+    user_name: string
+    site_name: string
+    silent_minutes: string
+    last_ingest_at: string
+  body_text: |
+    Hello {user_name},
+
+    Site {site_name} has sent no accepted occupancy update for {silent_minutes} minutes (last accepted: {last_ingest_at}). Advisories for this site use stale data until it recovers.
+
+- code: freespace_site_recovered
+  name: Freespace Site Recovered
+  description: Alert sent when a silent site is sending accepted occupancy updates again
+  channel: email
+  subject: "Freespace: {site_name} is sending data again"
+  is_active: true
+  variables:
+    user_name: string
+    site_name: string
+    last_ingest_at: string
+  body_text: |
+    Hello {user_name},
+
+    Site {site_name} is sending occupancy updates again (last accepted: {last_ingest_at}).
+
+- code: freespace_fcm_credential_failure
+  name: Freespace FCM Credential Failure
+  description: Alert sent when Firebase Cloud Messaging rejects the push credentials or they are missing
+  channel: email
+  subject: "Freespace: push credentials rejected by FCM"
+  is_active: true
+  variables:
+    user_name: string
+    occurred_at: string
+    http_status: string
+  body_text: |
+    Hello {user_name},
+
+    The push credentials failed at {occurred_at}: Firebase Cloud Messaging rejected them or they are not configured (HTTP status: {http_status}). Advisory fan-out is stopped until the service account file and project id are fixed.
+
+- code: freespace_device_ceiling_reached
+  name: Freespace Device Ceiling Reached
+  description: Alert sent when the deployment reaches its device registration ceiling
+  channel: email
+  subject: "Freespace: device registration ceiling reached"
+  is_active: true
+  variables:
+    user_name: string
+    registered: string
+    ceiling: string
+  body_text: |
+    Hello {user_name},
+
+    The deployment holds {registered} registered devices, which is the configured ceiling ({ceiling}). New registrations are refused until devices are purged or the ceiling is raised.
+
+- code: freespace_ingest_rejection_rate
+  name: Freespace Ingest Rejection Rate
+  description: Alert sent when more ingest requests a minute than the threshold are rejected
+  channel: email
+  subject: "Freespace: ingest requests are being rejected"
+  is_active: true
+  variables:
+    user_name: string
+    site_name: string
+    rejections_per_minute: string
+    threshold: string
+  body_text: |
+    Hello {user_name},
+
+    About {rejections_per_minute} ingest requests a minute are being rejected for {site_name} (alert threshold: {threshold} a minute). Check the ParkIT publisher configuration, clock and key.

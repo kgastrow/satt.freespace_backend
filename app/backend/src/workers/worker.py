@@ -9,6 +9,7 @@ Usage:
 from arq import cron
 
 from src.constants.queues import ARQ_QUEUE_NAME
+from src.workers.freespace_tasks import engine_tick, fanout_advisory_task
 from src.workers.job_metrics import instrument_cron_task, instrument_task
 from src.workers.payment_tasks import (
     # Payment processing tasks
@@ -57,6 +58,9 @@ from src.workers.two_factor_tasks import (
 _collect_metrics = instrument_cron_task(collect_metrics_task)
 _system_cron_scheduler = instrument_cron_task(system_cron_scheduler_task)
 _reconcile_pending_payments = instrument_cron_task(reconcile_pending_payments_task)
+# Freespace engine tick (BF-50, D7): hardcoded ARQ cron, not a DB-driven cron
+# job, so a slow unrelated job can never delay the engine.
+_engine_tick = instrument_cron_task(engine_tick)
 
 
 class WorkerSettings(BaseWorkerSettings):
@@ -116,6 +120,9 @@ class WorkerSettings(BaseWorkerSettings):
         _reconcile_pending_payments,
         # Cron scheduler tasks
         _system_cron_scheduler,
+        # Freespace tasks
+        instrument_task(fanout_advisory_task),
+        _engine_tick,
     ]
 
     # Cron jobs (scheduled tasks)
@@ -129,4 +136,6 @@ class WorkerSettings(BaseWorkerSettings):
         cron(_system_cron_scheduler, minute=None),
         # Reconcile pending payments every 15 minutes (catch missed webhooks)
         cron(_reconcile_pending_payments, minute={0, 15, 30, 45}),
+        # Freespace engine tick every minute, offset from the cron scheduler
+        cron(_engine_tick, second=30),
     ]

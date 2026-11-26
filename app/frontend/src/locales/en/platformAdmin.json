@@ -31,6 +31,10 @@
       "backgroundJobs": "Background Jobs",
       "cronJobs": "Cron Jobs",
       "requestLogs": "Request Logs"
+    },
+    "freespace": {
+      "title": "Freespace",
+      "appKeys": "App Keys"
     }
   }
 }

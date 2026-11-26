@@ -33,6 +33,12 @@
       "auditLogs": "Audit Logs",
       "feedback": "Feedback",
       "reports": "Reports"
+    },
+    "sites": {
+      "title": "Sites",
+      "sites": "Sites",
+      "deviceStats": "Device statistics",
+      "simulator": "Simulator"
     }
   },
   "users": {

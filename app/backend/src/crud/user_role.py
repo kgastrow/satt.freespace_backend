@@ -313,6 +313,8 @@ async def get_role_by_id(session: AsyncSession, role_id: str) -> Role | None:
 ROLE_HIERARCHY = {
     "viewer": 1,
     "member": 2,
+    # Freespace operator (D16): member level, so managers and up can assign it
+    "operator": 2,
     "manager": 3,
     "admin": 4,
     "owner": 5,

@@ -203,12 +203,12 @@ export type CreateBulkNotificationResponse = Schema['CreateBulkNotificationRespo
 export type CancelBulkNotificationResponse = Schema['CancelBulkNotificationResponse']
 
 // Templates
-export type TemplateResponse = Schema['TemplateResponse']
-export type TemplateListResponse = Schema['TemplateListResponse']
+export type TemplateResponse = Schema['src__serialisers__notification__TemplateResponse']
+export type TemplateListResponse = Schema['src__serialisers__notification__TemplateListResponse']
 export type CreateTemplateRequest = Schema['CreateTemplateRequest']
 export type CreateTemplateResponse = Schema['CreateTemplateResponse']
 export type UpdateTemplateRequest = Schema['UpdateTemplateRequest']
-export type UpdateTemplateResponse = Schema['UpdateTemplateResponse']
+export type UpdateTemplateResponse = Schema['src__serialisers__notification__UpdateTemplateResponse']
 export type DeleteTemplateResponse = Schema['DeleteTemplateResponse']
 
 // System Templates
@@ -263,7 +263,7 @@ export type UnsubscribeResponse = Schema['UnsubscribeResponse']
 
 // Backwards-compatible aliases for notifications
 export type Notification = Schema['NotificationResponse']
-export type NotificationTemplate = Schema['TemplateResponse']
+export type NotificationTemplate = Schema['src__serialisers__notification__TemplateResponse']
 export type NotificationCategory = Schema['CategoryResponse']
 export type CategoryWithPreference = Schema['CategoryWithPreferenceResponse']
 export type BulkNotification = Schema['BulkNotificationResponse']

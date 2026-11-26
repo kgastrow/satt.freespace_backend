@@ -50,6 +50,14 @@ owner:
   - reports:write
   - reports:delete
   - reports:schedule
+  # Freespace (D16)
+  - sites:read
+  - sites:write
+  - site_keys:write
+  - site_push:test
+  - site_push:announce
+  - site_events:read
+  - site_alerts:receive
 
 admin:
   # Admins get most permissions except some sensitive ones
@@ -98,6 +106,14 @@ admin:
   - reports:write
   - reports:schedule
   # No reports:delete
+  # Freespace (D16)
+  - sites:read
+  - sites:write
+  - site_keys:write
+  - site_push:test
+  - site_push:announce
+  - site_events:read
+  - site_alerts:receive
 
 member:
   # Members get basic permissions including feedback submission
@@ -115,6 +131,9 @@ viewer:
   - feedback:submit
   - about:read
   - reports:read
+  # Freespace (D16)
+  - sites:read
+  - site_events:read
 
 tester:
   # QA testers can bypass feature flags to test unreleased features
@@ -128,3 +147,12 @@ tester:
   - feedback:submit
   - api_keys:read
   - about:read
+
+operator:
+  # Freespace Operator (D16): view everything, test push. Announcements are
+  # Administrator only (BF-75, plan Q7).
+  - sites:read
+  - site_events:read
+  - site_push:test
+  - about:read
+  - feedback:submit

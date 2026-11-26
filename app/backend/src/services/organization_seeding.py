@@ -66,6 +66,12 @@ DEFAULT_ROLES = [
         "description": "QA tester with feature flag bypass to test unreleased features.",
         "is_default_on_registration": False,
     },
+    {
+        # Freespace back office (D16): view everything, send test pushes.
+        "name": "operator",
+        "description": "Freespace operator: views all sites and events and sends test pushes.",
+        "is_default_on_registration": False,
+    },
 ]
 
 
@@ -213,6 +219,19 @@ DEFAULT_NOTIFICATION_CATEGORIES = [
         # Must remain user-configurable - this is the unsubscribe target.
         "user_configurable": True,
         "display_order": 40,
+    },
+    {
+        "code": "site_operations",
+        "name": "Site Operations Alerts",
+        "description": (
+            "Freespace operator alerts: a site stopped or resumed sending data, "
+            "push credentials were rejected, the device ceiling was reached or "
+            "ingest requests are being rejected (BF-82)."
+        ),
+        "default_enabled": True,
+        # Operational alerts for permission holders - not opt-out.
+        "user_configurable": False,
+        "display_order": 50,
     },
 ]
 

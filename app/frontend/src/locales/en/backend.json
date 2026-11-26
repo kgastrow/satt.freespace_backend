@@ -250,7 +250,8 @@
     "unauthorized": "Unauthorized",
     "validation_error": "Validation error",
     "internal_error": "Internal server error",
-    "service_unavailable": "Service temporarily unavailable"
+    "service_unavailable": "Service temporarily unavailable",
+    "rate_limited": "Too many requests, please try again later"
   },
   "server": {
     "error": "Internal server error"
@@ -329,5 +330,107 @@
     "reorder_invalid": "The requested FAQ order is not valid",
     "conflict": "The FAQ could not be saved because it conflicts with an existing one",
     "database_error": "The FAQ could not be saved. Please try again."
+  },
+  "ingest": {
+    "unauthorized": "Missing or invalid ingest key",
+    "key_revoked": "This ingest key has been revoked",
+    "key_expired": "This ingest key has expired",
+    "site_mismatch": "This ingest key is not valid for the submitted site",
+    "clock_skew": "The submission's measuredAt is too far in the future",
+    "rate_limited": "Too many submissions for this ingest key",
+    "invalid_payload": "The submission could not be read",
+    "site_not_found": "The site of this ingest key no longer exists"
+  },
+  "app_key": {
+    "invalid": "Missing or invalid app key",
+    "created": "App key created",
+    "revoked": "App key revoked",
+    "deleted": "App key deleted",
+    "not_found": "App key not found",
+    "already_revoked": "App key is already revoked",
+    "name_conflict": "An app key with this name already exists"
+  },
+  "ingest_key": {
+    "created": "Ingest key created",
+    "updated": "Ingest key updated",
+    "revoked": "Ingest key revoked",
+    "deleted": "Ingest key deleted",
+    "not_found": "Ingest key not found",
+    "already_revoked": "Ingest key is already revoked",
+    "name_conflict": "An ingest key with this name already exists for this site",
+    "invalid_expiry": "The expiry must be in the future"
+  },
+  "site": {
+    "not_found": "Site not found",
+    "created": "Site created",
+    "updated": "Site updated",
+    "deleted": "Site deleted",
+    "config_updated": "Site settings updated",
+    "slug_conflict": "A site with this site id already exists",
+    "invalid_slug": "The site id may only contain lowercase letters, digits, '-' and '_'",
+    "invalid_settings": "The site settings are not valid",
+    "invalid_time_zone": "Unknown time zone",
+    "invalid_notification_window": "The notification window is not valid",
+    "invalid_topic": "The FCM topic is not valid",
+    "organization_not_found": "Customer organization not found"
+  },
+  "zone": {
+    "not_found": "Zone not found",
+    "created": "Zone created",
+    "updated": "Zone updated",
+    "deleted": "Zone deleted",
+    "reviewed": "Zone reviewed",
+    "slug_conflict": "A zone with this zone id already exists in this site",
+    "invalid_slug": "The zone id may only contain lowercase letters, digits, '-' and '_'",
+    "invalid_settings": "The zone settings are not valid"
+  },
+  "site_template": {
+    "not_found": "Message template not found",
+    "updated": "Message templates updated",
+    "reset": "Message templates reset to the defaults",
+    "invalid": "The message template is not valid",
+    "invalid_placeholder": "The message template uses a placeholder that is not available for this message type",
+    "unknown_type": "Unknown message type"
+  },
+  "device": {
+    "invalid_id": "The device id is not valid",
+    "unknown_site": "One or more selected sites do not exist",
+    "invalid_token": "The FCM token is not valid",
+    "ceiling_reached": "Device registration is temporarily unavailable",
+    "rate_limited": "Too many requests for this device",
+    "registered": "Device registered",
+    "deleted": "Device data erased"
+  },
+  "site_push": {
+    "test_sent": "Test push accepted by FCM",
+    "test_failed": "The test push was not accepted by FCM",
+    "device_not_found": "No device matches this id suffix",
+    "device_ambiguous": "More than one device matches this id suffix",
+    "device_no_token": "The device has no valid push token",
+    "confirmation_required": "Type the topic name to confirm",
+    "confirmation_mismatch": "The confirmation does not match the topic name",
+    "invalid_target": "Choose either one device or the site topic",
+    "announcement_sent": "Announcement accepted by FCM",
+    "announcement_failed": "The announcement was not accepted by FCM",
+    "fcm_not_configured": "Push delivery is not configured",
+    "fcm_auth_failure": "The push credential was rejected by FCM",
+    "site_unmanaged": "Announcements can only be sent for a managed site"
+  },
+  "site_event": {
+    "not_found": "Event not found",
+    "invalid_filter": "The event filter is not valid",
+    "invalid_period": "The selected period is not valid",
+    "export_too_large": "Too many events to export; narrow the period"
+  },
+  "site_stats": {
+    "invalid_period": "The selected period is not valid",
+    "invalid_date": "The selected day is not valid"
+  },
+  "mock": {
+    "clock_advanced": "Mock clock advanced",
+    "clock_reset": "Mock clock reset",
+    "invalid_clock_request": "The mock clock can only move forward",
+    "occupancy_set": "Mock occupancy accepted",
+    "redis_unavailable": "Mock mode needs Redis for the shared clock"
   }
 }

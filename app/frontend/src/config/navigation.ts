@@ -21,6 +21,8 @@ export interface NavItem {
   requireAll?: boolean
   /** Badge type for dynamic badges */
   badge?: 'notification-count' | 'pending-count'
+  /** Only shown when the backend runs in mock mode */
+  requiresMockMode?: boolean
   /** Child navigation items */
   children?: NavItem[]
   /** Show divider before this item */
@@ -101,6 +103,7 @@ export const adminNavigation: NavSection[] = [
           'feedback:view',
           'reports:read',
           'changelog:write',
+          'sites:read',
         ],
       },
     ],
@@ -121,6 +124,7 @@ export const adminSidebarNavigation: NavSection[] = adminNavConfig.map((category
     url: item.path,
     icon: item.icon,
     permissions: item.permissions,
+    requiresMockMode: item.requiresMockMode,
   })),
 }))
 

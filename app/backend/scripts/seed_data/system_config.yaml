@@ -101,3 +101,42 @@
 - key: about.content_type
   value: "html"
   description: Content type for the about page (plain or html)
+
+# Freespace deployment settings (D13). Read through
+# src/services/freespace/deployment_settings.py (60 s cache, safe defaults).
+# Request-log retention (BF-73, 30 days) reuses request_logs.retention_days.
+- key: freespace.limit_scope
+  value: "DEVICE"
+  description: "Freespace per-phone limit scope: DEVICE (cooldown/cap across all sites) or DEVICE_PER_SITE (each site's own settings) (BF-63)"
+
+- key: freespace.cooldown_s
+  value: "1800"
+  description: Freespace per-phone cooldown in seconds between advisories (DEVICE scope)
+
+- key: freespace.daily_cap
+  value: "2"
+  description: Freespace maximum advisories per phone per day (DEVICE scope)
+
+- key: freespace.time_zone
+  value: "Africa/Johannesburg"
+  description: Freespace deployment time zone; defines "today" for the DEVICE-scope daily cap
+
+- key: freespace.device_ceiling
+  value: "50000"
+  description: Freespace maximum registered devices; beyond it registration answers 503 (BF-37)
+
+- key: freespace.retention.devices_days
+  value: "90"
+  description: Freespace devices with no registration update for this many days are erased (BF-73)
+
+- key: freespace.retention.send_history_days
+  value: "35"
+  description: Freespace send history retention in days (BF-73)
+
+- key: freespace.retention.events_days
+  value: "365"
+  description: Freespace event log retention in days (BF-73)
+
+- key: freespace.retention.occupancy_history_days
+  value: "180"
+  description: Freespace occupancy history retention in days (BF-73)

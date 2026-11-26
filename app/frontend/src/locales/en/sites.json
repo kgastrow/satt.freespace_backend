@@ -1,0 +1,789 @@
+{
+  "nav": {
+    "sites": "Sites"
+  },
+  "readOnlyNotice": "You have read-only access. Ask an administrator to change these settings.",
+  "tabs": {
+    "overview": "Overview",
+    "settings": "Settings",
+    "zones": "Zones",
+    "templates": "Messages",
+    "ingestKeys": "Ingest keys",
+    "live": "Live",
+    "history": "History",
+    "events": "Event log",
+    "devices": "Devices"
+  },
+  "badges": {
+    "managed": "Managed",
+    "shadow": "Shadow",
+    "listed": "Listed",
+    "unlisted": "Not listed"
+  },
+  "actions": {
+    "cancel": "Cancel",
+    "save": "Save",
+    "saving": "Saving...",
+    "discard": "Discard changes",
+    "actions": "Actions"
+  },
+  "common": {
+    "yes": "Yes",
+    "no": "No"
+  },
+  "units": {
+    "seconds": "seconds",
+    "bays": "bays",
+    "points": "points"
+  },
+  "fields": {
+    "customer": "Customer",
+    "customerPlaceholder": "Select a customer",
+    "name": "Name",
+    "slug": "Site id",
+    "slugHelp": "Lowercase letters, digits, '-' and '_'. This is the site id used by ParkIT and the app, and it cannot be changed later.",
+    "slugReadOnly": "The site id is used by ParkIT and the app and cannot be changed.",
+    "timeZone": "Time zone",
+    "timeZoneHelp": "IANA name, for example Africa/Johannesburg. Leave empty on creation to use the default.",
+    "topic": "Push topic",
+    "topicHelp": "The FCM topic the app subscribes to for this site. Leave empty to use the default.",
+    "mode": "Mode",
+    "listed": "Listed in the app",
+    "listedHelp": "Whether the site appears in the app's site list.",
+    "managed": "Managed",
+    "managedHelp": "Managed sites send push notifications from this backend. Shadow sites only record and evaluate, and send nothing."
+  },
+  "list": {
+    "title": "Sites",
+    "description": "Parking sites that report to Freespace.",
+    "create": "Create site",
+    "empty": "No sites yet.",
+    "loadError": "Could not load sites",
+    "occupancyValue": "{{pct}}% ({{occupied}}/{{capacity}})",
+    "columns": {
+      "dataAge": "Data age",
+      "data": "Data",
+      "engine": "State",
+      "occupancy": "Occupancy",
+      "recommendation": "Recommended zone",
+      "devices": "Devices opted in"
+    }
+  },
+  "create": {
+    "title": "Create site",
+    "description": "A new site starts in shadow mode and is not listed in the app until you enable it.",
+    "submit": "Create site",
+    "creating": "Creating...",
+    "success": "Site created"
+  },
+  "detail": {
+    "backToList": "All sites",
+    "loadError": "Could not load the site",
+    "tabsLabel": "Site sections"
+  },
+  "overview": {
+    "identityTitle": "Site details",
+    "identityDescription": "How the site is named and addressed.",
+    "saved": "Site saved",
+    "modeTitle": "Mode and visibility",
+    "modeDescription": "Control whether the backend sends notifications for this site and whether the app shows it.",
+    "listedSaved": "Visibility updated",
+    "managedOn": "Site is now managed",
+    "managedOff": "Site is now in shadow mode",
+    "created": "Created {{date}}",
+    "updated": "Updated {{date}}",
+    "managedConfirmOn": {
+      "title": "Turn on managed mode?",
+      "description": "Turning on managed mode makes this backend send push notifications to every phone subscribed to {{name}}. Before you continue, make sure the legacy ParkIT notifier is turned off for this site, otherwise phones will receive duplicate messages.",
+      "confirm": "Turn on managed mode"
+    },
+    "managedConfirmOff": {
+      "title": "Turn off managed mode?",
+      "description": "{{name}} will go back to shadow mode. The backend keeps evaluating but stops sending push notifications. Turning managed mode on again starts a fresh cycle.",
+      "confirm": "Turn off managed mode"
+    },
+    "dangerTitle": "Delete site",
+    "dangerDescription": "Removes the site from the back office and the app.",
+    "delete": "Delete site",
+    "deleted": "Site deleted",
+    "deleteConfirm": {
+      "title": "Delete this site?",
+      "description": "{{name}} will stop accepting data from ParkIT and disappear from the app. This cannot be undone from the back office.",
+      "confirm": "Delete site"
+    }
+  },
+  "settings": {
+    "saved": "Settings saved",
+    "loadError": "Could not load the settings",
+    "trigger": {
+      "title": "When to notify",
+      "description": "Occupancy thresholds and how much a change must be before phones are told."
+    },
+    "data": {
+      "title": "Data quality and recovery",
+      "description": "When ParkIT data is treated as stale, and whether to send an all-clear."
+    },
+    "zoneAdvisory": {
+      "title": "Zone advisories",
+      "description": "Optional messages when a single zone fills up. The percentage that triggers one is set on each zone."
+    },
+    "limits": {
+      "title": "Per-phone limits and expiry",
+      "description": "The cooldown and daily cap apply only when the deployment limits notifications per device and site. The expiry applies to every push."
+    },
+    "window": {
+      "title": "Notification window",
+      "description": "Phones are only notified inside these windows, in the site's local time ({{timeZone}}). Leave the list empty to notify at any time.",
+      "anyTime": "No window set: notifications can be sent at any time.",
+      "weekdays": "Days",
+      "start": "From",
+      "end": "To",
+      "add": "Add window",
+      "remove": "Remove window",
+      "days": {
+        "mon": "Mon",
+        "tue": "Tue",
+        "wed": "Wed",
+        "thu": "Thu",
+        "fri": "Fri",
+        "sat": "Sat",
+        "sun": "Sun"
+      }
+    },
+    "fields": {
+      "trigger_pct": {
+        "label": "Trigger occupancy",
+        "help": "Notify when site occupancy reaches this percentage (1-100)."
+      },
+      "reset_pct": {
+        "label": "Reset occupancy",
+        "help": "Occupancy must fall below this percentage, which must be lower than the trigger, before a new cycle can start."
+      },
+      "change_points": {
+        "label": "Change threshold",
+        "help": "Percentage points the situation must change by before a follow-up message is sent (1-50)."
+      },
+      "change_direction": {
+        "label": "Change direction",
+        "help": "Whether follow-up messages are sent only when occupancy rises or in both directions.",
+        "RISING": "Rising only",
+        "BOTH": "Rising and falling"
+      },
+      "stabilisation_s": {
+        "label": "Stabilisation time",
+        "help": "How long a change must hold before it is sent (0-3600 seconds)."
+      },
+      "recommendation_margin": {
+        "label": "Recommendation margin",
+        "help": "Free bays a zone must have over the current recommendation to replace it (0 or more)."
+      },
+      "stale_limit_s": {
+        "label": "Stale limit",
+        "help": "Data older than this is treated as stale. At least 120 seconds, twice ParkIT's posting interval."
+      },
+      "partial_is_stale": {
+        "label": "Partial data counts as stale",
+        "help": "Treat a submission with missing zones as stale."
+      },
+      "recovery_push": {
+        "label": "Send recovery message",
+        "help": "Tell phones when availability has improved after an advisory."
+      },
+      "zone_advisory": {
+        "label": "Send zone advisories",
+        "help": "Notify when an individual zone with an advisory percentage fills up."
+      },
+      "zone_reset_gap": {
+        "label": "Zone reset gap",
+        "help": "How far below its advisory percentage a zone must fall before it can advise again (1-50 points)."
+      },
+      "cooldown_s": {
+        "label": "Cooldown per phone",
+        "help": "Minimum time between two pushes to the same phone for this site (0 or more seconds)."
+      },
+      "daily_cap": {
+        "label": "Daily cap per phone",
+        "help": "Maximum pushes per phone and site per day (0 or more)."
+      },
+      "push_expiry_s": {
+        "label": "Push expiry",
+        "help": "How long a push stays deliverable if the phone is offline (60-86400 seconds)."
+      }
+    }
+  },
+  "zones": {
+    "title": "Zones",
+    "description": "Zones in the order the app shows them. Capacity comes from ParkIT and is not edited here.",
+    "create": "Add zone",
+    "createTitle": "Add zone",
+    "createDescription": "Create a zone before ParkIT reports it, or to prepare its settings.",
+    "editTitle": "Edit zone",
+    "editDescription": "Change how this zone is shown and recommended.",
+    "saveMarksReviewed": "This zone was created automatically from a ParkIT report. Saving it marks it as reviewed.",
+    "empty": "No zones yet. Zones appear when ParkIT first reports them.",
+    "loadError": "Could not load the zones",
+    "created": "Zone created",
+    "updated": "Zone saved",
+    "deleted": "Zone deleted",
+    "discovered": "New - needs review",
+    "review": "Mark reviewed",
+    "edit": "Edit {{name}}",
+    "delete": "Delete {{name}}",
+    "thresholds": "Thresholds",
+    "thresholdsValue": "Limited {{limited}}%, full {{full}}% or under {{minFree}} free, unknown {{unknown}}%",
+    "noAdvisory": "Off",
+    "discoveredNotice": {
+      "title": "{{count}} zone(s) created automatically need review",
+      "description": "ParkIT reported zones that were not set up here. They stay hidden from the app until you review and enable them."
+    },
+    "deleteConfirm": {
+      "title": "Delete this zone?",
+      "description": "{{name}} will be removed from the site and the app.",
+      "confirm": "Delete zone"
+    },
+    "fields": {
+      "name": "Name",
+      "slug": "Zone id",
+      "slugHelp": "Lowercase letters, digits, '-' and '_'. Matches the id ParkIT uses. Cannot be changed later.",
+      "slugReadOnly": "The zone id cannot be changed.",
+      "display_order": "Display order",
+      "display_orderHelp": "Lower numbers are shown first.",
+      "enabled": "Enabled",
+      "enabledHelp": "Show this zone in the app.",
+      "recommendable": "Recommendable",
+      "recommendableHelp": "Allow this zone to be recommended. A zone can be shown but never recommended.",
+      "preferred": "Preferred",
+      "preferredHelp": "Prefer this zone when recommendations are otherwise close.",
+      "priority": "Priority",
+      "priorityHelp": "Lower numbers win ties.",
+      "limited_pct": "Limited from",
+      "limited_pctHelp": "Occupancy percentage at which the zone is shown as limited.",
+      "full_pct": "Full from",
+      "full_pctHelp": "Occupancy percentage at which the zone is shown as full.",
+      "full_min_free": "Full at or below free bays",
+      "full_min_freeHelp": "The zone is also full when fewer than this many bays are free.",
+      "unknown_limit_pct": "Unknown limit",
+      "unknown_limit_pctHelp": "Largest share of bays with unknown state before the zone is shown as unknown.",
+      "advisory_pct": "Advisory percentage",
+      "advisory_pctHelp": "Send a zone advisory at this occupancy. Leave empty for no zone advisory.",
+      "note": "Staff note",
+      "noteHelp": "For staff only, for example how the zone is sensed. Never sent to the app."
+    }
+  },
+  "templates": {
+    "intro": "The wording of each push message for this site. Insert placeholders from the list to fill in live values.",
+    "loadError": "Could not load the messages",
+    "titleLabel": "Title",
+    "bodyLabel": "Message",
+    "counter": "Title {{title}}/{{maxTitle}}, message {{body}}/{{maxBody}} characters",
+    "placeholders": "Placeholders available for this message",
+    "insertHint": "Click a placeholder to insert it where the cursor is.",
+    "unknownTitle": "Placeholder not available",
+    "unknown": "This message type does not provide: {{names}}. Remove them before saving.",
+    "preview": "Preview",
+    "previewNote": "Shown with sample values.",
+    "saved": "Message saved",
+    "reset": "Reset to default",
+    "resetDone": "Message reset to the default wording",
+    "resetConfirm": {
+      "title": "Reset to the default wording?",
+      "description": "Your changes to this message will be replaced with the default title and message.",
+      "confirm": "Reset"
+    },
+    "placeholderHelp": {
+      "site": "The site name",
+      "zone": "The recommended zone",
+      "topZones": "The zones with the most bays, such as Basement 3 and Basement 4",
+      "occupancyPct": "Site occupancy as a whole number",
+      "fullZone": "The zone that is full"
+    },
+    "types": {
+      "SITE_INITIAL": {
+        "title": "Parking filling up",
+        "description": "First message when site occupancy reaches the trigger."
+      },
+      "SITE_CHANGE": {
+        "title": "Recommendation changed",
+        "description": "Follow-up when the recommended zone or the situation changes."
+      },
+      "ZONE_ADVISORY": {
+        "title": "Zone full",
+        "description": "Sent when a single zone fills up and another has room."
+      },
+      "RECOVERY": {
+        "title": "Availability improved",
+        "description": "Sent when parking has eased after an advisory."
+      },
+      "TEST": {
+        "title": "Test message",
+        "description": "Used by the test push in the back office."
+      }
+    }
+  },
+  "keys": {
+    "create": "Create key",
+    "creating": "Creating...",
+    "revoke": "Revoke",
+    "never": "Never",
+    "neverUsed": "Never used",
+    "empty": "No keys yet.",
+    "loadError": "Could not load the keys",
+    "fields": {
+      "name": "Name",
+      "namePlaceholder": "For example: ParkIT production 2026",
+      "hint": "Key hint",
+      "status": "Status",
+      "created": "Created",
+      "expires": "Expires",
+      "expiresPlaceholder": "No expiry",
+      "expiresHelp": "Optional. The key stops working at the end of the chosen day.",
+      "revokedAt": "Revoked",
+      "lastUsed": "Last used",
+      "lastIp": "Last source IP"
+    },
+    "status": {
+      "active": "Active",
+      "revoked": "Revoked",
+      "expired": "Expired"
+    },
+    "reveal": {
+      "warningTitle": "Copy this key now",
+      "warning": "It is shown only once. It cannot be retrieved later, only replaced with a new key.",
+      "keyLabel": "Key",
+      "copy": "Copy key",
+      "copied": "Key copied",
+      "copyFailed": "Could not copy. Select the key and copy it manually.",
+      "close": "I have saved the key"
+    },
+    "ingest": {
+      "title": "Ingest keys",
+      "description": "Keys ParkIT uses to send occupancy data for this site.",
+      "rotationTitle": "Rotating a key without a gap",
+      "rotation": "Several keys can be valid at once. To rotate: create a new key, enter it in ParkIT, check that its last-used time updates, and only then revoke the old key.",
+      "createTitle": "Create ingest key",
+      "createDescription": "Give the key a name that tells you where it is used.",
+      "revealTitle": "Ingest key created",
+      "revealDescription": "Enter this key in ParkIT for this site.",
+      "revoked": "Key revoked",
+      "revokeConfirm": {
+        "title": "Revoke this key?",
+        "description": "ParkIT will no longer be able to send data with the key \"{{name}}\". Make sure ParkIT already uses a newer key.",
+        "confirm": "Revoke key"
+      }
+    },
+    "app": {
+      "title": "App keys",
+      "description": "Keys the Freespace mobile app sends with its requests. They apply to the whole deployment.",
+      "rotationTitle": "Rotating an app key",
+      "rotation": "At least two keys can be valid at once so that an app release can switch keys. Create the new key, ship the release that uses it, and revoke the old key once old versions are retired.",
+      "createTitle": "Create app key",
+      "createDescription": "Give the key a name that identifies the app release it is for.",
+      "revealTitle": "App key created",
+      "revealDescription": "Build this key into the app release.",
+      "revoked": "Key revoked",
+      "revokeConfirm": {
+        "title": "Revoke this app key?",
+        "description": "App versions that use the key \"{{name}}\" will be refused. Make sure users have moved to a release with a newer key.",
+        "confirm": "Revoke key"
+      }
+    }
+  },
+  "validation": {
+    "required": "This field is required",
+    "integer": "Enter a whole number",
+    "min": "Must be at least {{min}}",
+    "max": "Must be at most {{max}}",
+    "maxLength": "At most {{max}} characters",
+    "resetBelowTrigger": "Reset occupancy must be lower than the trigger occupancy",
+    "limitedBelowFull": "Limited occupancy must not be higher than full occupancy",
+    "tooManyRules": "At most {{max}} windows",
+    "slug": "Use lowercase letters, digits, '-' and '_' (up to 64 characters, starting with a letter or digit)",
+    "topic": "Use letters, digits and - _ . ~ % only",
+    "timeZone": "Enter a valid time zone name, for example Africa/Johannesburg",
+    "window": {
+      "noWeekdays": "Select at least one day",
+      "invalidTime": "Enter times as HH:MM",
+      "startNotBeforeEnd": "The start must be before the end. A window cannot run past midnight."
+    }
+  },
+  "age": {
+    "seconds_one": "{{count}} second ago",
+    "seconds_other": "{{count}} seconds ago",
+    "minutes_one": "{{count}} minute ago",
+    "minutes_other": "{{count}} minutes ago",
+    "hours_one": "{{count}} hour ago",
+    "hours_other": "{{count}} hours ago"
+  },
+  "status": {
+    "AVAILABLE": "Available",
+    "LIMITED": "Limited",
+    "FULL": "Full",
+    "UNKNOWN": "Unknown"
+  },
+  "engineState": {
+    "IDLE": "Idle",
+    "PENDING": "Pending",
+    "ACTIVE": "Active"
+  },
+  "live": {
+    "title": "Live view",
+    "intro": "The zone table is computed exactly as the app computes it. It refreshes every 15 seconds while this tab is visible.",
+    "loadError": "Could not load the live view",
+    "noEngine": "Not evaluated yet",
+    "fresh": "Fresh",
+    "stale": "Stale",
+    "noData": "No data",
+    "none": "None",
+    "totals": {
+      "occupancy": "Site occupancy",
+      "bays": "{{occupied}} of {{capacity}} bays occupied",
+      "free": "Free bays",
+      "dataAge": "Data age",
+      "recommendation": "Recommended zone"
+    },
+    "zones": {
+      "title": "Zones",
+      "description": "Zones as the app sees them. Zones that are not enabled are not shown in the app.",
+      "empty": "No zones yet.",
+      "zone": "Zone",
+      "status": "Status",
+      "free": "Free",
+      "occupancy": "Occupancy",
+      "updated": "Last update",
+      "recommended": "Recommended",
+      "notEnabled": "Not shown in the app",
+      "notRecommendable": "Never recommended"
+    },
+    "engine": {
+      "title": "Notification engine",
+      "description": "A push is considered when occupancy reaches {{trigger}}% and the engine is reset again below {{reset}}%.",
+      "noState": "The engine has not evaluated this site yet.",
+      "idle": "Idle: no occupancy rise is being tracked.",
+      "pending": "Pending since {{since}}, fires at {{at}}.",
+      "active": "Active since {{since}}.",
+      "dueNow": "The stabilisation time is over; the next evaluation decides.",
+      "inSeconds_one": "That is in {{count}} second.",
+      "inSeconds_other": "That is in {{count}} seconds.",
+      "inMinutes_one": "That is in about {{count}} minute.",
+      "inMinutes_other": "That is in about {{count}} minutes.",
+      "inflight": {
+        "title": "Advisory in flight",
+        "description": "A push is being sent to devices right now. An identical advisory is not started again until it finishes."
+      },
+      "lastNotified": "Last notified level",
+      "neverNotified": "No advisory sent in this cycle",
+      "lastNotifiedValue": "{{pct}}% at {{at}}",
+      "lastRecommendation": "Last recommendation",
+      "topZones": "Top zones: {{zones}}",
+      "zoneAdvisories": "Zone advisories",
+      "advisoryAdvised": "{{zone}}: advised (above its level since {{since}})",
+      "advisoryWatching": "{{zone}}: above its level since {{since}}, not yet advised"
+    }
+  },
+  "events": {
+    "intro": "Everything the engine and the intake decided for this site. Counts show how many devices were affected; devices are never identified.",
+    "noAccess": "You do not have access to the event log.",
+    "loadError": "Could not load events",
+    "empty": "No events match these filters.",
+    "export": "Export CSV",
+    "exporting": "Exporting...",
+    "expand": "Show details",
+    "collapse": "Hide details",
+    "range": "{{first}}-{{last}} of {{total}}",
+    "pageOf": "Page {{page}} of {{pages}}",
+    "previous": "Previous",
+    "next": "Next",
+    "columns": {
+      "time": "Time",
+      "type": "Type",
+      "reason": "Reason",
+      "zone": "Zone",
+      "repeats": "Repeats"
+    },
+    "filters": {
+      "type": "Type",
+      "anyType": "All types",
+      "reason": "Reason",
+      "anyReason": "All reasons",
+      "period": "Period",
+      "from": "From",
+      "to": "To (inclusive)",
+      "pickDay": "Pick a day",
+      "clear": "Clear filters",
+      "periodInvalid": "The first day must not be after the last day.",
+      "periods": {
+        "all": "All time",
+        "24h": "Last 24 hours",
+        "7d": "Last 7 days",
+        "30d": "Last 30 days",
+        "custom": "Custom days"
+      }
+    },
+    "types": {
+      "STATE_CHANGE": "State change",
+      "CANDIDATE": "Candidate",
+      "ADVISORY": "Advisory",
+      "DATA_STALE": "Data stale",
+      "DATA_RECOVERED": "Data recovered",
+      "INGEST_REJECTED": "Intake rejected",
+      "INGEST_INCONSISTENT": "Intake inconsistent",
+      "ZONE_DISCOVERED": "Zone discovered",
+      "FCM_ERROR": "FCM error",
+      "CONFIG_CHANGED": "Settings changed",
+      "TEST_PUSH": "Test push",
+      "ANNOUNCEMENT": "Announcement"
+    },
+    "reasons": {
+      "TRIGGER_CROSSED": "Trigger level crossed",
+      "NOT_STABLE": "Not stable (fell back before the stabilisation time)",
+      "STABILISED": "Stabilised",
+      "RESET": "Fell below the reset level",
+      "CYCLE_RESTARTED": "Cycle restarted",
+      "STALE_DATA": "Data stale",
+      "NO_MATERIAL_CHANGE": "No material change",
+      "NO_RECOMMENDATION": "No recommendation",
+      "UNMANAGED": "Site not managed (shadow)",
+      "IN_FLIGHT": "Identical advisory in flight",
+      "SITE_MISMATCH": "Site mismatch",
+      "CLOCK_SKEW": "Clock skew",
+      "RATE_LIMITED": "Rate limited",
+      "OUT_OF_ORDER": "Out of order",
+      "SUM_MISMATCH": "Counts do not add up",
+      "AUTH_FAILURE": "FCM credential rejected",
+      "CREDENTIALS_MISSING": "FCM credentials missing",
+      "QUOTA_EXHAUSTED": "FCM quota exhausted",
+      "SITE_SETTINGS": "Site settings",
+      "ZONE_SETTINGS": "Zone settings",
+      "TEMPLATES": "Messages",
+      "MANAGED_ON": "Managed switched on",
+      "MANAGED_OFF": "Managed switched off",
+      "KEYS": "Keys"
+    },
+    "outcomes": {
+      "SENT": "Accepted by FCM",
+      "OPTED_OUT": "Opted out",
+      "OUTSIDE_WINDOW": "Outside notification window",
+      "DUPLICATE": "Duplicate",
+      "COOLDOWN": "Cooldown",
+      "DAILY_CAP": "Daily cap",
+      "SEND_FAILED": "Send failed",
+      "TOKEN_INVALID": "Token invalid",
+      "PENDING": "Pending"
+    },
+    "fanoutStatus": {
+      "PENDING": "Fan-out queued",
+      "RUNNING": "Fan-out running",
+      "COMPLETED": "Fan-out completed",
+      "FAILED": "Fan-out failed"
+    },
+    "detail": {
+      "message": "Message",
+      "repeat": "Occurrences",
+      "repeatValue_one": "{{count}} occurrence",
+      "repeatValue_other": "{{count}} occurrences",
+      "lastSeen": "(last at {{at}})",
+      "counts": "Devices by outcome",
+      "fanout": "Fan-out",
+      "latency": "(FCM accepted in {{ms}} ms)",
+      "figures": "Figures at the time",
+      "details": "Details"
+    }
+  },
+  "push": {
+    "close": "Close",
+    "sending": "Sending...",
+    "topicWarning": "This goes to the topic {{topic}} and reaches every subscribed phone of this site at once. It cannot be recalled.",
+    "confirmLabel": "Type the topic name \"{{topic}}\" to confirm",
+    "test": {
+      "open": "Test push",
+      "title": "Send a test push",
+      "description": "Sends a test message that does not count against any limit. It works for shadow sites too.",
+      "target": "Send to",
+      "targetDevice": "One device",
+      "targetTopic": "Every subscriber of the site topic",
+      "suffixLabel": "Last 6 characters of the device id",
+      "suffixHelp": "Shown in the app's settings. Exactly 6 letters, digits, '-' or '_'.",
+      "send": "Send test push"
+    },
+    "announce": {
+      "open": "Announcement",
+      "title": "Send an announcement",
+      "description": "Sends a free-text message to every subscriber of this site's topic. No cooldown or daily cap applies.",
+      "titleLabel": "Title (optional)",
+      "titlePlaceholder": "Defaults to the site name",
+      "messageLabel": "Message",
+      "counter": "{{count}} of {{max}} characters",
+      "send": "Send announcement"
+    },
+    "result": {
+      "accepted": "Accepted by FCM",
+      "notAccepted": "Not accepted by FCM",
+      "latency": "FCM answered in {{ms}} ms.",
+      "note": "\"Accepted by FCM\" means Google took the message for delivery. It does not confirm that any phone received it.",
+      "target": {
+        "device": "Sent to one device.",
+        "topic": "Sent to the site topic."
+      }
+    }
+  },
+  "devices": {
+    "title": "Device statistics",
+    "description": "How many phones use the app, across your sites. Counts only; devices are never identified here.",
+    "intro": "Counts only; devices are never identified here.",
+    "loadError": "Could not load device statistics",
+    "total": "Registered devices",
+    "optedIn": "Opted in to notifications",
+    "optedInShort": "Opted in",
+    "devices": "Devices",
+    "byPlatform": "By platform",
+    "platform": "Platform",
+    "platforms": {
+      "ANDROID": "Android",
+      "IOS": "iOS"
+    },
+    "byVersion": "By app version",
+    "version": "App version",
+    "unknownVersion": "Unknown",
+    "bySite": "By site",
+    "bySiteDescription": "Devices that follow each site.",
+    "site": "Site",
+    "empty": "No devices yet."
+  },
+  "history": {
+    "title": "Occupancy history",
+    "description": "Occupancy over one day, in the site's time zone ({{timeZone}}). Dashed lines mark the trigger and reset levels.",
+    "day": "Day",
+    "pickDay": "Pick a day",
+    "previousDay": "Previous day",
+    "nextDay": "Next day",
+    "today": "Today",
+    "loadError": "Could not load the history",
+    "empty": "No occupancy data was recorded on this day.",
+    "gapNote": "Where the line is broken, no data was received; it does not mean zero.",
+    "zonesNotPlotted_one": "{{count}} further zone is not drawn.",
+    "zonesNotPlotted_other": "{{count}} further zones are not drawn.",
+    "legend": "Series",
+    "triggerLine": "Trigger {{pct}}%",
+    "resetLine": "Reset {{pct}}%",
+    "chartLabel": "Occupancy of {{site}} over the day",
+    "noData": "No data",
+    "time": "Time",
+    "showTable": "Show as table",
+    "hideTable": "Hide table"
+  },
+  "simulator": {
+    "title": "Simulator",
+    "description": "Walk a site through the acceptance scenarios with made-up figures and a movable clock.",
+    "unavailable": {
+      "title": "Not available",
+      "description": "The simulator only exists when the backend runs in mock mode. It is not enabled here."
+    },
+    "notice": "Mock mode is on. Snapshots you post here are stored for the chosen site as if ParkIT had sent them. Use a demonstration site.",
+    "site": "Site",
+    "sitePlaceholder": "Choose a site",
+    "posted": "Snapshot accepted.",
+    "ignored": "Snapshot ignored: {{reason}}.",
+    "result": {
+      "title": "Observed state",
+      "description": "What the backend shows for this site now.",
+      "state": "Engine state",
+      "data": "Data",
+      "recommendation": "Recommended zone",
+      "mockTime": "Mock time",
+      "recentEvents": "Recent events",
+      "noEvents": "No events yet."
+    },
+    "clock": {
+      "title": "Mock clock",
+      "description": "Moves the backend's clock forward so timers expire. An engine evaluation runs after each move.",
+      "advance": "Advance {{minutes}} min",
+      "reset": "Reset clock"
+    },
+    "snapshot": {
+      "title": "Post a snapshot",
+      "description": "Free bays are computed as capacity minus occupied.",
+      "area": "Area",
+      "siteTotals": "Site totals",
+      "capacity": "Capacity",
+      "occupied": "Occupied",
+      "health": "Health",
+      "post": "Post snapshot",
+      "capacityOf": "Capacity of {{name}}",
+      "occupiedOf": "Occupied bays of {{name}}",
+      "healthOf": "Health of {{name}}"
+    },
+    "health": {
+      "OK": "OK",
+      "PARTIAL": "Partial",
+      "OFFLINE": "Offline"
+    },
+    "presets": {
+      "title": "Acceptance scenarios",
+      "description": "Pick a scenario and run it step by step. Each step states the expected outcome next to what the backend shows.",
+      "step": "#",
+      "action": "Action",
+      "expected": "Expected",
+      "observed": "Observed",
+      "advance": "Advance clock {{seconds}} s,",
+      "snapshot": "post site at {{pct}}%.",
+      "runNext": "Run step {{n}}",
+      "done": "Finished",
+      "restart": "Restart",
+      "observedValue": "State {{state}}, data {{stale}}, recommendation {{recommendation}}",
+      "match": {
+        "match": "As expected",
+        "differs": "Differs from expected",
+        "unchecked": "Check the events"
+      },
+      "AT-01": {
+        "title": "Quiet site",
+        "description": "A site at a low level is served normally and produces no candidate."
+      },
+      "AT-02": {
+        "title": "Not stable",
+        "description": "The trigger is crossed but occupancy falls back before the stabilisation time."
+      },
+      "AT-03": {
+        "title": "Stabilised",
+        "description": "The trigger level is held for the stabilisation time, so the first advisory is sent."
+      },
+      "AT-04": {
+        "title": "Rising further",
+        "description": "Already active and notified, occupancy rises a little more."
+      },
+      "AT-05": {
+        "title": "Material change",
+        "description": "Already active, occupancy rises by the change step, first with the same recommendation, then with a new one."
+      },
+      "AT-06": {
+        "title": "Reset and new cycle",
+        "description": "Occupancy falls below the reset level, then rises to the trigger again."
+      },
+      "AT-07": {
+        "title": "One zone full",
+        "description": "The site is below the trigger while one zone is nearly full and another is free."
+      },
+      "AT-08": {
+        "title": "Stale data",
+        "description": "No data for three minutes, then a zone reported offline."
+      }
+    },
+    "expected": {
+      "holding": "Still pending while {{pct}}% is held for {{seconds}} s more.",
+      "idleNoCandidate": "At {{pct}}% the site stays idle and no candidate is logged.",
+      "pending": "At {{pct}}% the state becomes pending and the timer starts.",
+      "stillPending": "Still pending; no push yet.",
+      "notStable": "Back at {{pct}}% the state returns to idle and a NOT_STABLE event is logged. No push is sent.",
+      "active": "The stabilisation time has passed: state active. On a managed site the first advisory is sent to eligible devices; on a shadow site it is logged as UNMANAGED.",
+      "noCandidate": "At {{pct}}% the state stays active and no new candidate is created.",
+      "noMaterialChange": "At {{pct}}% with the same recommendation the candidate is dropped as NO_MATERIAL_CHANGE.",
+      "newRecommendation": "With a new recommendation an advisory is sent to devices that are out of cooldown and under their daily cap; the others are logged as COOLDOWN or DAILY_CAP.",
+      "reset": "At {{pct}}% the state returns to idle (a recovery push only if enabled).",
+      "newCycle": "Rising to {{pct}}% starts a new cycle: pending again.",
+      "recommendOther": "At {{pct}}% the site stays idle and sends no push, while the app recommends the free zone.",
+      "fresh": "Data is fresh.",
+      "staleData": "After {{seconds}} s without data the site is stale and candidates are logged as STALE_DATA.",
+      "zoneUnknown": "The offline zone shows as unknown and is never recommended."
+    }
+  }
+}

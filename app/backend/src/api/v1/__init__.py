@@ -26,6 +26,12 @@ from src.api import (
     feedback,
     file,
     file_serve,
+    freespace_events,
+    freespace_keys,
+    freespace_push,
+    freespace_sites,
+    freespace_stats,
+    freespace_zones,
     help_center,
     impersonation,
     invitation,
@@ -40,10 +46,10 @@ from src.api import (
     organization_two_factor_settings,
     payment_methods,
     payment_settings,
-    push,
     # Payment routers
     payments,
     phone_verification,
+    push,
     # Report routers
     report,
     report_schedule,
@@ -216,5 +222,18 @@ v1_router.include_router(changelog.router)
 # Invitation router (has /invitations prefix) - org admin with users:write permission
 # NOTE: /invitations/validate/{token} public route is registered first inside the router
 v1_router.include_router(invitation.router)
+
+# Freespace back-office routers (all under /admin/sites..., /admin/app-keys).
+# ORDER MATTERS (CLAUDE.md rule 13): freespace_stats owns the literal
+# single-segment routes /admin/sites/summary and /admin/sites/device-stats, so
+# it must come BEFORE freespace_sites, whose /admin/sites/{site_id} would
+# otherwise capture them. freespace_sites stays last.
+v1_router.include_router(freespace_stats.router)
+v1_router.include_router(freespace_events.router)
+v1_router.include_router(freespace_push.router)
+v1_router.include_router(freespace_keys.router)
+v1_router.include_router(freespace_keys.app_keys_router)
+v1_router.include_router(freespace_zones.router)
+v1_router.include_router(freespace_sites.router)
 
 __all__ = ["v1_router"]

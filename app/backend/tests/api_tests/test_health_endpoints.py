@@ -1,5 +1,6 @@
 """
-Tests for /health and /health/detailed.
+Tests for /health/live (liveness), /health (Freespace BF-80 service health,
+see tests/freespace/test_integration_wiring.py) and /health/detailed.
 
 /health/detailed used to answer HTTP 200 "healthy" straight through a total
 Redis failure, and HTTP 200 "unhealthy" through a database failure - so a
@@ -29,14 +30,14 @@ class _DeadRedis:
         raise RuntimeError(self.message)
 
 
-# ==================== /health : liveness ====================
+# ==================== /health/live : liveness ====================
 
 
 @pytest.mark.asyncio
 async def test_health_is_a_constant(client: AsyncClient):
     """Liveness must not probe dependencies: restarting the app does not fix a
     dead database, it just kills a process that could still serve cached reads."""
-    response = await client.get("/health")
+    response = await client.get("/health/live")
 
     assert response.status_code == 200
     assert response.json() == {"status": "healthy"}
@@ -44,9 +45,10 @@ async def test_health_is_a_constant(client: AsyncClient):
 
 @pytest.mark.asyncio
 async def test_health_is_not_cacheable(client: AsyncClient):
-    response = await client.get("/health")
+    for path in ("/health/live", "/health"):
+        response = await client.get(path)
 
-    assert response.headers["cache-control"] == "no-store"
+        assert response.headers["cache-control"] == "no-store"
 
 
 @pytest.mark.asyncio
@@ -62,10 +64,69 @@ async def test_health_stays_200_when_dependencies_fail(
         _DeadEngine("connection to server at 10.1.2.3 port 5432 failed"),
     )
 
-    response = await client.get("/health")
+    response = await client.get("/health/live")
 
     assert response.status_code == 200
     assert response.json()["status"] == "healthy"
+
+
+def _no_tick(monkeypatch, async_session):
+    """Point /health at the TEST database (it otherwise opens
+    ``src.database.AsyncSessionLocal``, i.e. the configured one) and pin the
+    tick source to "none recorded", so only the grace window decides."""
+    import src.database
+    from src.services.freespace import health
+
+    class _Ctx:
+        async def __aenter__(self):
+            return async_session
+
+        async def __aexit__(self, *exc):
+            return False
+
+    async def none(_factory):
+        return None
+
+    monkeypatch.setattr(src.database, "AsyncSessionLocal", lambda: _Ctx())
+    monkeypatch.setattr(health, "_last_tick", none)
+    return health
+
+
+@pytest.mark.asyncio
+async def test_service_health_within_grace_is_200(
+    client: AsyncClient, monkeypatch, async_session
+):
+    """/health (BF-80): fresh process, no tick yet -> 200, status fields only."""
+    health = _no_tick(monkeypatch, async_session)
+    health.reset_health_state()
+    try:
+        response = await client.get("/health")
+    finally:
+        health.reset_health_state()
+
+    assert response.status_code == 200
+    assert set(response.json()) == {"status", "database", "engine"}
+    assert response.json()["engine"]["status"] == "no_tick_yet"
+
+
+@pytest.mark.asyncio
+async def test_service_health_after_grace_without_tick_is_503(
+    client: AsyncClient, monkeypatch, async_session
+):
+    from datetime import UTC, datetime, timedelta
+
+    health = _no_tick(monkeypatch, async_session)
+    health.reset_health_state(
+        datetime.now(UTC) - timedelta(seconds=health.STARTUP_GRACE_S + 60)
+    )
+    try:
+        response = await client.get("/health")
+    finally:
+        health.reset_health_state()
+
+    assert response.status_code == 503
+    assert set(response.json()) == {"status", "database", "engine"}
+    assert response.json()["engine"]["status"] == "stale"
 
 
 # ==================== /health/detailed : readiness ====================

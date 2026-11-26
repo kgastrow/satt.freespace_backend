@@ -169,3 +169,11 @@
   is_active: true
   is_enabled_by_default_for_new_orgs: true
   parameters: {}
+
+- name: Freespace Daily Purge
+  description: "Freespace retention purge (BF-73): removes devices, send history, site events, occupancy history and request logs older than the retention periods configured in System Config"
+  code: freespace_daily_purge
+  schedule_expression: "30 3 * * *"  # Daily at 3:30 AM
+  is_active: true
+  is_enabled_by_default_for_new_orgs: true
+  parameters: {}
